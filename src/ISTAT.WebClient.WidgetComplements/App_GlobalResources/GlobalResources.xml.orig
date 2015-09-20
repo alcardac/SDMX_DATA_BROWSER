@@ -1,0 +1,1585 @@
+<GlobalResources>
+  <Resource key="app_copyright">
+    <Name LocaleIsoCode="en"><![CDATA[Copyright (c) 2010 by the European Commission, represented by Eurostat.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Copyright (c) 2010 European Commission, rappresentata da Eurostat.]]></Name>
+  </Resource>
+  <Resource key="app_description">
+    <Name LocaleIsoCode="en"><![CDATA[A simple .NET Web application for exposing / browsing dissemination environment of an NSI.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Una semplice applicazione Java Web per l'esposizione / diffusione nell'ambiente di navigazione di un NSI.]]></Name>
+  </Resource>
+  <Resource key="app_title">
+    <Name LocaleIsoCode="en"><![CDATA[NSI .NET Client]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[NSI .NET Client]]></Name>
+  </Resource>
+  <Resource key="app_version">
+    <Name LocaleIsoCode="en"><![CDATA[v3.3.1 -21-11-2014]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[v3.3.1 -21-11-2014]]></Name>
+  </Resource>
+  <Resource key="confirmation_criteria_clear">
+    <Name LocaleIsoCode="en"><![CDATA[All criteria removed.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Tutti i criteri rimossi.]]></Name>
+  </Resource>
+  <Resource key="error_ajax_generic">
+    <Name LocaleIsoCode="en"><![CDATA[Failed to send/receive data to/from server. Please try the operation again.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Impossibile inviare / ricevere dati a / da server. Si prega di ritentare l'operazione.]]></Name>
+  </Resource>
+  <Resource key="error_drag_slice_component_single">
+    <Name LocaleIsoCode="en"><![CDATA[You cannot drag and drop a slice component with only one value to horizontal or vertical axis.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Non è possibile trascinare e rilasciare un componente fetta con un solo valore  di asse orizzontale o verticale.]]></Name>
+  </Resource>
+  <Resource key="error_invalid_session">
+    <Name LocaleIsoCode="en"><![CDATA[The HTTP session has expired. Click <a href="{0}">here</a> to go to home page and start again.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[La sessione HTTP è scaduta. Clicca <a href="{0}">qui</a> per andare alla home page e ricominciare.]]></Name>
+  </Resource>
+  <Resource key="error_query_not_empty">
+    <Name LocaleIsoCode="en"><![CDATA[Dataflow cannot be changed because current criteria is not empty. Use the Clear Criteria before selecting another dataflow.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Flusso di dati non possono essere cambiati perchè i criteri attuali non è vuoto. Utilizzare i criteri chiari prima di scegliere un altro flusso di dati.]]></Name>
+  </Resource>
+  <Resource key="error_results">
+    <Name LocaleIsoCode="en"><![CDATA[Failed to process the query and to retrieve the response. Try again and if the problem persists contact the system administrator.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Impossibile elaborare la query e per recuperare la risposta. Prova ancora e se il problema perist contattare l'amministratore di sistema.]]></Name>
+  </Resource>
+  <Resource key="error_time_period_empty">
+    <Name LocaleIsoCode="en"><![CDATA[You must specify at least a start date]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[È necessario specificare almeno una data di inizio]]></Name>
+  </Resource>
+  <Resource key="format_codelist_code">
+    <Name LocaleIsoCode="en"><![CDATA[[{0}] - {1}]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[[{0}] - {1}]]></Name>
+  </Resource>               
+  <Resource key="format_dataflow_id">
+    <Name LocaleIsoCode="en"><![CDATA[{0}_{1}_{2}]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[{0}_{1}_{2}]]></Name>
+  </Resource>
+  <Resource key="format_time_interval">
+    <Name LocaleIsoCode="en"><![CDATA[Between {0} and {1}]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Tra {0} e {1}]]></Name>
+  </Resource>
+  <Resource key="format_time_interval_end">
+    <Name LocaleIsoCode="en"><![CDATA[Before {0}]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Prima {0}]]></Name>
+  </Resource>
+  <Resource key="format_time_interval_start">
+    <Name LocaleIsoCode="en"><![CDATA[After {0}]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Dopo {0}]]></Name>
+  </Resource>
+  <Resource key="help_excel_csv_layout">
+    <Name LocaleIsoCode="en"><![CDATA[Select this option to download the data for Excel in CSV format using the selected layout]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare questa opzione per scaricare i dati per Excel in formato CSV utilizzando il layout selezionato]]></Name>
+  </Resource>
+  <Resource key="help_excel_csv_tabular">
+    <Name LocaleIsoCode="en"><![CDATA[Select this option to download the data for Excel in CSV tabular format. It ignores the layout.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare questa opzione per scaricare i dati per Excel in formato tabulare CSV. Ignora il layout.]]></Name>
+  </Resource>
+  <Resource key="help_excel_html">
+    <Name LocaleIsoCode="en"><![CDATA[Select this option to download the data for Excel in HTML format. Please ignore any Excel warning.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare questa opzione per scaricare i dati per Excel in formato HTML. Si prega di ignorare qualsiasi avviso di Excel.]]></Name>
+  </Resource>
+  <Resource key="help_excel_separator">
+    <Name LocaleIsoCode="en"><![CDATA[Select the separator character that will be used in CSV files]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare il carattere separatore che verrà  utilizzato nel file CSV]]></Name>
+  </Resource>
+  <Resource key="help_pdf_select_orientation">
+    <Name LocaleIsoCode="en"><![CDATA[Select the orientation depeding on the dimensions of the data. If there many columns select Landscape else Potrait.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare la funzione di orientamento sulle dimensioni dei dati. Se ci molte colonne selezionare Potrait altro paesaggio.]]></Name>
+  </Resource>
+  <Resource key="help_pdf_select_page_size">
+    <Name LocaleIsoCode="en"><![CDATA[Select the page size according to the possible number of columns. If not sure choose A4.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare il formato di pagina per il possibile numero di colonne. Se non certo scegliere A4.]]></Name>
+  </Resource>
+  <Resource key="help_sdmxml_dataset">
+    <Name LocaleIsoCode="en"><![CDATA[Select this option to download only the data. The data will be SDMX-ML format]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare questa opzione per scaricare solo i dati. I dati saranno formato SDMX-ML]]></Name>
+  </Resource>
+  <Resource key="help_sdmxml_structure">
+    <Name LocaleIsoCode="en"><![CDATA[Select this option to download only the SDMX-ML Structure file. The Structure file includes the Data Structure Definition/Key Family (DSD) and the depended code lists and concept schemes.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare questa opzione per scaricare solo il file struttura SDMX-ML. Lo struttura file include la famiglia di definizione/chiave struttura dati (DSD) e il codice depended elenchi e schemi concettuali.]]></Name>
+  </Resource>
+  <Resource key="help_sdmxml_zip">
+    <Name LocaleIsoCode="en"><![CDATA[Select this option to download both SDMX-ML data and SDMX-ML Structure files inside a zip archive.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare questa opzione per scaricare sia i dati SDMX-ML e file struttura SDMX-ML all'interno di un archivio zip.]]></Name>
+  </Resource>
+  <Resource key="html_criteria_help_1">
+    <Name LocaleIsoCode="en"><![CDATA[Using the below tab control you can specify the criteria to be used for filtering the available data into dissemination databases. Click on a tab element to select the page for specifying the filter for a specific dimension.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Utilizzando il seguente controllo scheda è possibile specificare i criteri da utilizzare per filtrare la i dati disponibili in banche dati di diffusione. Fare clic su un elemento scheda per selezionare la pagina per specificare il filtro per una dimensione specifica.]]></Name>
+  </Resource>
+  <Resource key="html_criteria_help_2">
+    <Name LocaleIsoCode="en"><![CDATA[Note that when a filter for a component is changed the filters for next components will be automatically reset.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Nota che quando un filtro per un componente viene modificato i filtri per i componentiprossimo sarà  automaticamente azzerato.]]></Name>
+  </Resource>
+  <Resource key="html_criteria_help_codes">
+    <Name LocaleIsoCode="en"><![CDATA[Note that are listed only the values for which data exists into dissemination databases.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Nota che sono elencati solo i valori per i quali esistono dati in banche dati di diffusione.]]></Name>
+  </Resource>
+  <Resource key="html_criteria_help_simple">
+    <Name LocaleIsoCode="en"><![CDATA[This component does not have an associated codelist, so you must enter the value manually. Click the <em>Save</em> button to save any changes.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Questo componente non dispone di un elenco dei codici associati, quindi è necessario inserire il valore manualmente. Fare clic sul pulsante <em;>Save</em;> per salvare le modifiche.]]></Name>
+  </Resource>
+  <Resource key="html_criteria_help_single_code">
+    <Name LocaleIsoCode="en"><![CDATA[There is only one available code. Its usage is implied without being specified in the SDMXQuery.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[C'è un solo codice disponibile. Il suo utilizzo è implicito, senza essere specificato in il SDMXQuery.]]></Name>
+  </Resource>
+  <Resource key="html_criteria_help_time">
+    <Name LocaleIsoCode="en"><![CDATA[You can specify a start date and, optionally, an end date.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[È possibile specificare una data di inizio e, facoltativamente, una data di fine.]]></Name>
+  </Resource>
+  <Resource key="html_criteria_select_dataflow">
+    <Name LocaleIsoCode="en"><![CDATA[Please select a dataflow first. After a dataflow is selected you'll be able to add criteria for filtering the available data.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Seleziona un primo flusso di dati. Dopo un flusso di dati è selezionata sarete in grado di aggiungere criteri per filtrare i dati disponibili.]]></Name>
+  </Resource>
+  <Resource key="html_criteria_splitter">
+    <Name LocaleIsoCode="en"><![CDATA[You can use the splitter to adjust the size of the panels. You can use the toggler located in the middle of the splitter to show/hide the left pane.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[È possibile utilizzare lo splitter per regolare le dimensioni dei pannelli. È possibile utilizzare il toggler trova nel mezzo dello splitter per mostrare / nascondere il pannello di sinistra.]]></Name>
+  </Resource>
+  <Resource key="html_dataflows_help">
+    <Name LocaleIsoCode="en"><![CDATA[Select the dataflow from the tree below.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare il flusso di dati dalla struttura sottostante.]]></Name>
+  </Resource>
+  <Resource key="html_results_help_1">
+    <Name LocaleIsoCode="en"><![CDATA[Drag & drop the yellow background blocks to corresponding X, Y and Z axis. The Z axis is for the components used for filtering the visible data, the X axis is for the horizontal components used for creating the header of the table, while Y axis is for the components used as first columns. Use the <em>Apply</em> button to confirm any changes, <em>Cancel</em> to revert them.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Drag & drop dei blocchi sfondo giallo corrispondente a X, Y e Z. L'asse Z è per i componenti utilizzati per filtrare i dati visibili, l'asse X è per le componenti orizzontali usate per creare l'intestazione della tabella, mentre l'asse Y è per i componenti utilizzati come prime colonne. Utilizzare il <em;>Applica</em;> per confermare le modifiche, <em;>Annulla</em;> di tornare li.]]></Name>
+  </Resource>
+  <Resource key="html_results_help_2">
+    <Name LocaleIsoCode="en"><![CDATA[In results table a component can be rendered using its description, the code and description or only the code, but this only if data is provided by NSI web service. You can click on a component label to toggle the display mode for all its values or you can click on a component value to toggle only its display mode. Use the Reset Display Mode button to reset to default the display mode for all component values.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Nella tabella dei risultati di un componente può essere reso con la sua descrizione, il codice e la descrizione o solo il codice, ma questo solo se i dati sono forniti da servizio web NSI. È possibile fare clic su un'etichetta componente per alternare la modalità  di visualizzazione per tutti i suoi valori o si può fare clic su un valore del componente per passare solo le sue modalità  di visualizzazione. Utilizzare il tasto <em>Reset Modalità  di Visualizzazione</em> per ripristinare la modalità  di visualizzazione di default per tutti i valori dei componenti.]]></Name>
+  </Resource>
+  <Resource key="html_results_wait">
+    <Name LocaleIsoCode="en"><![CDATA[Please wait while retrieving data...]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Attendere il recupero dei dati...]]></Name>
+  </Resource>
+  <Resource key="label_apply">
+    <Name LocaleIsoCode="en"><![CDATA[Apply]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Applica]]></Name>
+  </Resource>
+  <Resource key="label_axis_x">
+    <Name LocaleIsoCode="en"><![CDATA[Horizontal (X-axis):]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Orizzontale (asse X):]]></Name>
+  </Resource>
+  <Resource key="label_axis_y">
+    <Name LocaleIsoCode="en"><![CDATA[Vertical (Y-axis)]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Verticale (asse Y)]]></Name>
+  </Resource>
+  <Resource key="label_axis_z">
+    <Name LocaleIsoCode="en"><![CDATA[Slice (Z-axis):]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Slice (asse Z):]]></Name>
+  </Resource>
+  <Resource key="label_cancel">
+    <Name LocaleIsoCode="en"><![CDATA[Cancel]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Annulla]]></Name>
+  </Resource>
+  <Resource key="label_clear">
+    <Name LocaleIsoCode="en"><![CDATA[Clear]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Cancella]]></Name>
+  </Resource>
+  <Resource key="label_collapse_all">
+    <Name LocaleIsoCode="en"><![CDATA[Collapse All]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Comprimi tutto]]></Name>
+  </Resource>
+  <Resource key="label_count">
+    <Name LocaleIsoCode="en"><![CDATA[Maximum possible observations:]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Osservazioni possibili massime:]]></Name>
+  </Resource>
+  <Resource key="label_criteria">
+    <Name LocaleIsoCode="en"><![CDATA[Criteria]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Criteri]]></Name>
+  </Resource>
+  <Resource key="label_csv">
+    <Name LocaleIsoCode="en"><![CDATA[CSV]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[CSV]]></Name>
+  </Resource>
+  <Resource key="label_delete">
+    <Name LocaleIsoCode="en"><![CDATA[Delete]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Cancella]]></Name>
+  </Resource>
+  <Resource key="label_download">
+    <Name LocaleIsoCode="en"><![CDATA[Download]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Download]]></Name>
+  </Resource>
+  <Resource key="label_excel_csv_layout">
+    <Name LocaleIsoCode="en"><![CDATA[CSV (Unformatted)]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[CSV (non formattato)]]></Name>
+  </Resource>
+  <Resource key="label_excel_csv_tabular">
+    <Name LocaleIsoCode="en"><![CDATA[CSV (Tabular)]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[CSV (tabulare)]]></Name>
+  </Resource>
+  <Resource key="label_excel_dialog">
+    <Name LocaleIsoCode="en"><![CDATA[Select Excel download]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare download Excel]]></Name>
+  </Resource>
+  <Resource key="label_excel_html">
+    <Name LocaleIsoCode="en"><![CDATA[HTML (Formatted)]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[HTML (formattato)]]></Name>
+  </Resource>
+  <Resource key="label_excel_separator">
+    <Name LocaleIsoCode="en"><![CDATA[Separator]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Separatore]]></Name>
+  </Resource>
+  <Resource key="label_expand_all">
+    <Name LocaleIsoCode="en"><![CDATA[Expand All]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Espandi tutto]]></Name>
+  </Resource>
+  <Resource key="label_expand_categories">
+    <Name LocaleIsoCode="en"><![CDATA[Expand Categories]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Espandi le categorie]]></Name>
+  </Resource>
+  <Resource key="label_html">
+    <Name LocaleIsoCode="en"><![CDATA[HTML]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[HTML]]></Name>
+  </Resource>
+  <Resource key="label_invert_selection">
+    <Name LocaleIsoCode="en"><![CDATA[Invert]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Inverti]]></Name>
+  </Resource>
+  <Resource key="label_pdf">
+    <Name LocaleIsoCode="en"><![CDATA[PDF]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[PDF]]></Name>
+  </Resource>
+  <Resource key="label_pdf_dialog">
+    <Name LocaleIsoCode="en"><![CDATA[Select PDF download options]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare Opzioni PDF download]]></Name>
+  </Resource>
+  <Resource key="label_pdf_select_orientation">
+    <Name LocaleIsoCode="en"><![CDATA[Select orientation]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare orientamento]]></Name>
+  </Resource>
+  <Resource key="label_pdf_select_page_size">
+    <Name LocaleIsoCode="en"><![CDATA[Select page size]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare le dimensioni della pagina]]></Name>
+  </Resource>
+  <Resource key="label_query_clear">
+    <Name LocaleIsoCode="en"><![CDATA[Clear Criteria]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Criteri chiari]]></Name>
+  </Resource>
+  <Resource key="label_query_download">
+    <Name LocaleIsoCode="en"><![CDATA[Download Query]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Scarica Query]]></Name>
+  </Resource>
+  <Resource key="label_remove">
+    <Name LocaleIsoCode="en"><![CDATA[Remove]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Rimuovi]]></Name>
+  </Resource>
+  <Resource key="label_reset_display_mode">
+    <Name LocaleIsoCode="en"><![CDATA[Reset Display Mode]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Reset Modalità  di visualizzazione]]></Name>
+  </Resource>
+  <Resource key="label_sdmxml_dataset">
+    <Name LocaleIsoCode="en"><![CDATA[SDMX-ML Data file]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[File di dati SDMX-ML]]></Name>
+  </Resource>
+  <Resource key="label_sdmxml_dialog">
+    <Name LocaleIsoCode="en"><![CDATA[Select SDMX-ML download]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare download SDMX-ML]]></Name>
+  </Resource>
+  <Resource key="label_sdmxml_structure">
+    <Name LocaleIsoCode="en"><![CDATA[SDMX-ML Structure file]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[File struttura SDMX-ML]]></Name>
+  </Resource>
+  <Resource key="label_sdmxml_zip">
+    <Name LocaleIsoCode="en"><![CDATA[Everything in a zip file]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Tutto in un file zip]]></Name>
+  </Resource>
+  <Resource key="label_select_all">
+    <Name LocaleIsoCode="en"><![CDATA[Select All]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Seleziona Tutto]]></Name>
+  </Resource>
+  <Resource key="label_deselect_all">
+    <Name LocaleIsoCode="en"><![CDATA[Deselect All]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Deseleziona Tutto]]></Name>
+  </Resource>
+  <Resource key="label_time_end">
+    <Name LocaleIsoCode="en"><![CDATA[To Period]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Per Periodo]]></Name>
+  </Resource>
+  <Resource key="label_time_start">
+    <Name LocaleIsoCode="en"><![CDATA[From Period]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Dal Periodo]]></Name>
+  </Resource>
+  <Resource key="label_view_results">
+    <Name LocaleIsoCode="en"><![CDATA[View Results]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Guarda i risultati]]></Name>
+  </Resource>
+  <Resource key="label_xls">
+    <Name LocaleIsoCode="en"><![CDATA[XLS]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[XLS]]></Name>
+  </Resource>
+  <Resource key="label_xml">
+    <Name LocaleIsoCode="en"><![CDATA[SDMX-ML]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[SDMX-ML]]></Name>
+  </Resource>
+  <Resource key="question_criteria_clear">
+    <Name LocaleIsoCode="en"><![CDATA[Do you want to clear the current criteria?]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Vuoi cancellare i criteri attuali?]]></Name>
+  </Resource>
+  <Resource key="question_criteria_update">
+    <Name LocaleIsoCode="en"><![CDATA[Updating this will reset the criteria for all components which are listed after this one. Do you want to continue ?]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[L'aggiornamento di questa procedura consentirà  di ripristinare i criteri per tutti i componenti che sono elencati dopo questo uno. Vuoi continuare?]]></Name>
+  </Resource>
+  <Resource key="question_truncate_dataset">
+    <Name LocaleIsoCode="en">
+      <![CDATA[The requested dataset number of observations ({0}) exceeds the allowed number of observations ({1}).
+  Select 'OK' to receive a truncated dataset with ({1}) observations.
+  Select 'Cancel' to cancel and enter more criteria to reduce the size of the dataset.]]>
+    </Name>
+    <Name LocaleIsoCode="it">
+      <![CDATA[Il numero di set di dati richiesta di osservazioni ({0}) supera il numero consentito di osservazioni ({1}).
+  Selezionare 'OK ' per ricevere un set di dati troncati con ({1}) osservazioni.
+  Scegliere 'Annulla ' per annullare e inserire più criteri per ridurre la dimensione del dataset.]]>
+    </Name>
+  </Resource>
+  <Resource key="text_dataflows_uncategorized">
+    <Name LocaleIsoCode="en"><![CDATA[Uncategorized]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Alcuna Categoria]]></Name>
+  </Resource>
+  <Resource key="text_wait">
+    <Name LocaleIsoCode="en"><![CDATA[Please wait...]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Attendere prego...]]></Name>
+  </Resource>
+  <Resource key="time_period_biannual">
+    <Name LocaleIsoCode="en"><![CDATA[Biannual]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Semestrale]]></Name>
+  </Resource>
+  <Resource key="time_period_monthly">
+    <Name LocaleIsoCode="en"><![CDATA[Monthly]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Mensili]]></Name>
+  </Resource>
+  <Resource key="time_period_quarterly">
+    <Name LocaleIsoCode="en"><![CDATA[Quarterly]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Trimestrale]]></Name>
+  </Resource>
+  <Resource key="time_period_single_biannual">
+    <Name LocaleIsoCode="en"><![CDATA[Semester]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Semestre]]></Name>
+  </Resource>
+  <Resource key="time_period_single_monthly">
+    <Name LocaleIsoCode="en"><![CDATA[Month]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Mese]]></Name>
+  </Resource>
+  <Resource key="time_period_single_quarterly">
+    <Name LocaleIsoCode="en"><![CDATA[Quarter]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Quartiere]]></Name>
+  </Resource>
+  <Resource key="time_period_single_trianual">
+    <Name LocaleIsoCode="en"><![CDATA[Trimester]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Trimestre]]></Name>
+  </Resource>
+  <Resource key="time_period_single_weekly">
+    <Name LocaleIsoCode="en"><![CDATA[Week]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Settimana]]></Name>
+  </Resource>
+  <Resource key="time_period_triannual">
+    <Name LocaleIsoCode="en"><![CDATA[Triannual]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Triennale]]></Name>
+  </Resource>
+  <Resource key="time_period_weekly">
+    <Name LocaleIsoCode="en"><![CDATA[Weekly]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Settimanale]]></Name>
+  </Resource>
+  <Resource key="time_period_year">
+    <Name LocaleIsoCode="en"><![CDATA[Year]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Anno]]></Name>
+  </Resource>
+  <Resource key="time_period_yearly">
+    <Name LocaleIsoCode="en"><![CDATA[Annual]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Annuale]]></Name>
+  </Resource>
+  <Resource key="footer_home">
+    <Name LocaleIsoCode="en"><![CDATA[Home Page]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Home Page]]></Name>
+  </Resource>
+  <Resource key="footer_copyright">
+    <Name LocaleIsoCode="en"><![CDATA[Copyright]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Copyright]]></Name>
+  </Resource>
+  <Resource key="footer_contacts">
+    <Name LocaleIsoCode="en"><![CDATA[Contacts]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Contatti]]></Name>
+  </Resource>
+  <Resource key="footer_links">
+    <Name LocaleIsoCode="en"><![CDATA[Useful Links]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Links Utili]]></Name>
+  </Resource>
+  <Resource key="footer_W3C">
+    <Name LocaleIsoCode="en"><![CDATA[W3C Check]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[W3C Check]]></Name>
+  </Resource>
+  <Resource key="footer_manual">
+    <Name LocaleIsoCode="en"><![CDATA[Manual]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Manuale]]></Name>
+  </Resource>
+  <Resource key="footer_sitemap">
+    <Name LocaleIsoCode="en"><![CDATA[Site Map]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Site Map]]></Name>
+  </Resource>
+  <Resource key="footer_settings">
+    <Name LocaleIsoCode="en"><![CDATA[Settings]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Impostazioni]]></Name>
+  </Resource>
+  <Resource key="footer_help">
+    <Name LocaleIsoCode="en"><![CDATA[Help]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Help]]></Name>
+  </Resource>
+  <Resource key="label_vaccessible">
+    <Name LocaleIsoCode="en"><![CDATA[Accessible Version]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Versione Accessibile]]></Name>
+  </Resource>
+  <Resource key="label_login">
+    <Name LocaleIsoCode="en"><![CDATA[Login]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Accedi]]></Name>
+  </Resource>
+  <Resource key="label_logout">
+    <Name LocaleIsoCode="en"><![CDATA[Logout]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Esci]]></Name>
+  </Resource>
+  <Resource key="label_fontsize">
+    <Name LocaleIsoCode="en"><![CDATA[Select the font size]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezione la dimensione del testo]]></Name>
+  </Resource>
+  <Resource key="header_text">
+    <Name LocaleIsoCode="en"><![CDATA[Web Client SDMX]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Web Client SDMX]]></Name>
+  </Resource>
+  <Resource key="img_logo">
+    <Name LocaleIsoCode="en"><![CDATA[Logo ISTAT]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Logo ISTAT]]></Name>
+  </Resource>
+  <Resource key="label_language">
+    <Name LocaleIsoCode="en"><![CDATA[Select Language]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Seleziona Lingua]]></Name>
+  </Resource>
+  <Resource key="label_ENlang">
+    <Name LocaleIsoCode="en"><![CDATA[English]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Inglese]]></Name>
+  </Resource>
+  <Resource key="label_ITlang">
+    <Name LocaleIsoCode="en"><![CDATA[Italian]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Italiano]]></Name>
+  </Resource>
+  <Resource key="label_CustomFonts">
+    <Name LocaleIsoCode="en"><![CDATA[Fonts Customization]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Personalizzazione dei Caratteri]]></Name>
+  </Resource>
+  <Resource key="label_CustomScreen">
+    <Name LocaleIsoCode="en"><![CDATA[Container width]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Larghezza del contenitore]]></Name>
+  </Resource>
+  <Resource key="label_CustomFolder">
+    <Name LocaleIsoCode="en"><![CDATA[Working directory]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Directory di lavoro]]></Name>
+  </Resource>
+  <Resource key="label_CustomColors">
+    <Name LocaleIsoCode="en"><![CDATA[Colors customization]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Personalizzazione dei colori]]></Name>
+  </Resource>
+  <Resource key="input_Folder">
+    <Name LocaleIsoCode="en"><![CDATA[Insert the path of the working folder]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Inserisci il percorso della cartella di lavoro]]></Name>
+  </Resource>
+  <Resource key="tag_Description">
+    <Name LocaleIsoCode="en"><![CDATA[NSI .NET Client]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[NSI .NET Client]]></Name>
+  </Resource>
+  <Resource key="tag_Keywords">
+    <Name LocaleIsoCode="en"><![CDATA[SDMX, Istat, Eurostat, ASP.Net, Javascript, JQuery]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[SDMX, Istat, Eurostat, ASP.Net, Javascript, JQuery]]></Name>
+  </Resource>
+  <Resource key="label_CustomMainColor">
+    <Name LocaleIsoCode="en"><![CDATA[Main Color]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Colore Principale]]></Name>
+  </Resource>
+  <Resource key="label_CustomSecondaryColor">
+    <Name LocaleIsoCode="en"><![CDATA[Secondary Color]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Colore Secondario]]></Name>
+  </Resource>
+  <Resource key="label_CustomFontHFColor">
+    <Name LocaleIsoCode="en"><![CDATA[Header/Footer text Color]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Colore del testo Header/footer]]></Name>
+  </Resource>
+  <Resource key="label_CustomBodyColor">
+    <Name LocaleIsoCode="en"><![CDATA[Body text color]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Colore del testo principale]]></Name>
+  </Resource>
+  <Resource key="help_Manual">
+    <Name LocaleIsoCode="en"><![CDATA[Manual]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Manuale]]></Name>
+  </Resource>
+  <Resource key="help_DimAtt">
+    <Name LocaleIsoCode="en"><![CDATA[Dimensions and Attributes]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Dimensioni e Attributi]]></Name>
+  </Resource>
+  <Resource key="help_Data">
+    <Name LocaleIsoCode="en"><![CDATA[How to obtain data]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Come arrivare al dato]]></Name>
+  </Resource>
+  <Resource key="help_WS">
+    <Name LocaleIsoCode="en"><![CDATA[How to select Web Service]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Come scegliere il Web Service]]></Name>
+  </Resource>
+  <Resource key="help_Graphic">
+    <Name LocaleIsoCode="en"><![CDATA[How to set graphics]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Come impostare la grafica]]></Name>
+  </Resource>
+  <Resource key="help_SDMX">
+    <Name LocaleIsoCode="en"><![CDATA[SDMX general concepts]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Concetti generali SDMX]]></Name>
+  </Resource>
+  <Resource key="form_Name">
+    <Name LocaleIsoCode="en"><![CDATA[Name]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Nominativo]]></Name>
+  </Resource>
+  <Resource key="form_Email">
+    <Name LocaleIsoCode="en"><![CDATA[E-mail]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[E-mail]]></Name>
+  </Resource>
+  <Resource key="form_Message">
+    <Name LocaleIsoCode="en"><![CDATA[Message]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Messaggio]]></Name>
+  </Resource>
+  <Resource key="form_Subject">
+    <Name LocaleIsoCode="en"><![CDATA[Subject]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Soggetto]]></Name>
+  </Resource>
+  <Resource key="form_Send">
+    <Name LocaleIsoCode="en"><![CDATA[Send]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Invia]]></Name>
+  </Resource>
+  <Resource key="form_Agree">
+    <Name LocaleIsoCode="en"><![CDATA[I agree al terms and conditions]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Accetto i termini e le condizoni]]></Name>
+  </Resource>
+  <Resource key="form_Name_tp">
+    <Name LocaleIsoCode="en"><![CDATA[Your name]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Il tuo nome]]></Name>
+  </Resource>
+  <Resource key="form_Email_tp">
+    <Name LocaleIsoCode="en"><![CDATA[Your e-mail]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[La tua e-mail]]></Name>
+  </Resource>
+  <Resource key="form_Message_tp">
+    <Name LocaleIsoCode="en"><![CDATA[Your message]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Il tuo messaggio]]></Name>
+  </Resource>
+  <Resource key="form_Subject_tp">
+    <Name LocaleIsoCode="en"><![CDATA[Message subject]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Il soggetto del messaggio]]></Name>
+  </Resource>
+  <Resource key="form_Send_tp">
+    <Name LocaleIsoCode="en"><![CDATA[Send data]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Invia il modulo]]></Name>
+  </Resource>
+  <Resource key="form_Agree_tp">
+    <Name LocaleIsoCode="en"><![CDATA[I Accept all Terms and Conditions and the Statement on Personal Data Protection]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Accetto tutti i Termini e Condizioni sul Trattamento dei Dati Personali]]></Name>
+  </Resource>
+  <Resource key="form_Name_alert">
+    <Name LocaleIsoCode="en"><![CDATA[Enter a valid Name]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Inserisci un nominativo valido]]></Name>
+  </Resource>
+  <Resource key="form_Email_alert">
+    <Name LocaleIsoCode="en"><![CDATA[Enter a valid e-mail]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Inserisci un'e-mail valida]]></Name>
+  </Resource>
+  <Resource key="form_Message_alert">
+    <Name LocaleIsoCode="en"><![CDATA[Enter a message]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Inserisci un messaggio]]></Name>
+  </Resource>
+  <Resource key="form_Subject_alert">
+    <Name LocaleIsoCode="en"><![CDATA[Enter the subject]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Inserisci il soggetto]]></Name>
+  </Resource>
+  <Resource key="form_Send_alert">
+    <Name LocaleIsoCode="en"><![CDATA[Send message]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Invia il messaggio]]></Name>
+  </Resource>
+  <Resource key="form_Agree_alert">
+    <Name LocaleIsoCode="en"><![CDATA[You must accept all Terms and Conditions about Personal Data Protection]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Devi accettare i Termini e Condizioni sul Trattamento dei Dati Personali]]></Name>
+  </Resource>
+  <Resource key="contact_Numbers">
+    <Name LocaleIsoCode="en"><![CDATA[numbers]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Recapiti]]></Name>
+  </Resource>
+  <Resource key="contact_Phone">
+    <Name LocaleIsoCode="en"><![CDATA[phone]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[telefono]]></Name>
+  </Resource>
+  <Resource key="contact_Fax">
+    <Name LocaleIsoCode="en"><![CDATA[fax]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[fax]]></Name>
+  </Resource>
+  <Resource key="contact_Details">
+    <Name LocaleIsoCode="en"><![CDATA[details]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[indirizzi]]></Name>
+  </Resource>
+  <Resource key="contact_Address">
+    <Name LocaleIsoCode="en"><![CDATA[address]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[indirizzo]]></Name>
+  </Resource>
+  <Resource key="contact_Email">
+    <Name LocaleIsoCode="en"><![CDATA[e-mail]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[e-mail]]></Name>
+  </Resource>
+  <Resource key="label_Dashboard">
+    <Name LocaleIsoCode="en"><![CDATA[Dashboard]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Dashboard]]></Name>
+  </Resource>
+  <Resource key="dashboard_Profile">
+    <Name LocaleIsoCode="en"><![CDATA[Profile]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Profilo]]></Name>
+  </Resource>
+  <Resource key="dashboard_Queries">
+    <Name LocaleIsoCode="en"><![CDATA[Queries]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Queries]]></Name>
+  </Resource>
+  <Resource key="dashboard_RegUsers">
+    <Name LocaleIsoCode="en"><![CDATA[Registered Users]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Utenti Registrati]]></Name>
+  </Resource>
+  <Resource key="dashboard_Statistics">
+    <Name LocaleIsoCode="en"><![CDATA[Statistics]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Statistiche]]></Name>
+  </Resource>
+  <Resource key="dashboard_SetHomePage">
+    <Name LocaleIsoCode="en"><![CDATA[Edit Home Page]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Modifica Home Page]]></Name>
+  </Resource>
+  <Resource key="dashboard_Template">
+    <Name LocaleIsoCode="en"><![CDATA[Template]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Template]]></Name>
+  </Resource>  
+  <Resource key="dashboard_menu">
+    <Name LocaleIsoCode="en"><![CDATA[<span id="dashboard_menu"><a href="/WebClient/Profile"><i class="icon-user"></i>Profile</a><a href="/WebClient/Queries"><i class="icon-doc-text-inv"></i>Queries</a><a href="/WebClient/RegUsers"><i class="icon-users"></i>Registered Users</a><a href="/WebClient/Statistics"><i class="icon-chart-line"></i>Statistics</a><a href="/WebClient/Dashboard"><i class="icon-gauge"></i>Dashboard</a></span>]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[<span id="dashboard_menu"><a href="/WebClient/Profile"><i class="icon-user"></i>Profilo</a><a href="/WebClient/Queries"><i class="icon-doc-text-inv"></i>Queries</a><a href="/WebClient/RegUsers"><i class="icon-users"></i>Utenti Registrati</a><a href="/WebClient/Statistics"><i class="icon-chart-line"></i>Statistiche</a><a href="/WebClient/Dashboard"><i class="icon-gauge"></i>Dashboard</a></span>]]></Name>
+  </Resource>
+  <Resource key="label_open_criteria">
+    <Name LocaleIsoCode="en"><![CDATA[Criteria]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Criteri]]></Name>
+  </Resource>
+  <Resource key="label_open_layout">
+    <Name LocaleIsoCode="en"><![CDATA[Layout]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Assi]]></Name>
+  </Resource>
+  <Resource key="label_dialog_criteria">
+    <Name LocaleIsoCode="en"><![CDATA[Criteria]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Criteri]]></Name>
+  </Resource>
+  <Resource key="label_dialog_layout">
+    <Name LocaleIsoCode="en"><![CDATA[Layout]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Assi]]></Name>
+  </Resource>
+  <Resource key="label_min_date">
+    <Name LocaleIsoCode="en"><![CDATA[Date min.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Data inizio]]></Name>
+  </Resource>
+  <Resource key="label_max_date">
+    <Name LocaleIsoCode="en"><![CDATA[Date max]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Data fine]]></Name>
+  </Resource>
+  <Resource key="label_error_dataParsing">
+    <Name LocaleIsoCode="en"><![CDATA[Error in server transit.<br/>Check if connection is well format.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Errore nella comunicazione con il server.<br/>Controllare che sia correttamente configurato il servizio.]]></Name>
+  </Resource>
+  <Resource key="label_save_query">
+    <Name LocaleIsoCode="en"><![CDATA[Save Query]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Salva Query]]></Name>
+  </Resource>
+  <Resource key="label_title_query">
+    <Name LocaleIsoCode="en"><![CDATA[Query name]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Nome Query]]></Name>
+  </Resource>
+  <Resource key="label_ok">
+    <Name LocaleIsoCode="en"><![CDATA[Ok]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Ok]]></Name>
+  </Resource>
+  <Resource key="label_save">
+    <Name LocaleIsoCode="en"><![CDATA[Ok]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Ok]]></Name>
+  </Resource>
+  <Resource key="label_queryList_empty">
+    <Name LocaleIsoCode="en"><![CDATA[There are no queries]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Non sono presenti queries]]></Name>
+  </Resource>
+  <Resource key="text_remove_query">
+    <Name LocaleIsoCode="en"><![CDATA[Operation completed]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Operazione completata]]></Name>
+  </Resource>
+  <Resource key="label_open_query">
+    <Name LocaleIsoCode="en"><![CDATA[Open]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Apri]]></Name>
+  </Resource>
+<Resource key="label_remove_query">
+    <Name LocaleIsoCode="en"><![CDATA[Remove]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Cancella]]></Name>
+  </Resource>
+<Resource key="label_error_data">
+    <Name LocaleIsoCode="en"><![CDATA[Error in server transit.<br/> Check if connection is well format.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Errore nella comunicazione con il server.<br/> Controllare che sia correttamente configurato il servizio.]]></Name>
+  </Resource>
+<Resource key="query_saved">
+    <Name LocaleIsoCode="en"><![CDATA[The query is saved]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Query salvata]]></Name>
+  </Resource>
+<Resource key="dashboard_userList">
+    <Name LocaleIsoCode="en"><![CDATA[User List]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Lista Utenti]]></Name>
+  </Resource>
+  <Resource key="button_userListChange">
+    <Name LocaleIsoCode="en"><![CDATA[Change]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Modifica]]></Name>
+  </Resource>
+  <Resource key="button_userListChangePsw">
+    <Name LocaleIsoCode="en"><![CDATA[Change PWD]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Modifica PDW]]></Name>
+  </Resource>
+  <Resource key="button_userListRemove">
+    <Name LocaleIsoCode="en"><![CDATA[Remove]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Cancella]]></Name>
+  </Resource>
+  <Resource key="text_errorListUser">
+    <Name LocaleIsoCode="en"><![CDATA[Error in server transit.<br/> Check if connection is well format.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Errore nella comunicazione con il server.<br/> Controllare che sia correttamente configurato il servizio.]]></Name>
+  </Resource>
+  <Resource key="text_emptyList">
+    <Name LocaleIsoCode="en"><![CDATA[No user is present]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Nessun utente è presente]]></Name>
+  </Resource>
+  <Resource key="text_confirmDelUser">
+    <Name LocaleIsoCode="en"><![CDATA[Are you sure you want to delete the selected user?]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Sei sicuro di voler cancellare l'utente selezionato?]]></Name>
+  </Resource>
+  <Resource key="text_userRemoved">
+    <Name LocaleIsoCode="en"><![CDATA[User successfully deleted]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Utente cancellato correttamente]]></Name>
+  </Resource>
+  <Resource key="text_operationKO">
+    <Name LocaleIsoCode="en"><![CDATA[Operation fails]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Operazione Fallita]]></Name>
+  </Resource>
+  <Resource key="text_confirmDelQuery">
+    <Name LocaleIsoCode="en"><![CDATA[Are you sure you want to delete the selected query?]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Sei sicuro di voler cancellare la query selezionata?]]></Name>
+  </Resource>
+  <Resource key="label_psw">
+    <Name LocaleIsoCode="en"><![CDATA[New Password]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Nuova Password]]></Name>
+  </Resource>
+  <Resource key="label_oldPsw">
+    <Name LocaleIsoCode="en"><![CDATA[Password]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Password]]></Name>
+  </Resource>
+  <Resource key="label_confirmPsw">
+    <Name LocaleIsoCode="en"><![CDATA[Confirm New Password]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Conferma Nuova Password ]]></Name>
+  </Resource>
+  <Resource key="label_sendButton">
+    <Name LocaleIsoCode="en"><![CDATA[Send]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Invia]]></Name>
+  </Resource>
+  <Resource key="label_registrationSuccess">
+    <Name LocaleIsoCode="en"><![CDATA[Successfully registered.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Registrazione avvenuta con successo.]]></Name>
+  </Resource>
+<Resource key="label_changePswOk">
+    <Name LocaleIsoCode="en"><![CDATA[Password successfully changed.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Password correttamente modificata.]]></Name>
+  </Resource>
+<Resource key="label_changePswKO">
+    <Name LocaleIsoCode="en"><![CDATA[Operation fails.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Operazione fallita.]]></Name>
+  </Resource>
+<Resource key="text_msgCampiObbl">
+    <Name LocaleIsoCode="en"><![CDATA[Fill out all fields]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Compila tutti i campi]]></Name>
+  </Resource>
+<Resource key="text_msglengthPsw">
+    <Name LocaleIsoCode="en"><![CDATA[The password must contain at least 8 characters]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[La password deve contenere almeno 8 caratteri]]></Name>
+  </Resource>
+<Resource key="label_confPsw">
+    <Name LocaleIsoCode="en"><![CDATA["Confirm New Password" must be equal to the "New Password"]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Il campo "Conferma Nuova Password" deve essere uguale al campo "Nuova Password"]]></Name>
+  </Resource>
+<Resource key="label_errorloadDat">
+    <Name LocaleIsoCode="en"><![CDATA[Error loading data]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Si è verificato un errore nel caricamento dei dati]]></Name>
+  </Resource>
+  <Resource key="label_utenteNoPres">
+    <Name LocaleIsoCode="en"><![CDATA[Error: User Not Present]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Errore: Utente Non Presente]]></Name>
+  </Resource>
+  <Resource key="text_fieldsChangeUser">
+    <Name LocaleIsoCode="en"><![CDATA[Fill out all fields]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Compila i tutti i campi]]></Name>
+  </Resource>
+  <Resource key="label_changeUserOk">
+    <Name LocaleIsoCode="en"><![CDATA[Successfully registered.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Registrazione avvenuta con successo.]]></Name>
+  </Resource>
+  <Resource key="label_changeUserKO">
+    <Name LocaleIsoCode="en"><![CDATA[Operation fails.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Operazione fallita.]]></Name>
+  </Resource>
+  <Resource key="label_userName">
+    <Name LocaleIsoCode="en"><![CDATA[Name]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Nome]]></Name>
+  </Resource>
+  <Resource key="label_userSurname">
+    <Name LocaleIsoCode="en"><![CDATA[Surname]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Cognome]]></Name>
+  </Resource>
+  <Resource key="label_userSex">
+    <Name LocaleIsoCode="en"><![CDATA[Sex]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Sesso]]></Name>
+  </Resource>
+  <Resource key="label_userAge">
+    <Name LocaleIsoCode="en"><![CDATA[Age]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Età]]></Name>
+  </Resource>
+  <Resource key="label_userResidence">
+    <Name LocaleIsoCode="en"><![CDATA[Residence]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Residenza]]></Name>
+  </Resource>
+  <Resource key="label_userEduQual">
+    <Name LocaleIsoCode="en"><![CDATA[Educational qualification]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Titolo di studio]]></Name>
+  </Resource>
+  <Resource key="label_userProfStatus">
+    <Name LocaleIsoCode="en"><![CDATA[Professional status]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Condizione Professionale]]></Name>
+  </Resource>
+  <Resource key="label_userEconomicSector">
+    <Name LocaleIsoCode="en"><![CDATA[Economic sector]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Settore Economico]]></Name>
+  </Resource>
+  <Resource key="label_userLang">
+    <Name LocaleIsoCode="en"><![CDATA[Preferred language for communications]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Lingua preferita per le comunicazioni]]></Name>
+  </Resource>
+  <Resource key="label_userThemes">
+    <Name LocaleIsoCode="en"><![CDATA[Topics of interest ( optional )]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Temi di interesse (opzionale)]]></Name>
+  </Resource>
+  <Resource key="label_userEmail">
+    <Name LocaleIsoCode="en"><![CDATA[Email address]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Indirizzo di posta elettronica]]></Name>
+  </Resource>
+  <Resource key="label_userPsw">
+    <Name LocaleIsoCode="en"><![CDATA[Password]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Password]]></Name>
+  </Resource>
+  <Resource key="label_userConfPsw">
+    <Name LocaleIsoCode="en"><![CDATA[Confirm your password]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Confermare la password]]></Name>
+  </Resource>
+  <Resource key="label_userPrivacy">
+    <Name LocaleIsoCode="en"><![CDATA[The data will be processed in accordance with the regulations established by Legislative Decree . N . 196/2003 . The owner of the data is the National Statistics Institute , Via Cesare Balbo n . 16-00184 Rome]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[I dati verranno trattati nel rispetto della disciplina dettata dal d.lgs. n. 196/2003. Il titolare del trattamento dei dati è l'Istituto nazionale di statistica, via Cesare Balbo n. 16 - 00184 Roma]]></Name>
+  </Resource>
+  <Resource key="label_userTreatDat">
+    <Name LocaleIsoCode="en"><![CDATA[Authorize the use of data]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Autorizzo il trattamento dei dati]]></Name>
+  </Resource>
+  <Resource key="button_userChange">
+    <Name LocaleIsoCode="en"><![CDATA[Send]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Modifica]]></Name>
+  </Resource>
+  <Resource key="label_settingsDialogTitle">
+    <Name LocaleIsoCode="en"><![CDATA[Settings successfully changed.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Impostazioni cambiate con successo.]]></Name>
+  </Resource>
+  <Resource key="label_settingsDialogMsg">
+    <Name LocaleIsoCode="en"><![CDATA[Your settings have been successfully saved.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Le tue impostazioni sono state salvate con successo.]]></Name>
+  </Resource>
+  <Resource key="label_settingsDialogText">
+    <Name LocaleIsoCode="en"><![CDATA[Your profile has a new theme.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Il tuo profilo ha un nuovo tema.]]></Name>
+  </Resource>
+  <Resource key="label_loginNew">
+    <Name LocaleIsoCode="en"><![CDATA[Create account]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Crea un account]]></Name>
+  </Resource>
+  <Resource key="label_loginPwd">
+    <Name LocaleIsoCode="en"><![CDATA[Forgot password?]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Hai dimenticato la password?]]></Name>
+  </Resource>
+  <Resource key="label_loginRegistered">
+    <Name LocaleIsoCode="en"><![CDATA[New user registered]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Nuovo utente registrato]]></Name>
+  </Resource>
+  <Resource key="label_loginGenError">
+    <Name LocaleIsoCode="en"><![CDATA[Error]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Errore]]></Name>
+  </Resource>
+  <Resource key="label_queryDelete">
+    <Name LocaleIsoCode="en"><![CDATA[Deleting query]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Eliminazione query]]></Name>
+  </Resource>  
+  <Resource key="dashboard_Profiles">
+    <Name LocaleIsoCode="en"><![CDATA[Administration]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Amministrazione]]></Name>
+  </Resource>
+  <Resource key="label_open_chart">
+    <Name LocaleIsoCode="en"><![CDATA[Charts]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Grafici]]></Name>
+  </Resource>
+  <Resource key="label_loginUser">
+    <Name LocaleIsoCode="en"><![CDATA[E-mail  ]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[E-mail]]></Name>
+  </Resource>
+  <Resource key="label_loginPassword">
+    <Name LocaleIsoCode="en"><![CDATA[Password]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Password]]></Name>
+  </Resource>
+  <Resource key="label_pageDesc">
+    <Name LocaleIsoCode="en"><![CDATA[Page]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Pagina]]></Name>
+  </Resource>
+  <Resource key="label_numBackward">
+    <Name LocaleIsoCode="en"><![CDATA[Backward]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Pagina precedente]]></Name>
+  </Resource>
+  <Resource key="label_numForward">
+    <Name LocaleIsoCode="en"><![CDATA[Forward]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Pagine successiva]]></Name>
+  </Resource>
+  <Resource key="label_linkIO">
+    <Name LocaleIsoCode="en"><![CDATA[International Organizations]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Organizzazioni internazionali]]></Name>
+  </Resource>
+  <Resource key="label_linkOC">
+    <Name LocaleIsoCode="en"><![CDATA[International Statistical Organizations]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Istituzioni statistiche di altri paesi]]></Name>
+  </Resource>
+  <Resource key="label_linkAPE">
+    <Name LocaleIsoCode="en"><![CDATA[Administrations and public authorities]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Amministrazioni ed Enti pubblici]]></Name>
+  </Resource>
+  <Resource key="label_linkOS">
+    <Name LocaleIsoCode="en"><![CDATA[Other websites]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Altri siti]]></Name>
+  </Resource>
+  <Resource key="label_ISTAT">
+    <Name LocaleIsoCode="en"><![CDATA[Istat - Istituto nazionale di statistica]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Istat - Istituto nazionale di statistica]]></Name>
+  </Resource>
+  <Resource key="label_save_template">
+    <Name LocaleIsoCode="en"><![CDATA[Save Template]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Salva Template]]></Name>
+  </Resource>
+  <Resource key="label_changeSuccess">
+    <Name LocaleIsoCode="en"><![CDATA[Changes successfully done]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Modifiche effettuate con successo]]></Name>
+  </Resource>
+  <Resource key="label_dashAdministration">
+    <Name LocaleIsoCode="en"><![CDATA[Administration]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Amministrazione]]></Name>
+  </Resource>
+  <Resource key="label_dashManagement">
+    <Name LocaleIsoCode="en"><![CDATA[Dashboards Management]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Gestione Dashboards]]></Name>
+  </Resource>
+  <Resource key="label_dashProfiles">
+    <Name LocaleIsoCode="en"><![CDATA[Profiles Management]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Gestione Utenti]]></Name>
+  </Resource>
+  <Resource key="label_dashLayout">
+    <Name LocaleIsoCode="en"><![CDATA[Layout Management]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Gestione Layout]]></Name>
+  </Resource>
+  <Resource key="label_dashboardTitle">
+    <Name LocaleIsoCode="en"><![CDATA[Dashboard title]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Titolo dashboard]]></Name>
+  </Resource>
+  <Resource key="label_rowsNumber">
+    <Name LocaleIsoCode="en"><![CDATA[Rows number]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Numero righe]]></Name>
+  </Resource>  
+  <Resource key="label_continue">
+    <Name LocaleIsoCode="en"><![CDATA[Create]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Continua]]></Name>
+  </Resource>
+  <Resource key="label_nullValue">
+    <Name LocaleIsoCode="en"><![CDATA[Null value]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Valore nullo]]></Name>
+  </Resource>
+  <Resource key="label_numericValue">
+    <Name LocaleIsoCode="en"><![CDATA[Rows number must be a numeric value]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Il numero di righe deve essere un valore numerico]]></Name>
+  </Resource>
+  <Resource key="label_widgetSelection">
+    <Name LocaleIsoCode="en"><![CDATA[Widget selection]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezione widget]]></Name>
+  </Resource>
+  <Resource key="label_wdgChart">
+    <Name LocaleIsoCode="en"><![CDATA[Chart]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Grafico]]></Name>
+  </Resource>
+  <Resource key="label_wdgText">
+    <Name LocaleIsoCode="en"><![CDATA[Text]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Testo]]></Name>
+  </Resource>
+  <Resource key="label_wdgTable">
+    <Name LocaleIsoCode="en"><![CDATA[Table]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Tabella]]></Name>
+  </Resource>
+  <Resource key="label_wdgContent">
+    <Name LocaleIsoCode="en"><![CDATA[Content]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Contenuto]]></Name>
+  </Resource>
+  <Resource key="label_wdgConfiguration">
+    <Name LocaleIsoCode="en"><![CDATA[Widget configuration]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Configurazione widget]]></Name>
+  </Resource>
+  <Resource key="label_wdgRemove">
+    <Name LocaleIsoCode="en"><![CDATA[Remove widget]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Rimuovi widget]]></Name>
+  </Resource>
+  <Resource key="label_rowRemove">
+    <Name LocaleIsoCode="en"><![CDATA[Remove row]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Rimuovi riga]]></Name>
+  </Resource>  
+  <Resource key="label_wdgConfirmRemove">
+    <Name LocaleIsoCode="en"><![CDATA[Confirm widget cancellation?]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Conferma cancellazione del widget?]]></Name>
+  </Resource>
+  <Resource key="label_rowConfirmRemove">
+    <Name LocaleIsoCode="en"><![CDATA[Confirm row cancellation?]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Conferma cancellazione della riga?]]></Name>
+  </Resource>  
+  <Resource key="label_allFieldsInserted">
+    <Name LocaleIsoCode="en"><![CDATA[All fields must be inserted]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[tutti i campi devono essere valorizzati]]></Name>
+  </Resource>
+  <Resource key="label_addWidget">
+    <Name LocaleIsoCode="en"><![CDATA[Add widget]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Inserisci widget]]></Name>
+  </Resource>    
+  <Resource key="label_out_max_results">
+    <Name LocaleIsoCode="en"><![CDATA[Attention the possible combination exceed the maximum allowed.Please reduce the cases that research.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Attenzione le combinazione possibili superano il massimo consentito.Ridurre le casistiche di ricerca.]]></Name>
+  </Resource>
+  <Resource key="labelBlock">
+    <Name LocaleIsoCode="en"><![CDATA[Block]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Block]]></Name>
+  </Resource>
+  <Resource key="labelDimension">
+    <Name LocaleIsoCode="en"><![CDATA[Dimension]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Dimensioni]]></Name>
+  </Resource>
+  <Resource key="titleSaveTemplate">
+    <Name LocaleIsoCode="en"><![CDATA[Title]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Titolo]]></Name>
+  </Resource>  
+  <Resource key="label_addDashboard">
+    <Name LocaleIsoCode="en"><![CDATA[Add Dashboard]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Aggiungi Dashboard]]></Name>
+  </Resource>
+  <Resource key="label_anotherDashboard">
+    <Name LocaleIsoCode="en"><![CDATA[It's necessary save or delete the current dashboard to create another]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[&Egrave; necessario salvare o cancellare la dashboard corrente per crearne un'altra]]></Name>
+  </Resource>
+  <Resource key="label_buttonSave">
+    <Name LocaleIsoCode="en"><![CDATA[Save]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Salva]]></Name>
+  </Resource>
+  <Resource key="label_buttonDelete">
+    <Name LocaleIsoCode="en"><![CDATA[Delete]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Cancella]]></Name>
+  </Resource>
+  <Resource key="label_buttonPreview">
+    <Name LocaleIsoCode="en"><![CDATA[Preview]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Anteprima]]></Name>
+  </Resource>
+  <Resource key="label_buttonEdit">
+    <Name LocaleIsoCode="en"><![CDATA[Edit]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Modifica]]></Name>
+  </Resource>  
+  <Resource key="label_buttonActive">
+    <Name LocaleIsoCode="en"><![CDATA[Active]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Attiva]]></Name>
+  </Resource>
+  <Resource key="label_delDashBoard">
+    <Name LocaleIsoCode="en"><![CDATA[Delete Dashboard]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Cancella Dashboard]]></Name>
+  </Resource>
+  <Resource key="label_sureDelDashBoard">
+    <Name LocaleIsoCode="en"><![CDATA[Are you sure you want to delete this dashboard?]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Sei sicuro di voler eliminare questa dashboard?]]></Name>
+  </Resource>
+  <Resource key="label_title">
+    <Name LocaleIsoCode="en"><![CDATA[Title]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Titolo]]></Name>
+  </Resource>
+  <Resource key="label_wbsChoose">
+    <Name LocaleIsoCode="en"><![CDATA[Choose WebService]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Scegli WebService]]></Name>
+  </Resource>
+  <Resource key="label_wbsAdd">
+    <Name LocaleIsoCode="en"><![CDATA[Add WebService]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Aggiungi WebService]]></Name>
+  </Resource>
+  <Resource key="label_type">
+    <Name LocaleIsoCode="en"><![CDATA[Type]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Tipo]]></Name>
+  </Resource>
+  <Resource key="label_variation">
+    <Name LocaleIsoCode="en"><![CDATA[Variation]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Variazione]]></Name>
+  </Resource>
+  <Resource key="label_varValue">
+    <Name LocaleIsoCode="en"><![CDATA[Value]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Valore]]></Name>
+  </Resource>
+  <Resource key="label_varTrend">
+    <Name LocaleIsoCode="en"><![CDATA[Trend]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Tendenziale]]></Name>
+  </Resource>
+  <Resource key="label_varCyclical">
+    <Name LocaleIsoCode="en"><![CDATA[Cyclical]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Congiuntura]]></Name>
+  </Resource>
+  <Resource key="insertWebService">
+    <Name LocaleIsoCode="en"><![CDATA[Select at least one web service]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Seleziona almeno un web service]]></Name>
+  </Resource>
+  <Resource key="webServiceMod">
+    <Name LocaleIsoCode="en"><![CDATA[Modified successfully]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Modifiche effettuate con successo]]></Name>
+  </Resource>
+  <Resource key="label_reset_pdw_Ok">
+    <Name LocaleIsoCode="en"><![CDATA[Check your email : <br/>you were sent a new password.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Controlla la tua mail: <br/>ti è stata inviata la nuova password.]]></Name>
+  </Resource>
+  <Resource key="label_reset_pdw_Ko">
+    <Name LocaleIsoCode="en"><![CDATA[Operation failed]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Operazione Non Riuscita]]></Name>
+  </Resource>
+  <Resource key="label_sender_mail">
+    <Name LocaleIsoCode="en"><![CDATA[mittente@mittente.it]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[mittente@mittente.it]]></Name>
+  </Resource>
+  <Resource key="label_text_mail">
+    <Name LocaleIsoCode="en"><![CDATA[Hello your new password is: ]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Ciao la tua nuova password è: ]]></Name>
+  </Resource>
+  <Resource key="label_subject_reset_pdw">
+    <Name LocaleIsoCode="en"><![CDATA[Enter new password]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Invio nuova password]]></Name>
+  </Resource>
+  <Resource key="label_mailSMTPServer">
+    <Name LocaleIsoCode="en"><![CDATA[SMTP.ISTAT.IT]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[SMTP.ISTAT.IT]]></Name>
+  </Resource>
+  <Resource key="label_insert_mail">
+    <Name LocaleIsoCode="en"><![CDATA[Enter an email]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Inserisci una mail]]></Name>
+    </Resource>
+  <Resource key="label_mail">
+      <Name LocaleIsoCode="en"><![CDATA[Email]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[Email]]></Name>
+  </Resource>
+  <Resource key="log_OK">
+      <Name LocaleIsoCode="en"><![CDATA[Login performed]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[Login Effettuato]]></Name>
+  </Resource>
+  <Resource key="log_KO">
+      <Name LocaleIsoCode="en"><![CDATA[Username or Password Incorrect]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[Nome Utente o Password Non Corretti]]></Name>
+  </Resource>
+  <Resource key="label_test_query">
+    <Name LocaleIsoCode="en"><![CDATA[Test Query]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Test Query]]></Name>
+  </Resource>
+  <Resource key="noRemWebService">
+    <Name LocaleIsoCode="en"><![CDATA[Must have at least one Web Service]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Deve essere presente almeno un Web Service]]></Name>
+  </Resource>
+  <Resource key="confRemWS">
+    <Name LocaleIsoCode="en"><![CDATA[Delete Confirmation Web Service]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Conferma Eliminazione Web Service]]></Name>
+  </Resource>
+  <Resource key="confRemDashBoard">
+    <Name LocaleIsoCode="en"><![CDATA[Delete Confirmation Dashboard]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Conferma Eliminazione Dashboard]]></Name>
+  </Resource>
+  <Resource key="label_msgGenError">
+    <Name LocaleIsoCode="en"><![CDATA[Error]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Errore]]></Name>
+  </Resource>
+  <Resource key="label_invalidFields">
+    <Name LocaleIsoCode="en"><![CDATA[The inserted fields are invalid]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[I campi inseriti non sono validi]]></Name>
+  </Resource>
+  <Resource key="label_webService">
+    <Name LocaleIsoCode="en"><![CDATA[WebService]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[WebService]]></Name>
+  </Resource>
+  <Resource key="label_endPoint">
+    <Name LocaleIsoCode="en"><![CDATA[EndPoint]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[EndPoint]]></Name>
+  </Resource>
+  <Resource key="label_endpointType">
+    <Name LocaleIsoCode="en"><![CDATA[EndPointType]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[EndPointType]]></Name>
+  </Resource>
+  <Resource key="label_endPointV20">
+    <Name LocaleIsoCode="en"><![CDATA[EndPointV20]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[EndPointV20]]></Name>
+  </Resource>
+  <Resource key="label_id">
+    <Name LocaleIsoCode="en"><![CDATA[Id]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Id]]></Name>
+  </Resource>
+  <Resource key="label_agency">
+    <Name LocaleIsoCode="en"><![CDATA[Agency]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Agenzia]]></Name>
+  </Resource>
+  <Resource key="label_version">
+    <Name LocaleIsoCode="en"><![CDATA[Version]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Versione]]></Name>
+  </Resource>
+  <Resource key="dashboard_ManagementTemplate">
+    <Name LocaleIsoCode="en"><![CDATA[Templates Management ]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Gestione Templates]]></Name>
+  </Resource>
+  <Resource key="emptylistTemplate">
+    <Name LocaleIsoCode="en"><![CDATA[There are no present templates]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Non sono presenti templates]]></Name>
+  </Resource>
+  <Resource key="emptylistQuery">
+    <Name LocaleIsoCode="en"><![CDATA[There are no queries]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Non sono presenti queries]]></Name>
+  </Resource>
+  <Resource key="template_saved">
+    <Name LocaleIsoCode="en"><![CDATA[The template is saved]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Template salvato]]></Name>
+  </Resource>
+  <Resource key="label_templateDelete">
+    <Name LocaleIsoCode="en"><![CDATA[Deleting template]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Eliminazione template]]></Name>
+  </Resource>
+  <Resource key="text_confirmDelTemplate">
+    <Name LocaleIsoCode="en"><![CDATA[Confirm template cancellation]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Conferma cancellazione template]]></Name>
+  </Resource>
+  <Resource key="text_remove_template">
+    <Name LocaleIsoCode="en"><![CDATA[Operation completed]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Operazione completata]]></Name>
+  </Resource>
+  <Resource key="dashboard_Themes">
+    <Name LocaleIsoCode="en"><![CDATA[Themes]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Temi]]></Name>
+  </Resource>
+  <Resource key="label_invalidWidgets">
+    <Name LocaleIsoCode="en"><![CDATA[It's necessary to configure all widgets for the dashboard saving]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[&Egrave; necessario configurare tutti i widget per il salvataggio della Dashboard]]></Name>
+  </Resource>
+  <Resource key="label_tree_display">
+    <Name LocaleIsoCode="en"><![CDATA[Tree displays]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Visualizza Albero]]></Name>
+  </Resource>
+  <Resource key="label_tree_display_request">
+    <Name LocaleIsoCode="en"><![CDATA[Tree displays on request]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Visualizza albero su richiesta]]></Name>
+  </Resource>
+  <Resource key="label_more_web_services">
+    <Name LocaleIsoCode="en"><![CDATA[View more webservices]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Visualizza più webservices]]></Name>
+  </Resource>
+  <Resource key="label_addWebService">
+    <Name LocaleIsoCode="en"><![CDATA[Add Web Service]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Aggiungi Web Service]]></Name>
+  </Resource>
+  <Resource key="label_new_WS">
+    <Name LocaleIsoCode="en"><![CDATA[New Web Service]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Nuovo Web Service]]></Name>
+  </Resource>
+  <Resource key="dataset_request_filters">
+    <Name LocaleIsoCode="en"><![CDATA[Request filters]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Richiesta filtri]]></Name>
+  </Resource>
+  <Resource key="dataset_request_layout">
+    <Name LocaleIsoCode="en"><![CDATA[Request layout]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Richiesta layout]]></Name>
+  </Resource>
+  <Resource key="dataset_request_data">
+    <Name LocaleIsoCode="en"><![CDATA[Request data]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Richiesta dati]]></Name>
+  </Resource>
+  <Resource key="query_savError">
+    <Name LocaleIsoCode="en"><![CDATA[Operation failed. Insert another title.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Operazione non riuscita. Inserire un altro titolo.]]></Name>
+  </Resource>
+  <Resource key="label_checkLayout">
+    <Name LocaleIsoCode="en"><![CDATA[You must select a layout]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Devi selezionare un layout]]></Name>
+  </Resource>
+  <Resource key="label_fixed_data">
+    <Name LocaleIsoCode="en"><![CDATA[Fixed data]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Dati fissi]]></Name>
+  </Resource>
+  <Resource key="label_axe_hor">
+    <Name LocaleIsoCode="en"><![CDATA[Horizzontal axis]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Asse orizzantale]]></Name>
+  </Resource>
+  <Resource key="label_axe_ver">
+    <Name LocaleIsoCode="en"><![CDATA[Vertical axis]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Asse verticale]]></Name>
+  </Resource>
+  <Resource key="label_data_grid">
+    <Name LocaleIsoCode="en"><![CDATA[Data grid]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Griglia dati]]></Name>
+  </Resource> 
+  <Resource key="label_obs_value_desc">
+    <Name LocaleIsoCode="en"><![CDATA[Value to look]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Valori da visualizzare]]></Name>
+  </Resource>      
+  <Resource key="label_chart_type_desc">
+    <Name LocaleIsoCode="en"><![CDATA[Chart type]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Tipo grafico]]></Name>
+  </Resource>        
+  <Resource key="label_check_obs_desc">
+    <Name LocaleIsoCode="en"><![CDATA[Select 1 or 2 data type]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare 1 o 2 tipologie di dato da visualizzare]]></Name>
+  </Resource>            
+  <Resource key="label_check_chart_type_desc">
+    <Name LocaleIsoCode="en"><![CDATA[Select chart type]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare tipo di grafico]]></Name>
+  </Resource>             
+  <Resource key="label_dimoutlimit_desc">
+    <Name LocaleIsoCode="en"><![CDATA[Can select only one dimension with more codes]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Possono essere selezionati più valori solo di una sola dimensione]]></Name>
+  </Resource>
+  <Resource key="label_titleWS">
+      <Name LocaleIsoCode="en"><![CDATA[Title]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[Titolo]]></Name>
+    </Resource>
+  <Resource key="label_endPointWS">
+      <Name LocaleIsoCode="en"><![CDATA[EndPoint]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[EndPoint]]></Name>
+    </Resource>
+  <Resource key="label_endPointV20WS">
+      <Name LocaleIsoCode="en"><![CDATA[EndPointV20]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[EndPointV20]]></Name>
+    </Resource>
+  <Resource key="label_endPointTypeWS">
+      <Name LocaleIsoCode="en"><![CDATA[EndPointType]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[EndPointType]]></Name>
+    </Resource>
+  <Resource key="label_localeWS">
+      <Name LocaleIsoCode="en"><![CDATA[Local]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[Locale]]></Name>
+    </Resource>
+
+  <Resource key="label_enableHttpWS">
+      <Name LocaleIsoCode="en"><![CDATA[EnableHTTPAuthentication]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[AbilitaAutenticazioneHTTP]]></Name>
+    </Resource>
+  <Resource key="label_domainWS">
+      <Name LocaleIsoCode="en"><![CDATA[Domain]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[Dominio]]></Name>
+    </Resource>
+  <Resource key="label_UsernameWS">
+      <Name LocaleIsoCode="en"><![CDATA[UserName]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[UserName]]></Name>
+    </Resource>
+  <Resource key="label_PasswordWS">
+      <Name LocaleIsoCode="en"><![CDATA[Password]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[Password]]></Name>
+    </Resource>
+  <Resource key="label_enablePoxyWS">
+      <Name LocaleIsoCode="en"><![CDATA[EnableProxy]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[AbilitaProxy]]></Name>
+    </Resource>
+  <Resource key="label_useSystemProxyWS">
+      <Name LocaleIsoCode="en"><![CDATA[UseSystemProxy]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[UseSystemProxy]]></Name>
+    </Resource>
+  <Resource key="label_proxyServerWS">
+      <Name LocaleIsoCode="en"><![CDATA[ProxyServer]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[ProxyServer]]></Name>
+    </Resource>
+  <Resource key="label_proxyServerPortWS">
+      <Name LocaleIsoCode="en"><![CDATA[ProxyServerPort]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[ProxyServerPort]]></Name>
+    </Resource>
+  <Resource key="label_proxyUsernameWS">
+      <Name LocaleIsoCode="en"><![CDATA[ProxyUserName]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[ProxyUserName]]></Name>
+    </Resource>
+  <Resource key="label_proxyPasswordWS">
+      <Name LocaleIsoCode="en"><![CDATA[ProxyPassword]]></Name>
+      <Name LocaleIsoCode="it"><![CDATA[ProxyPassword]]></Name>
+  </Resource>
+  <Resource key="button_showTree">
+    <Name LocaleIsoCode="en"><![CDATA[Show/Hide tree]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Mostra/Nascondi albero]]></Name>
+  </Resource>
+  <Resource key="button_openTree">
+    <Name LocaleIsoCode="en"><![CDATA[Open tree]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[apri albero]]></Name>
+  </Resource>
+  <Resource key="messageWorkProg">
+    <Name LocaleIsoCode="en"><![CDATA[Work in progress]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Lavori in corso]]></Name>
+  </Resource>
+  <Resource key="label_removeWidget">
+    <Name LocaleIsoCode="en"><![CDATA[Remove widget]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Elimina il widget]]></Name>
+  </Resource>
+  <Resource key="label_removeRow">
+    <Name LocaleIsoCode="en"><![CDATA[Remove row]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Elimina la riga]]></Name>
+  </Resource>
+  <Resource key="label_addRow">
+    <Name LocaleIsoCode="en"><![CDATA[Add row]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Aggiungi riga]]></Name>
+  </Resource>  
+  <Resource key="label_configureWidget">
+    <Name LocaleIsoCode="en"><![CDATA[Configure widget]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Configura il widget]]></Name>
+  </Resource>
+  <Resource key="label_errorDeleteRow">
+    <Name LocaleIsoCode="en"><![CDATA[The dashboard must be composed by one or more row]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[La dashboard deve essere composta da una o più righe]]></Name>
+  </Resource>
+  <Resource key="label_time_plus">
+    <Name LocaleIsoCode="en"><![CDATA[Last period]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Ultimo periodo finale]]></Name>
+  </Resource>
+  <Resource key="label_buttonDefault">
+    <Name LocaleIsoCode="en"><![CDATA[Set default]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Imposta default]]></Name>
+  </Resource>
+  <Resource key="label_error_dash_save">
+    <Name LocaleIsoCode="en"><![CDATA[Error in save dashboard. Please check widgets configuration.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Errore nel salvataggio della dashboard. Controllare la configurazione dei widget.]]></Name>
+  </Resource>
+  <Resource key="label_TIME_PERIOD">
+    <Name LocaleIsoCode="en"><![CDATA[Time]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Periodo]]></Name>
+  </Resource>
+  <Resource key="label_varSerie">
+    <Name LocaleIsoCode="en"><![CDATA[Serie]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Serie]]></Name>
+  </Resource>
+  <Resource key="label_dimension_axe">
+    <Name LocaleIsoCode="en"><![CDATA[Dimension axe X]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Dimensione asse X]]></Name>
+  </Resource>
+  <Resource key="label_serie_label">
+    <Name LocaleIsoCode="en"><![CDATA[Custom label]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Personalizza etichette]]></Name>
+  </Resource>
+  <Resource key="no_result_found">
+    <Name LocaleIsoCode="en"><![CDATA[No Results found, please select other criteria.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Nessun risultato, vi preghiamo di selezionare altri criteri.]]></Name>
+  </Resource>    
+  <Resource key="label_view_uncategorised">
+    <Name LocaleIsoCode="en"><![CDATA[Show uncategorised dataflow.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Mostra dataflow non categorizzati.]]></Name>
+  </Resource>     
+  <Resource key="label_dimoutlimit_desc_2">
+    <Name LocaleIsoCode="en"><![CDATA[Non si possono selezionare codici da più di due dimensioni.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Non si possono selezionare codici da più di due dimensioni.]]></Name>
+  </Resource>     
+  <Resource key="label_dimoutlimit_time_fixed">
+    <Name LocaleIsoCode="en"><![CDATA[Select only one Time period.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezionare solo un periodo di tempo.]]></Name>
+  </Resource>        
+  <Resource key="label_save_csv_tabular">
+    <Name LocaleIsoCode="en"><![CDATA[CSV (tabular)]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[CSV (tabulare)]]></Name>
+  </Resource>
+  <Resource key="label_save_csv_not_formatted">
+    <Name LocaleIsoCode="en"><![CDATA[CSV (not formatted)]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[CSV (non formattato)]]></Name>
+  </Resource>
+  <Resource key="label_save_xls">
+    <Name LocaleIsoCode="en"><![CDATA[XLS]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[XLS]]></Name>
+  </Resource>
+  <Resource key="label_save_pdf">
+    <Name LocaleIsoCode="en"><![CDATA[PDF]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[PDF]]></Name>
+  </Resource>
+  <Resource key="label_save_html">
+    <Name LocaleIsoCode="en"><![CDATA[HTML]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[HTML]]></Name>
+  </Resource>
+  <Resource key="label_save_sdmx_data">
+    <Name LocaleIsoCode="en"><![CDATA[SDMX-ML Data.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[SDMX-ML Dati.]]></Name>
+  </Resource>
+  <Resource key="label_save_sdmx_query">
+    <Name LocaleIsoCode="en"><![CDATA[SDMX-ML Query.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[SDMX-ML Query.]]></Name>
+  </Resource>
+  <Resource key="label_desc_save_csv_tabular">
+    <Name LocaleIsoCode="en"><![CDATA[Download a tabular CSV.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Scarica un file csv di tipo tabellare.]]></Name>
+  </Resource>
+  <Resource key="label_desc_save_csv_not_formatted">
+    <Name LocaleIsoCode="en"><![CDATA[Download a not formatted CSV.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Scarica un file csv di tipo listato.]]></Name>
+  </Resource>
+  <Resource key="label_desc_save_xls">
+    <Name LocaleIsoCode="en"><![CDATA[Download a XLS file.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Scarica un XLS file.]]></Name>
+  </Resource>
+  <Resource key="label_desc_save_pdf">
+    <Name LocaleIsoCode="en"><![CDATA[Download a PDF file.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Scarica un file PDF.]]></Name>
+  </Resource>
+  <Resource key="label_desc_save_html">
+    <Name LocaleIsoCode="en"><![CDATA[Download in HTML table format.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Scarica in formato tabella HTML.]]></Name>
+  </Resource>
+  <Resource key="label_desc_save_sdmx_data">
+    <Name LocaleIsoCode="en"><![CDATA[Download XML Sdmx-ML Data.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Scarica XML Sdmx-ML Dati.]]></Name>
+  </Resource>
+  <Resource key="label_desc_save_sdmx_query">
+    <Name LocaleIsoCode="en"><![CDATA[Download XML Sdmx-ML Query.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Scarica XML Sdmx-ML Query.]]></Name>
+  </Resource>
+  
+  <Resource key="label_select_download">
+    <Name LocaleIsoCode="en"><![CDATA[Select download]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Seleziona download]]></Name>
+  </Resource>
+  <Resource key="label_landscape">
+    <Name LocaleIsoCode="en"><![CDATA[Landscape]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Orizzontale]]></Name>
+  </Resource>
+  <Resource key="label_separator">
+    <Name LocaleIsoCode="en"><![CDATA[Separator]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Separatore]]></Name>
+  </Resource>
+  <Resource key="label_separator_outlimit">
+    <Name LocaleIsoCode="en"><![CDATA[Please select a character for csv separator.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Selezione un separatore per il csv.]]></Name>
+  </Resource>
+  <Resource key="label_with_quote">
+    <Name LocaleIsoCode="en"><![CDATA[With quote]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Con apici]]></Name>
+  </Resource>
+  
+  <Resource key="label_hide_row">
+    <Name LocaleIsoCode="en"><![CDATA[Group rows]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Raggruppare righe]]></Name>
+  </Resource>
+  <Resource key="label_useUncategorysed">
+    <Name LocaleIsoCode="en"><![CDATA[Show Uncategorised Dataflow]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Mostra Dataflow non categorizzati]]></Name>
+  </Resource>
+  <Resource key="label_useVirtualDF">
+    <Name LocaleIsoCode="en"><![CDATA[Show Virtual Dataflow]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Mostra Dataflow virtuali]]></Name>
+  </Resource>
+
+
+  
+
+</GlobalResources>

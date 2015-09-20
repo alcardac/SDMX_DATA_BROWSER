@@ -1,0 +1,191 @@
+﻿<style type="text/css">
+    DIV.container {
+        float:none;
+        width:60%;
+        margin: 0 auto;
+    }
+    DIV.subcontainer {
+        float:left;
+        width:100%;
+        margin: 0 auto;
+        margin-bottom: 50px;
+        padding: 10px;
+        margin-top: 50px;
+    }
+    DIV.user {
+        float:left;
+        width:100%;
+        padding: 5px;
+        border-bottom: 1px solid #d49f9f;
+    }
+    DIV.lista_vuota {
+        float:none;
+        width:100%;
+        padding: 5px;
+        border-bottom: 1px solid #d49f9f;
+    }
+    DIV.email_user {
+        float:left;
+        width:33%;
+    }
+    DIV.name_user {
+        float: left;
+        width: 33%;
+        margin-right: 5px;
+    }
+    DIV.button {
+        float:left;
+        clear:right;
+        width:10%;
+    }
+</style>
+
+<script type="text/javascript">
+    
+
+    function remove_user(data, user, successCall,errorCall) {
+        
+        var sei_sicuro = confirm(local_msg.conferma_operazione);
+        if (sei_sicuro) {
+            var us = jQuery.parseJSON(user);
+            var age = us.Age;
+            var agency = us.Agency;
+            var country = us.Country;
+            var email = us.Email;
+            var lang = us.Lang;
+            var name = us.Name;
+            var position = us.Position;
+            var sex = us.Sex;
+            var study = us.Study;
+            var surname = us.Surname;
+            var theme = us.Themes; 
+            var themes = new Array();
+            for (ii = 0; ii < theme.length; ii++){
+                themes[ii] = '"' + theme[ii] + '"';
+            }
+            var codice = us.UserCode; 
+
+            var dati = '{"Age":"' + age + '",' +
+                        '"Agency":"' + agency + '",' +
+                        '"Country":"' + country + '",' +
+                        '"Email":"' + email + '",' +
+                        '"Lang":"' + lang + '",' +
+                        '"Name":"' + name + '",' +
+                        '"Position":"' + position + '",' +
+                        '"Sex":"' + sex + '",' +
+                        '"Study":"' + study + '",' +
+                        '"Surname":"' + surname + '",' +
+                        '"Themes":[' + themes + '],' +
+                        '"UserCode":"' + codice + '"}';
+            
+
+            $.ajax({
+                type: "POST",
+                url: data.endpoint + "/service/DelUser",
+                async: true,
+                data: dati,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    location.reload();
+                    var retur = '{ "CancUser": "true" }';
+                    successCall(retur);
+
+                },
+                error: function (msg) {
+                    errorCall(local_msg.operazione_non_riuscita);
+                }
+            });
+
+        } else {
+        }
+
+    }
+
+
+    var local_msg;
+    function LocalizeString(data) {
+
+        local_msg = {
+            error_caricamento_dati: 'Si è verificato un errore nel caricamento dei dati',
+            lista_vuota: 'Nessun utente è presente nella lista',
+            operazione_non_riuscita: 'Operazione Non Riuscita',
+            conferma_operazione:"Sei sicuro di voler cancellare l'utente selezionato?",
+            operazione_effettuata: "Utente cancellato correttamente"
+        }
+        if (data.local_msg != null) {
+            $.extend(local_msg, data.local_msg);
+        }
+        
+
+        local_interface = {
+            buttonC: 'Cancella',
+            buttonM: 'Modifica',
+            buttonMPSW: 'Modifica Password'
+        }
+        if (data.local_interface != null) {
+            $.extend(local_interface, data.local_interface);
+        }
+        
+    }
+
+    function SetupWidget_widgetListUser(data, successCall, errorCall, editCall, editCall2) {
+
+        LocalizeString(data);
+        try {
+            $.ajax({
+                type: "POST",
+                url: data.endpoint + "/service/GetUsers",
+                async: true,
+                data: JSON.stringify(null),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg == "") {
+                        $("#sub_container").append("<div class='lista_vuota'>" + local_msg.lista_vuota + "</div>");
+                    } else {
+                        var i = 0;
+                        $.each(msg, function () {
+                           
+                            var strjson = "";
+                            strjson = JSON.stringify(this);
+                            var code_user = this["UserCode"];
+                            
+                            $(".subcontainer").append("<div class='user'><div class='email_user'>" + this['Email'] + "</div><div class='name_user'>" + this['Name'] + " " + this['Surname'] + "</div><div class='button'><input type='button' id='id_button_M_" + i + "'/></div><div class='button'><input type='button' id='id_button_MPSW_" + i + "'/></div><div class='button'><input type='button' id='id_button_R_" + i + "'/></div></div>");
+                            $("#id_button_M_" + i).val(local_interface.buttonM);
+                            $("#id_button_MPSW_" + i).val(local_interface.buttonMPSW);
+                            $("#id_button_R_" + i).val(local_interface.buttonC);
+
+
+                           
+                            $("#id_button_M_"+i).click(function () {
+                                editCall(code_user);
+                            });
+
+                            $("#id_button_MPSW_" + i).click(function () {
+                                editCall2(code_user);
+                            });
+                           
+                            
+                            $("#id_button_R_" + i).click(function () {
+                                remove_user(data, strjson,successCall, errorCall);
+                            });
+                            i++;
+                        });
+                    }
+                },
+                error: function (msg) {
+                    errorCall(local_msg.error_caricamento_dati);
+                }
+            });
+        } catch (ex) {
+            errorCall(ex);
+        }
+       
+    }
+</script>
+
+<div id="container" class="container">
+    <div id="sub_container" class="subcontainer">
+    </div>
+</div>

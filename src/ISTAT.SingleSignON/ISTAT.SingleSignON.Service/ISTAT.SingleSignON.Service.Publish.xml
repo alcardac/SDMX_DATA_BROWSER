@@ -1,0 +1,39 @@
+<publishData>
+  <publishTarget publishUrl="D:\SDMX_RI\OpenPro\ISTAT.WebClient\app\WebBrowserLogin\">
+    <file relUrl="Web.config" publishTime="07/24/2015 12:31:31" />
+    <file relUrl="bin/EntityFramework.dll" publishTime="07/24/2015 12:31:32" />
+    <file relUrl="SingleSignONService.svc" publishTime="07/24/2015 12:31:32" />
+    <file relUrl="ISTAT.SingleSignON.Service.SingleSignONService.svc" publishTime="07/24/2015 12:36:08" />
+    <file relUrl="bin/Service.Config" publishTime="07/24/2015 12:31:32" />
+    <file relUrl="bin/ISTAT.SingleSignON.Service.pdb" publishTime="07/24/2015 12:36:06" />
+    <file relUrl="bin\App_Data/DBUser_log.ldf" publishTime="07/24/2015 12:31:31" />
+    <file relUrl="bin/EntityFramework.xml" publishTime="07/24/2015 12:31:32" />
+    <file relUrl="App_Data/DBUser.mdf" publishTime="07/24/2015 12:31:31" />
+    <file relUrl="App_Data/DBUser_log.ldf" publishTime="07/24/2015 12:31:31" />
+    <file relUrl="bin/ISTAT.SingleSignON.Service.dll.config" publishTime="07/24/2015 12:31:31" />
+    <file relUrl="bin\App_Data/DBUser.mdf" publishTime="07/24/2015 12:31:31" />
+    <file relUrl="bin/ISTAT.SingleSignON.Service.dll" publishTime="07/24/2015 12:36:06" />
+  </publishTarget>
+  <publishTarget publishUrl="C:\Users\Eidos\Desktop\SingleSignON\">
+    <file relUrl="Web.config" publishTime="04/01/2015 12:03:28" />
+    <file relUrl="bin/EntityFramework.dll" publishTime="03/31/2015 11:07:41" />
+    <file relUrl="SingleSignONService.svc" publishTime="03/27/2015 15:55:13" />
+    <file relUrl="bin/Service.Config" publishTime="04/01/2015 12:20:58" />
+    <file relUrl="bin/ISTAT.SingleSignON.Service.pdb" publishTime="04/02/2015 17:04:26" />
+    <file relUrl="bin\App_Data/DBUser_log.ldf" publishTime="04/02/2015 15:55:12" />
+    <file relUrl="ISTAT.SingleSignON.Service.SingleSignONService.svc" publishTime="04/02/2015 17:24:56" />
+    <file relUrl="App_Data/DBUser.mdf" publishTime="04/02/2015 15:55:12" />
+    <file relUrl="bin\App_Data/DBUser.mdf" publishTime="04/02/2015 15:55:12" />
+    <file relUrl="bin/ISTAT.SingleSignON.Service.dll.config" publishTime="04/01/2015 12:03:28" />
+    <file relUrl="bin/ISTAT.SingleSignON.Service.dll" publishTime="04/02/2015 17:04:26" />
+    <file relUrl="bin/EntityFramework.xml" publishTime="03/31/2015 11:07:41" />
+    <file relUrl="App_Data/DBUser_log.ldf" publishTime="04/02/2015 15:55:12" />
+  </publishTarget>
+  <publishTarget publishUrl="C:\Users\Eidos\Desktop\PippoRel\">
+    <file relUrl="bin\App_Data/DBUser.mdf" publishTime="03/27/2015 17:52:20" />
+    <file relUrl="bin/ISTAT.SingleSignON.Service.dll" publishTime="03/27/2015 17:54:20" />
+    <file relUrl="App_Data/DBUser.mdf" publishTime="03/27/2015 17:52:20" />
+    <file relUrl="bin/ISTAT.SingleSignON.Service.pdb" publishTime="03/27/2015 17:54:20" />
+    <file relUrl="SingleSignONService.svc" publishTime="03/27/2015 15:55:13" />
+  </publishTarget>
+</publishData>

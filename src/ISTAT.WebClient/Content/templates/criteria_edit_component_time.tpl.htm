@@ -1,0 +1,41 @@
+<!-- this are used for passing data to "nsi-client.js" functions -->
+<div style="display:none">
+    <div id="${items.type.getId()}">time</div>
+</div>
+
+<!-- the help message -->
+<div class="help-message">{{html msg.html_criteria_help_time}}</div>
+<input type="hidden" id="${items.concept.getId()}" value="${query.component.ConceptRef}"/>
+<!--<input type="hidden" id="criteria-component-index" value="${index}"/>-->
+<input type="hidden" id="${items.warn.getId()}" value="${query.warn}"/>
+<input type ="hidden" id ="minDateEndDate"/>
+<!-- used for clearing the elements with data -->
+<!-- moved to nsi-client.js nsic_TimeClear -->
+<!--<div >
+<span id="criteria-edit-button-save" class="button ui-button-text" onclick="niscOnCriteriaSaveButtonClicked(${query.isLast});">
+         ${msg.label_save}
+</span>
+ </div>-->
+<!-- the components used for specifying the time interval -->
+<table id="${items.time.getId()}" cellpadding="0" cellspacing="3">
+   
+    <!-- start period -->
+    <tr>
+        <th>${msg.label_time_start}</th>
+        <td>
+          <input  type ="text" id="startDatePicker" onchange="nsicOnCriteriaComponentChanged()" />
+                <input type="hidden" id ="timeMinStartDate" name="timeMinStartDate"/>
+       </td>
+   
+    
+    </tr>
+    <!-- end period -->
+    <tr>
+        <th>${msg.label_time_end}</th>
+        <td>
+             	<input type="text" id="endDatePicker" onchange="nsicOnCriteriaComponentChanged()"  />
+        </td>
+    
+    </tr>
+    
+</table>

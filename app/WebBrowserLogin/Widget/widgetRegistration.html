@@ -1,0 +1,439 @@
+<style type="text/css">
+
+    DIV.container {
+         float: none;
+         width: 60%;
+         margin:0 auto;
+    }
+    
+    DIV.subcontainer {
+    }
+
+    DIV.anagrafica {
+         float: left;
+         width: 100%;
+         margin-top:20px;
+         margin-bottom:20px;
+         border:1px solid #d49f9f;
+         padding: 10px;
+    }
+
+    DIV.voce {
+        float: left;
+        width: 100%;
+        margin-bottom:10px;
+        margin-left: 10px;
+    }
+
+    DIV.etichetta {
+        float:left; 
+        width:25%;
+        
+    }
+
+    label.etichetta {
+       
+    }
+
+    DIV.temi_interesse {
+        float:left;
+        width:100%;
+        margin-left: 10px;
+    }
+    label.etichetta_temi_interesse {
+         float:left;
+         width:100%;
+    }
+
+    label.etichetta_voce_pref {
+          float: left;
+          width: 80%;
+    }
+    DIV.preferenze {
+        float:left;
+        width:100%;
+        margin-top:10px;
+        margin-bottom:20px;
+        border:1px solid #d49f9f;
+        padding: 10px;
+    }
+    DIV.scegli {
+        float:left;
+        width:65%;
+        margin-left: 40px;
+    }
+
+    DIV.inserisci {
+       float:left;
+       width:70%;
+    }
+    DIV.seleziona {
+        float: left;
+        width: 65%;
+    }
+    DIV.autenticazione {
+        float: left;
+        width: 100%;
+        margin-top: 10px;
+        border:1px solid #d49f9f;
+        padding: 10px;
+    }
+    DIV.privacy {
+         float:left;
+         width: 100%;
+         margin-top:20px;
+         margin-bottom:20px;
+         border:1px solid #d49f9f;
+         padding: 10px;
+    }
+    DIV.sub_privacy {
+        float:left;
+        width:100%;
+        margin-top:10px;
+    }
+    
+    DIV.etichetta_autenticazione {
+        float: left;
+        width: 30%;
+    }
+    DIV.button {
+        width: 100%;
+        float: left;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+    DIV.sub_button {
+        width: 25%;
+        margin:0 auto;
+    }
+    input.button_reg {
+        width:100%;
+    }
+    
+
+</style>
+
+
+
+<script type="text/javascript">
+   
+    jQuery.removeFromArray = function (value, arr) {
+        return jQuery.grep(arr, function (elem, index) {
+            return elem !== value;
+        });
+    };
+
+    var cbox_sel = new Array();
+
+    function checkLetters(str) {
+        var check = false;
+        if ((str.indexOf("<") > -1) || (str.indexOf(">") > -1)) {
+            check = true;
+        }
+
+        return check;
+    }
+
+    function verifica_sel(elemento, code) {
+        var string_code = code;
+        if (elemento.checked) {
+           cbox_sel.push(code);
+        }
+        else {
+            for(i=0; i<cbox_sel.length; i++){
+                if(cbox_sel[i] == code){
+                    cbox_sel.splice(i,1);
+                }
+            }
+        }
+    }
+     
+    var local_msg;
+    var local_interface;
+    
+    function LocalizeString(data) {
+        
+        local_msg = {
+            errore_caricamento_dati: "Errore Caricamento Dati",
+            registrazione_effettuata: 'Registrazione Effettuata',
+            registrazione_fallita: 'Operazione Non Riuscita',
+            compila_campi: 'Compila i Campi Obbligatori',
+            length_psw: 'La password deve contenere almeno 8 caratteri',
+            conf_psw: 'Il campo "Conferma Password" deve essere uguale al campo "Password"',
+            privacy: 'Devi accettare il trattamento dei dati'
+        }
+        
+        if (data.local_msg != null) {
+            $.extend(local_msg, data.local_msg);
+        }
+        $.extend(local_msg, data.local_msg);
+       
+        local_interface = {
+            nome: 'Nome',
+            cognome: 'Cognome',
+            sesso: 'Sesso',
+            eta: 'Eta',
+            residenza: 'Residenza',
+            titolo_studio: 'Titolo di Studio',
+            cond_prof: 'Condizione Professionale',
+            settore_econ: 'Settore Economico',
+            lingua: 'Lingua preferita per le comunicazioni',
+            temi_interesse: 'Temi di interesse (opzionale)',
+            indirizzo_email: 'Indirizzo di posta elettronica',
+            password: 'Password',
+            conferma_password: 'Confermare la password',
+            informativa_privacy: "I dati verranno trattati nel rispetto della disciplina dettata dal d.lgs. n. 196/2003. Il titolare del trattamento dei dati è l'Istituto nazionale di statistica, via Cesare Balbo n. 16 - 00184 Roma",
+            label_autoriz_trattamento_dati: 'Autorizzo il trattamento dei dati',
+            button: 'Registra'
+        }
+        if (data.local_interface != null) {
+            $.extend(local_interface, data.local_interface);
+        }
+        
+
+    }
+
+     
+    function SetupWidget_widgetRegistration(data, successCall, errorCall) {
+        LocalizeString(data);
+        
+        $('#nome').text(local_interface.nome);
+        $('#cognome').text(local_interface.cognome);
+        $('#sesso').text(local_interface.sesso);
+        $('#eta').text(local_interface.eta);
+        $('#residenza').text(local_interface.residenza);
+        $('#titolo_studio').text(local_interface.titolo_studio);
+        $('#cond_prof').text(local_interface.cond_prof);
+        $('#settore_econ').text(local_interface.settore_econ);
+        $('#lingua').text(local_interface.lingua);
+        $('#temi_interesse').text(local_interface.temi_interesse);
+        $('#indirizzo_email').text(local_interface.indirizzo_email);
+        $('#password').text(local_interface.password);
+        $('#conferma_password').text(local_interface.conferma_password);
+        $('#informativa_privacy').text(local_interface.informativa_privacy);
+        $('#label_autoriz_trattamento_dati').text(local_interface.label_autoriz_trattamento_dati);
+        $('#buttonRegistra').val(local_interface.button);
+
+        var dati = 'it';
+        
+        $.ajax({
+            type: "POST",
+            url: data.endpoint + "/service/GetMetadata",
+            async: true,
+            data: JSON.stringify(dati),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                $.each(msg[0].Value, function (index, value) {
+                    $("#seleziona_residenza").append("<option value=\"" + value.Code + "\">" + value.Description + "</option>");
+
+                });
+                $.each(msg[1].Value, function (index, value) {
+                    $("#seleziona_sesso").append("<option value=\"" + value.Code + "\">" + value.Description + "</option>");
+                });
+                $.each(msg[2].Value, function (index, value) {
+                    $("#seleziona_eta").append("<option value=\"" + value.Code + "\">" + value.Description + "</option>");
+
+                });
+                $.each(msg[3].Value, function (index, value) {
+                    $("#seleziona_titolo_studio").append("<option value=\"" + value.Code + "\">" + value.Description + "</option>");
+
+                });
+                $.each(msg[4].Value, function (index, value) {
+                    $("#seleziona_cond_prof").append("<option value=\"" + value.Code + "\">" + value.Description + "</option>");
+
+                });
+                $.each(msg[5].Value, function (index, value) {
+                    $("#seleziona_settore_econ").append("<option value=\"" + value.Code + "\">" + value.Description + "</option>");
+
+                });
+                $.each(msg[6].Value, function (index, value) {
+                    $("#seleziona_lingua").append("<option value=\"" + value.Code + "\">" + value.Description + "</option>");
+
+                });
+                $.each(msg[7].Value, function (index, value) {
+                    $("#id_scegli").append('<div><input type="checkbox" name="' + value.Description + '" value="' + value.Code + '" onclick="verifica_sel(this,' + value.Code + ')" /><label>' + value.Description + '</label><div>');
+
+                });
+
+            },
+            error: function (msg) {
+                errorCall(local_msg.errore_caricamento_dati);
+            }
+        });
+
+        $("#buttonRegistra").click(function () {
+
+            var age = $("#seleziona_eta").val();
+            var agency = $("#seleziona_settore_econ").val();
+            var country = $("#seleziona_residenza").val();
+            var email = $("#id_indirizzo_email").val();
+            var lang = $("#seleziona_lingua").val();
+            var name = $("#id_nome").val();
+
+            var password = $("#id_password").val();
+            var conferma_password = $("#id_conferma_password").val();
+
+            var position = $("#seleziona_cond_prof").val();
+            var sex = $("#seleziona_sesso").val();
+            var study = $("#seleziona_titolo_studio").val();
+            var surname = $("#id_cognome").val();
+
+            var themes = new Array();
+            for (i = 0; i < cbox_sel.length; i++) {
+                themes[i] = '"' + cbox_sel[i] + '"';
+            }
+            themes.sort();
+
+            var userCode = "";
+
+            if (age == "" || agency == "" || country == "" || email == "" || lang == "" || name == "" || password == "" || position == "" || sex == "" || study == "" || surname == "") {
+                errorCall(local_msg.compila_campi);
+            } else if ((checkLetters(name)) || (checkLetters(surname)) || (checkLetters(password)) || (checkLetters(conferma_password)) || (checkLetters(email))) {
+                errorCall(local_msg.registrazione_fallita);
+            }  else if (password.length < 8) {
+                errorCall(local_msg.length_psw);
+            } else if (password != conferma_password) {
+                errorCall(local_msg.conf_psw);
+            } else if ($("#id_ck_autoriz_trattamento_dati").is(":not(:checked)")) {
+                errorCall(local_msg.privacy);
+            } else {
+                var dati = '{"Age":"' + age + '",' +
+                                  '"Agency":"' + agency + '",' +
+                                  '"Country":"' + country + '",' +
+                                  '"Email":"' + email + '",' +
+                                  '"Lang":"' + lang + '",' +
+                                  '"Name":"' + name + '",' +
+                                  '"Password":"' + password + '",' +
+                                  '"Position":"' + position + '",' +
+                                  '"Sex":"' + sex + '",' +
+                                  '"Study":"' + study + '",' +
+                                  '"Surname":"' + surname + '",' +
+                                  '"Themes":[' + themes + '],' +
+                                  '"UserCode": ""}';
+
+                $.ajax({
+                    type: "POST",
+                    url: data.endpoint + "/service/AddUser",
+                    async: true,
+                    data: dati,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        successCall(msg);
+                    },
+                    error: function (msg) {
+                        errorCall(local_msg.registrazione_fallita);
+                    }
+                });
+            }
+        });
+   }
+   
+    
+</script>
+
+<div class="container">
+    <div class="subcontainer">
+	    <div class="anagrafica" id="dati_anagrafici">
+		    <div class="voce">
+			    <div class="etichetta" ><label class="etichetta" id="nome"></label></div> 
+                <div class="inserisci"><input  id="id_nome" type="text"></div>
+		    </div>
+		    <div class="voce">
+			    <div class="etichetta" ><label class="etichetta" id="cognome"></label> </div>
+                <div class="inserisci">   <input id="id_cognome" type="text"></div>
+		    </div>
+		    <div class="voce">
+			    <div class="etichetta" ><label class="etichetta" id="sesso"></label> </div>
+                <div class="seleziona">
+                <select id="seleziona_sesso">
+                    <option></option>
+			    </select>
+                </div>
+		    </div>
+		    <div class="voce">
+			    <div class="etichetta" ><label class="etichetta" id="eta"></label> </div>
+			    <div class="seleziona">
+                <select id="seleziona_eta">
+                    <option></option>
+			    </select>
+                </div>
+		    </div>
+		    <div class="voce">
+			    <div class="etichetta" ><label class="etichetta" id="residenza"></label> </div>
+			    <div class="seleziona">
+                <select id="seleziona_residenza">
+                    <option></option>
+			    </select>
+                </div>
+		    </div>
+		    <div class="voce">
+			    <div class="etichetta" ><label class="etichetta" id="titolo_studio"></label> </div>
+			    <div class="seleziona">
+                <select id="seleziona_titolo_studio">
+                    <option></option>
+			    </select>
+                </div>
+		    </div>
+		    <div class="voce">
+			    <div class="etichetta" ><label class="etichetta" id="cond_prof"></label> </div>
+			    <div class="seleziona">
+                <select id="seleziona_cond_prof">
+                    <option></option>
+			    </select>
+                </div>
+		    </div>
+		    <div class="voce">
+			    <div class="etichetta" ><label class="etichetta" id="settore_econ"></label> </div>
+			    <div class="seleziona">
+                <select id="seleziona_settore_econ">
+                    <option></option>
+			    </select>
+                </div>
+		    </div>	
+        </div>
+        <div class="preferenze" id="id_preferenze">
+            <div class="voce">
+			    <div class="etichetta" ><label class="etichetta_voce_pref" id="lingua"></label> </div>
+			    <div class="seleziona">
+                <select id="seleziona_lingua">
+                    <option></option>
+			    </select>
+                </div>
+		    </div>	
+            <div class="temi_interesse">
+			    <div class="etichetta" ><label class="etichetta_temi_interesse" id="temi_interesse"></label> </div>
+			    <div class="scegli" id="id_scegli"></div>
+		    </div>	
+        </div>	
+        <div class="autenticazione" id="id_autenticazione">
+            <div class="voce">
+			    <div class="etichetta_autenticazione" ><label class="etichetta" id="indirizzo_email"></label> </div>
+                <div class="inserisci">   <input id="id_indirizzo_email" type="text"></div>
+		    </div>	
+            <div class="voce">
+			    <div class="etichetta_autenticazione" ><label class="etichetta" id="password"></label> </div>
+                <div class="inserisci">   <input id="id_password" type="password"></div>
+		    </div>	
+            <div class="voce">
+			    <div class="etichetta_autenticazione" ><label class="etichetta" id="conferma_password"></label> </div>
+                <div class="inserisci">   <input id="id_conferma_password" type="password"></div>
+		    </div>	
+        </div>	
+        <div class="privacy" id="id_privacy">
+            <div class="sub_privacy">
+			    <label class="etichetta" id="informativa_privacy"></label>
+		    </div>	
+            <div class="sub_privacy"> 
+                <input id="id_ck_autoriz_trattamento_dati" type="checkbox" name="' + value.Description + '" value=""/><label id="label_autoriz_trattamento_dati" ></label>
+            </div>
+        </div>	
+        <div class="button" id="id_bottoni">
+            <div class="sub_button">
+			    <input class="button_reg" id="buttonRegistra" type="button">
+		    </div>	
+        </div>
+    </div>
+</div>

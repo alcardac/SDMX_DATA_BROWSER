@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureSpecificDataQuery xmlns="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message">
+  <Header>
+    <ID>IDREF5</ID>
+    <Test>false</Test>
+    <Prepared>2015-03-18T10:11:13.7331286+01:00</Prepared>
+    <Sender id="Unknown" />
+    <Receiver id="Unknown" />
+  </Header>
+  <Query>
+    <ReturnDetails defaultLimit="90" detail="Full" observationAction="Active" xmlns="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/query">
+      <Structure dimensionAtObservation="TIME_PERIOD" structureID="StructureId">
+        <Structure xmlns="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common">
+          <Ref agencyID="ESTAT" id="SEP_POP_POP_INDDEM" version="1.3" xmlns="" />
+        </Structure>
+      </Structure>
+    </ReturnDetails>
+    <DataWhere xmlns="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/query">
+      <Dataflow>
+        <Ref agencyID="ESTAT" id="SEP" version="1.3" xmlns="" />
+      </Dataflow>
+      <TimeDimensionValue>
+        <TimeValue operator="greaterThanOrEqual">2011-01-01</TimeValue>
+      </TimeDimensionValue>
+      <Or>
+        <DimensionValue>
+          <ID>REF_AREA</ID>
+          <Value operator="equal">IT</Value>
+        </DimensionValue>
+        <DimensionValue>
+          <ID>REF_AREA</ID>
+          <Value operator="equal">ITD</Value>
+        </DimensionValue>
+      </Or>
+      <Or>
+        <DimensionValue>
+          <ID>TIPO_INDDEM</ID>
+          <Value operator="equal">NMIGRATEIN</Value>
+        </DimensionValue>
+      </Or>
+    </DataWhere>
+  </Query>
+</StructureSpecificDataQuery>

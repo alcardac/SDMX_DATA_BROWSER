@@ -1,0 +1,146 @@
+<!-- page header -->
+<div class="header-result">
+
+    <table id="ds_attr_extra_dialog" class="table-info-extra">
+    ${( $data.hasReference = 'false' ),''}
+    {{each(i,key) model.DatasetAttribute.list}}
+        {{if key!=null }}
+        ${( $data.hasReference = 'true' ),''}
+        <tr>
+            <td class="dialog-lbl-concept-info-extra">${i}</td>
+            <td class="dialog-lbl-concept-value-info-extra">[${key}]{{if codeMap[i]!=null }} - ${codeMap[i][key]}{{/if}}</td>
+        </tr>
+        {{/if}}
+    {{/each}} 
+    </table>
+
+    <p class="dataflowTitle" title="${model.DataflowKey}">
+    {{if hasReference=='true' }}
+    <span id="ds_attr" class="dialog-btn-info-extra ui-icon ui-icon-info" onclick="ShowExtraPopup('ds_attr')"></span>
+    {{/if}} ${model.Dataflow}
+    </p> 
+
+
+    
+
+    <!-- bottoni -->
+    <div id="${items.buttons.getId()}">
+
+        <span style="float:left" id="${items.criteria.getId()}" class="button" onclick="results.events.criteria()">Criteri</span>
+        <span style="float:left" id="clear_criteria" class="button" onclick="criteria.events.clear()">${msg.label_query_clear}</span>
+    
+        <span style="float:left" id="${items.layout.getId()}" class="button" onclick="results.events.layout()">Layout</span>
+        <!--<span id="${items.apply.getId()}" class="button" onclick="results.events.apply()">${msg.label_apply}</span>-->
+        <!--<span id="${items.cancel.getId()}" class="button" onclick="results.events.cancel()">${msg.label_cancel}</span>-->
+        
+        <!-- download links -->
+        <div class="page-links">
+            ${msg.label_download}:
+            <span id="download_data_directDownload" class="button" onclick="nsic.main.events.download(nsic.main.$items.directDownload.$getItem(),results.events.download.html)">${msg.label_html}</span>
+            <span id="download_data_sdmxDialog" class="button" onclick="nsic.main.events.downloadDialog(nsic.main.$items.sdmxDialog.$getItem(),results.events.download.sdmx)">${msg.label_xml}</span>
+            <span id="download_data_excelDialog" class="button" onclick="nsic.main.events.downloadDialog(nsic.main.$items.excelDialog.$getItem(),results.events.download.excel)">${msg.label_xls}</span>
+            <span id="download_data_pdfDialog" class="button" onclick="nsic.main.events.downloadDialog(nsic.main.$items.pdfDialog.$getItem(),results.events.download.pdf,380)">${msg.label_pdf}</span>
+            <!--<span id="download_query" class="button" onclick="nsic.main.events.download(nsic.main.$items.directDownload.$getItem(),criteria.events.queryDownload)">${msg.label_query_download}</span>-->
+        </div>
+
+        <span style="float:right" class="button ui-icon ui-icon-help" onclick="$('.help-message').toggle();">Help</span>
+        {{if model.HorizontalKeys.length > 0 || model.VerticalKeys.length > 0 }} 
+            <span id="${items.reset.getId()}" style="float:right"  class="button" onclick="results.events.reset()">${msg.label_reset_display_mode}</span>
+        {{/if}}
+    </div>  
+
+    <div class="help-message" style="display:none">{{html msg.html_results_help_1}}</div>
+    {{if model.HorizontalKeys.length > 0 || model.VerticalKeys.length > 0 }} 
+    <div class="help-message" style="display:none">{{html msg.html_results_help_2}}</div>
+    {{/if}}
+
+</div>     
+<!-- sliceFilter -->
+{{if model.SliceKeys}}
+<div id="${items.sliceFilter.getId()}">
+    <table id="${items.sliceKeys.getId()}" cellspacing="0" cellpadding="0">
+        {{each(i,key) model.SliceKeys}}
+            <tr>
+                <td class="key-name">
+                    ${model.AllValidKeys[key]}
+                </td>
+                <td class="key-value" id="TD_KV_${key}"></td>
+            </tr>
+        {{/each}}
+    </table>
+</div>
+{{/if}}
+
+<!-- data -->
+<div class="container-result-data">
+    <div id="${items.dataDiv.getId()}">
+    </div>
+</div>
+
+<!-- criteria - popup -->
+<div id="panel-criteria" style="display:none"></div>
+<!-- layout - popup -->
+<div id="${items.layoutTable.getId()}" style="display:none">
+    <table class="container-component">
+        <tr>
+            <!-- axis_z -->
+            <td id="${items.slice.getId()}" colspan="2">
+                <ul class="results-layout-axis">
+                    <li class="fixed">${msg.label_axis_z}</li>
+                    {{each(i,key) model.SliceKeys}}
+                        {{if model.SliceKeyValidValues[key].length > 1}}
+                            <li><div id="KEY_{{html key}}" class="component" title="${model.AllValidKeys[key]}">${key}</div></li>
+                        {{else}}
+                            <li><div id="KEY_{{html key}}" class="component component-white component-z-only" title="${model.AllValidKeys[key]}">${key}</div></li>
+                        {{/if}}
+                    {{/each}}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <!-- axis_x -->
+            <td id="${items.horizontal.getId()}">
+                {{if model.BlockAxisX}} 
+                    <ul class="results-layout-axis block-axis"> 
+                {{else}}
+                    <ul class="results-layout-axis">
+                {{/if}}
+                    <li class="fixed">${msg.label_axis_x}</li>
+                    {{each(i,key) model.HorizontalKeys}}
+
+                        {{if model.HorizontalVerticalKeyCount[key] > 1}}
+                            <!--  class="fixed" -->
+                            {{if model.BlockAxisX}} <li class="fixed"> {{else}} <li> {{/if}}
+                            <div id="KEY_{{html key}}" class="component" title="${model.AllValidKeys[key]}">${key}</div></li>
+                        {{else}}
+                            {{if model.BlockAxisX}} <li class="fixed"> {{else}} <li> {{/if}}
+                            <div id="KEY_{{html key}}" class="component component-white" title="${model.AllValidKeys[key]}">${key}</div></li>
+                        {{/if}}
+
+                    {{/each}}
+                </ul>
+            </td>
+            <!-- axis_y -->
+            <td id="${items.vertical.getId()}">
+
+                {{if model.BlockAxisY}} 
+                    <ul class="results-layout-axis block-axis"> 
+                {{else}}
+                    <ul class="results-layout-axis">
+                {{/if}}
+
+                    <li class="fixed">${msg.label_axis_y}</li>
+                    {{each(i,key) model.VerticalKeys}}
+                        {{if model.HorizontalVerticalKeyCount[key] > 1}}
+                            {{if model.BlockAxisY}} <li class="fixed"> {{else}} <li> {{/if}}
+                            <div id="KEY_{{html key}}" class="component" title="${model.AllValidKeys[key]}">${key}</div></li>
+                        {{else}}
+                            {{if model.BlockAxisY}} <li class="fixed"> {{else}} <li> {{/if}}
+                            <div id="KEY_{{html key}}" class="component component-white" title="${model.AllValidKeys[key]}">${key}</div></li>
+                        {{/if}}
+                    {{/each}}
+                </ul>
+            </td>
+        </tr>
+    </table>
+</div>

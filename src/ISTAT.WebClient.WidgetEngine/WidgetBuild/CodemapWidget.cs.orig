@@ -1,0 +1,340 @@
+﻿using Estat.Sri.CustomRequests.Constants;
+using ISTAT.WebClient.WidgetComplements.Model;
+using ISTAT.WebClient.WidgetComplements.Model.CallWS;
+using ISTAT.WebClient.WidgetComplements.Model.JSObject;
+using ISTAT.WebClient.WidgetComplements.Model.Properties;
+using ISTAT.WebClient.WidgetEngine.Model;
+using log4net;
+using Org.Sdmxsource.Sdmx.Api.Model.Mutable.Codelist;
+using Org.Sdmxsource.Sdmx.Api.Model.Mutable.Registry;
+using Org.Sdmxsource.Sdmx.Api.Model.Objects;
+using Org.Sdmxsource.Sdmx.Api.Model.Objects.Base;
+using Org.Sdmxsource.Sdmx.Api.Model.Objects.Codelist;
+using Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure;
+using Org.Sdmxsource.Sdmx.SdmxObjects.Model.Mutable.Codelist;
+using Org.Sdmxsource.Sdmx.SdmxObjects.Model.Mutable.Registry;
+using Org.Sdmxsource.Sdmx.Util.Objects.Container;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Web.Script.Serialization;
+
+namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
+{
+    public class CodemapWidget
+    {
+        private GetCodemapObject CodemapObj { get; set; }
+        private SessionImplObject SessionObj { get; set; }
+        private IGetSDMX GetSDMXObject = null;
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(CodemapWidget));
+        private const string ErrorOccured = "{\"error\" : true }";
+
+        public CodemapWidget(GetCodemapObject codemapObj, SessionImplObject sessionObj)
+        {
+            CodemapObj = codemapObj;
+            SessionObj = sessionObj;
+            GetSDMXObject = WebServiceSelector.GetSdmxImplementation(this.CodemapObj.Configuration);
+        }
+
+        public SessionImplObject GetCodemap()
+        {
+            try
+            {
+                ISdmxObjects structure = GetDsdAndCodelist(false);
+                IDataflowObject df = structure.Dataflows.First();
+                IDataStructureObject kf = structure.DataStructures.First();
+
+                if (kf == null)
+                    throw new InvalidOperationException("DataStructure is not set");
+
+                CodemapResponseObject codemapret = new CodemapResponseObject()
+                {
+                    codemap = ParseCodelist(kf, structure.Codelists),
+                    key_time_dimension = kf.TimeDimension.Id,
+                    dataflow = new MaintenableObj()
+                    {
+                        id = df.Id,
+                        agency = df.AgencyId,
+                        version = df.Version,
+                        name = TextTypeHelper.GetText(df.Names, this.CodemapObj.Configuration.Locale),
+                        description = TextTypeHelper.GetText(df.Descriptions, this.CodemapObj.Configuration.Locale)
+                    }
+                };
+
+                this.SessionObj.SavedCodemap = new JavaScriptSerializer().Serialize(codemapret);
+                return this.SessionObj;
+            }
+            catch (InvalidOperationException ex)
+            {
+                Logger.Warn(Resources.ErrorMaxJsonLength);
+                Logger.Warn(ex.Message, ex);
+                throw new Exception(ErrorOccured);
+            }
+            catch (ArgumentException ex)
+            {
+                Logger.Warn(Resources.ErrorRecursionLimit);
+                Logger.Warn(ex.Message, ex);
+                throw new Exception(ErrorOccured);
+            }
+            catch (Exception ex)
+            {
+                Logger.Warn(ex.Message, ex);
+                throw new Exception(ErrorOccured);
+            }
+        }
+
+
+
+        public ISdmxObjects GetDsdAndCodelist(bool withAttribute)
+        {
+            if (this.SessionObj == null)
+            {
+                this.SessionObj = new SessionImplObject();
+                this.SessionObj.SdmxObject = new SdmxObjectsImpl();
+            }
+<<<<<<< local
+
+            IDataflowObject dataflow = this.SessionObj.SdmxObject.Dataflows.FirstOrDefault(d =>
+                d.AgencyId == this.CodemapObj.Dataflow.agency && d.Id == this.CodemapObj.Dataflow.id && d.Version == this.CodemapObj.Dataflow.version);
+=======
+            //
+            IDataflowObject dataflow = null;
+            if (this.SessionObj.SdmxObject != null && this.SessionObj.SdmxObject.Dataflows != null)
+            {
+                dataflow = this.SessionObj.SdmxObject.Dataflows.FirstOrDefault(d =>
+                 d.AgencyId == this.CodemapObj.Dataflow.agency && d.Id == this.CodemapObj.Dataflow.id && d.Version == this.CodemapObj.Dataflow.version);
+            }
+>>>>>>> other
+
+            ISdmxObjects Structure = null;
+            if (dataflow != null)
+            {
+                Structure = GetSDMXObject.GetStructure(dataflow, this.SessionObj.SdmxObject.DataStructures);
+                Structure.AddDataflow(dataflow);
+            }
+            else
+            {
+                Structure = GetSDMXObject.GetStructure(this.CodemapObj.Dataflow.id, this.CodemapObj.Dataflow.agency, this.CodemapObj.Dataflow.version);
+            }
+
+            if (this.SessionObj.SdmxObject != null)
+                this.SessionObj.SdmxObject.Merge(Structure);
+            else this.SessionObj.SdmxObject = Structure;
+
+
+            IDataStructureObject kf = Structure.DataStructures.FirstOrDefault();
+            IDataflowObject df = Structure.Dataflows.FirstOrDefault();
+            withAttribute = false;
+            ICodelistObject FreqCodelist = null;
+            if (kf != null && df != null)
+            {
+                if (withAttribute)
+                {
+                    foreach (IComponent component in kf.Components.Where(c => c.HasCodedRepresentation() && !string.IsNullOrEmpty(c.Representation.Representation.MaintainableReference.MaintainableId)))
+                        Structure.AddCodelist(this.GetCodeList(df, kf, component));
+
+                }
+                else
+                {
+                    foreach (IDimension component in kf.DimensionList.Dimensions.Where(c => c.HasCodedRepresentation() && !string.IsNullOrEmpty(c.Representation.Representation.MaintainableReference.MaintainableId)))
+                    {
+                        if (component.Id == kf.FrequencyDimension.Id)
+                        {
+                            FreqCodelist = this.GetCodeList(df, kf, component);
+                            Structure.AddCodelist(FreqCodelist);
+                        }
+                        else
+                        {
+                            Structure.AddCodelist(this.GetCodeList(df, kf, component));
+                        }
+                    }
+                }
+                //Aggiunta TimeDimension
+                //Structure.AddCodelist(this.GetCodeList(df, kf, kf.TimeDimension));
+                Structure.AddCodelist(this.GetTimeCodeList(FreqCodelist, df, kf));
+
+                if (this.SessionObj.CodelistConstrained == null) this.SessionObj.CodelistConstrained = new Dictionary<string, ISet<ICodelistObject>>();
+                this.SessionObj.CodelistConstrained[Utils.MakeKey(df)] = Structure.Codelists;
+            }
+
+            return Structure;
+        }
+
+
+        private Dictionary<string, CodemapObj> ParseCodelist(IDataStructureObject kf, ISet<ICodelistObject> codelists)
+        {
+            return ParseCodelist(kf, codelists, null);
+        }
+        public Dictionary<string, CodemapObj> ParseCodelist(IDataStructureObject kf, ISet<ICodelistObject> codelists, List<DataCriteria> Criterias)
+        {
+            Dictionary<string, CodemapObj> drcodemap = new Dictionary<string, CodemapObj>();
+
+            foreach (ICodelistObject codelist in codelists)
+            {
+
+                IComponent component = kf.Components.FirstOrDefault(c => c.HasCodedRepresentation() && !string.IsNullOrEmpty(c.Representation.Representation.MaintainableReference.MaintainableId) && c.Representation.Representation.MaintainableReference.MaintainableId == codelist.Id);
+                if (component == null && codelist.AgencyId == "MA" && codelist.Id == string.Format("CL_{0}", kf.TimeDimension.Id))
+                    component = kf.TimeDimension;
+
+                if (component == null) continue;
+
+                List<string> criteri = new List<string>();
+                if (Criterias != null)
+                {
+                    DataCriteria dc = Criterias.Find(cri => cri.component == component.Id && cri.values != null);
+                    if (dc != null)
+                        criteri = dc.values;
+                }
+
+                CodemapObj codemap = new CodemapObj() { title = TextTypeHelper.GetText(codelist.Names, this.CodemapObj.Configuration.Locale), codes = new Dictionary<string, string>() };
+                foreach (ICode codeItem in codelist.Items.Where(ci => (criteri.Count > 0 ? criteri.Contains(ci.Id) : true)))
+                    codemap.codes.Add(codeItem.Id, TextTypeHelper.GetText(codeItem.Names, this.CodemapObj.Configuration.Locale));
+
+                drcodemap.Add(component.Id, codemap);
+            }
+
+            return drcodemap;
+        }
+
+        private ICodelistObject GetCodeList(IDataflowObject df, IDataStructureObject kf, IComponent component)
+        {
+            ICodelistObject codes = null;
+            if (this.SessionObj.CodelistConstrained != null && this.SessionObj.CodelistConstrained.ContainsKey(Utils.MakeKey(df)))
+            {
+                if (component.Representation != null && component.Representation.Representation != null)
+                {
+                    codes = this.SessionObj.CodelistConstrained[Utils.MakeKey(df)].FirstOrDefault(
+                        c => c.Id == component.Representation.Representation.MaintainableReference.MaintainableId &&
+                        c.AgencyId == component.Representation.Representation.MaintainableReference.AgencyId &&
+                        c.Version == component.Representation.Representation.MaintainableReference.Version);
+                }
+            }
+
+
+            if (codes == null)
+            {
+                bool Contrained = component.StructureType.EnumType != Org.Sdmxsource.Sdmx.Api.Constants.SdmxStructureEnumType.DataAttribute;
+                #region Criteria
+                IContentConstraintMutableObject criteria = new ContentConstraintMutableCore();
+                if (Contrained)
+                {
+                    string currentComponent = component.ConceptRef.ChildReference.Id;
+                    criteria.Id = currentComponent ?? "SPECIAL";
+                    criteria.AddName("en", "english");
+                    criteria.AgencyId = "agency";
+                    ICubeRegionMutableObject region = new CubeRegionMutableCore();
+
+                    if (currentComponent != null)
+                    {
+                        IKeyValuesMutable keyValue = new KeyValuesMutableImpl();
+                        keyValue.Id = currentComponent;
+                        keyValue.AddValue(SpecialValues.DummyMemberValue);
+                        region.AddKeyValue(keyValue);
+                    }
+                    criteria.IncludedCubeRegion = region;
+                }
+
+                #endregion
+                codes = GetSDMXObject.GetCodelist(df, kf, component, criteria, Contrained);
+            }
+
+            return codes;
+        }
+
+        private ICodelistObject GetTimeCodeList(ICodelistObject FreqCodelist, IDataflowObject df, IDataStructureObject kf)
+        {
+
+            if (this.SessionObj.CodelistConstrained != null && this.SessionObj.CodelistConstrained.ContainsKey(Utils.MakeKey(df)))
+            {
+                ICodelistObject codes = this.SessionObj.CodelistConstrained[Utils.MakeKey(df)].FirstOrDefault(
+                    c => c.Id == "CL_" + kf.TimeDimension.Id &&
+                    c.AgencyId == "MA" &&
+                    c.Version == "1.0");
+                if (codes != null)
+                    return codes;
+            }
+
+            ICodelistObject CL_TIME_MA = GetCodeList(df, kf, kf.TimeDimension);
+            if (CL_TIME_MA == null || CL_TIME_MA.Items == null || CL_TIME_MA.Items.Count != 2)
+                return CL_TIME_MA;
+            DateTime MinDate = DateTime.ParseExact(CL_TIME_MA.Items[0].Id, "yyyy-MM-dd", CultureInfo.CurrentCulture, DateTimeStyles.None);
+            DateTime MaxDate = DateTime.ParseExact(CL_TIME_MA.Items[1].Id, "yyyy-MM-dd", CultureInfo.CurrentCulture, DateTimeStyles.None);
+
+            ICodelistMutableObject CL_TIME = new CodelistMutableCore();
+            CL_TIME.Id = CL_TIME_MA.Id;
+            CL_TIME.AgencyId = CL_TIME_MA.AgencyId;
+            CL_TIME.Version = CL_TIME_MA.Version;
+
+            CL_TIME_MA.Names.ToList().ForEach(n => CL_TIME.AddName(n.Locale, n.Value));
+
+            string FrequencyDominant = "A";
+            if (FreqCodelist.Items.Count(c => c.Id == "S") > 0) FrequencyDominant = "S";
+            if (FreqCodelist.Items.Count(c => c.Id == "Q") > 0) FrequencyDominant = "Q";
+            if (FreqCodelist.Items.Count(c => c.Id == "M") > 0) FrequencyDominant = "M";
+
+            DateTime ActualDate = MinDate;
+            switch (FrequencyDominant)
+            {
+                case "A":
+                    #region Aggiungo gli Annual
+                    while (ActualDate.CompareTo(MaxDate) < 0)
+                    {
+                        ICodeMutableObject code = new CodeMutableCore();
+                        code.Id = ActualDate.Year.ToString();
+                        code.AddName("en", code.Id);
+                        CL_TIME.AddItem(code);
+
+                        ActualDate = ActualDate.AddYears(1);
+                    }
+                    #endregion
+                    break;
+                case "S":
+                    #region Aggiungo gli Semestrali
+                    while (ActualDate.CompareTo(MaxDate) < 0)
+                    {
+                        ICodeMutableObject code = new CodeMutableCore();
+                        code.Id = ActualDate.Year.ToString() + "-S" + (ActualDate.Month < 6 ? "1" : "2");
+                        code.AddName("en", code.Id);
+                        CL_TIME.AddItem(code);
+
+                        ActualDate = ActualDate.AddMonths(6);
+                    }
+                    #endregion
+                    break;
+                case "Q":
+                    #region Aggiungo i Quartely
+                    while (ActualDate.CompareTo(MaxDate) < 0)
+                    {
+                        ICodeMutableObject code = new CodeMutableCore();
+                        code.Id = ActualDate.Year.ToString() + "-Q" + ((ActualDate.Month - 1) / 3 + 1).ToString();
+                        code.AddName("en", code.Id);
+                        CL_TIME.AddItem(code);
+
+                        ActualDate = ActualDate.AddMonths(3);
+                    }
+                    #endregion
+                    break;
+                case "M":
+                    #region Aggiungo i Mensili
+                    while (ActualDate.CompareTo(MaxDate) < 0)
+                    {
+                        ICodeMutableObject code = new CodeMutableCore();
+                        code.Id = ActualDate.ToString("yyyy-MM");
+                        code.AddName("en", code.Id);
+                        CL_TIME.AddItem(code);
+
+                        ActualDate = ActualDate.AddMonths(1);
+                    }
+                    #endregion
+                    break;
+                default:
+                    break;
+            }
+
+            return CL_TIME.ImmutableInstance;
+        }
+
+    }
+}

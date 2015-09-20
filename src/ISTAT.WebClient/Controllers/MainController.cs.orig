@@ -1,0 +1,404 @@
+﻿using ISTAT.WebClient.WidgetEngine.WidgetBuild;
+using ISTAT.WebClient.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using ISTAT.WebClient.WidgetComplements.Model.JSObject;
+using ISTAT.WebClient.WidgetComplements.Model;
+using System.Configuration;
+using System.Web.Script.Serialization;
+using ISTAT.WebClient.WidgetEngine.Model.DataRender;
+using System.Text;
+using ISTAT.WebClient.WidgetComplements.Model.Settings;
+using ISTAT.WebClient.WidgetEngine.Model;
+
+namespace ISTAT.WebClient.Controllers
+{         
+
+    public static class JSONConst {
+        public readonly static string Error = "{\"error\" : true }";
+        public readonly static string Success = "{\"success\" : true }";
+    }
+
+    public class MainController : Controller
+    {
+
+        // Utility
+        public static string RemoveSpecialCharacters(string str)
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            foreach (char c in str)
+            {
+                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_')
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+
+        private ControllerSupport CS = new ControllerSupport();
+        private bool EnableCacheWidget = WebClientSettings.Instance.EnableCacheWidget;
+
+        public ActionResult GetTree()
+        {
+            try
+            {
+
+                //Utils.App_Data_Path = HttpContext.Server.MapPath("~/App_Data/");
+
+                // Get parameter
+                GetTreeObject PostDataArrived = CS.GetPostData<GetTreeObject>(this.Request);
+                PostDataArrived.Configuration.Locale = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+
+                //string SESSION_KEY =
+                //PostDataArrived.Configuration.EndPoint +
+                //System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.Trim();
+
+                //SESSION_KEY = MainController.RemoveSpecialCharacters(SESSION_KEY);
+
+                //if (Session[SESSION_KEY] != null && Session[SESSION_KEY] is SessionImplObject
+                //    && !string.IsNullOrEmpty(((SessionImplObject)Session[SESSION_KEY]).SavedTree))
+                //    return CS.ReturnForJQuery(((SessionImplObject)Session[SESSION_KEY]).SavedTree);
+
+                ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+                if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
+                    throw new Exception("ConnectionString not set");
+
+                TreeWidget treeWidget = new TreeWidget(PostDataArrived, connectionStringSetting.ConnectionString);
+                SessionImplObject ret = treeWidget.GetTree();
+
+                //Session[SESSION_KEY] = ret;
+                return CS.ReturnForJQuery(ret.SavedTree);
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(ex.Message);
+            }
+        }
+
+        public ActionResult GetData()
+        {
+            try
+            {
+                ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+                if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
+                    throw new Exception("ConnectionString not set");
+                CacheWidget cache = new CacheWidget(connectionStringSetting.ConnectionString);
+
+                string CodeForStreaming = Guid.NewGuid().ToString();
+
+                // Not remove this linee
+                Utils.App_Data_Path = HttpContext.Server.MapPath("~/App_Data/");
+
+                GetDataObject PostDataArrived = CS.GetPostData<GetDataObject>(this.Request);
+                PostDataArrived.Configuration.Locale = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+
+                // +++ Caching +++
+                if (PostDataArrived.WidgetId > 0 && EnableCacheWidget)
+                {
+                    SavedWidget widget = cache.GetWidget(PostDataArrived.WidgetId, PostDataArrived.Configuration.Locale);
+                    if (widget != null && !String.IsNullOrEmpty(widget.widgetData))
+                    {
+                        Session[CodeForStreaming] = widget;
+                        return CS.ReturnForJQuery("{\"code\":\"" + CodeForStreaming + "\"}");
+                    }
+                }
+
+                SessionImplObject sdmxObj = null;
+                string SESSION_KEY =
+                    PostDataArrived.Configuration.EndPoint +
+                    PostDataArrived.Dataflow.id + PostDataArrived.Dataflow.agency + PostDataArrived.Dataflow.agency +
+                    System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.Trim();
+                
+                    SESSION_KEY = MainController.RemoveSpecialCharacters(SESSION_KEY);
+
+                if (Session[SESSION_KEY] != null && Session[SESSION_KEY] is SessionImplObject)
+                    sdmxObj = (SessionImplObject)Session[SESSION_KEY];
+
+
+                DataWidget dataWidget = new DataWidget(
+                    PostDataArrived, sdmxObj,
+                    (ConfigurationManager.AppSettings["ParseSDMXAttributes"].ToString().ToLower() == "true"));
+
+                object DataStream = null;
+                SessionImplObject ret = dataWidget.GetData(out DataStream);
+
+                DataObjectForStreaming dOFS = DataStream as DataObjectForStreaming;
+                if (dOFS != null && PostDataArrived.WidgetId > 0)
+                    dOFS.WidgetID = PostDataArrived.WidgetId;
+
+                Session[CodeForStreaming] = DataStream;
+
+                if (Session[SESSION_KEY] == null)  Session[SESSION_KEY] = ret;
+                else ((SessionImplObject)Session[SESSION_KEY]).MergeObject(ret);
+
+                return CS.ReturnForJQuery("{\"code\":\"" + CodeForStreaming + "\"}");
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(ex.Message);
+            }
+        }
+
+        public StreamResponseAction GetDataTable(string id)
+        {
+            try
+            {
+
+                if (EnableCacheWidget)
+                {
+                    string htmlRet;
+                    SavedWidget widget = Session[id] as SavedWidget;
+
+                    if (widget != null && !String.IsNullOrEmpty(widget.widgetData))
+                    {
+                        htmlRet = widget.widgetData;
+                        return new StreamResponseAction(htmlRet);
+                    }
+                }
+
+                long maxContent = (long)ISTAT.WebClient.WidgetComplements.Model.Settings.WebClientSettings.Instance.MaxResultHTML;
+
+                string CodeForStreaming = id;
+
+                System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
+                System.IO.TextWriter textWriter = new System.IO.StreamWriter(memoryStream);
+
+                DataWidget.StreamDataTable(Session[CodeForStreaming], textWriter, (ConfigurationManager.AppSettings["ParseSDMXAttributes"].ToString().ToLower() == "true"));
+                //Session[CodeForStreaming] = null;
+
+                textWriter.Flush(); // added this line
+                byte[] bytesInStream = memoryStream.ToArray(); // simpler way of converting to array
+                memoryStream.Close();
+
+                if (EnableCacheWidget)
+                {
+                    ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+                    CacheWidget cache = new CacheWidget(connectionStringSetting.ConnectionString);
+
+                    DataObjectForStreaming dOFS = Session[CodeForStreaming] as DataObjectForStreaming;
+                    if (dOFS != null && dOFS.WidgetID > 0)
+                    {
+                        var htmlOutput = System.Text.Encoding.Default.GetString(bytesInStream);
+                        cache.InsertWidget(dOFS.WidgetID, htmlOutput, dOFS.Configuration.Locale);
+                    }
+                }
+
+
+                if ((bytesInStream.Length / 1000) > maxContent)
+                {
+                    this.HttpContext.Response.Clear();
+                    return new StreamResponseAction("HTML result out of range");
+                }
+                else
+                {
+                    this.HttpContext.Response.Clear();
+                    this.HttpContext.Response.ContentType = "text/html";
+                    //this.HttpContext.Response.AddHeader("content-disposition", "attachment;    filename=name_you_file.xls");
+                    this.HttpContext.Response.BinaryWrite(bytesInStream);
+                    this.HttpContext.Response.End();
+                }
+
+                return new StreamResponseAction();
+            }
+            catch (Exception ex)
+            {
+                return new StreamResponseAction(ex.Message);
+            }
+        }
+
+        public ActionResult GetCodemap()
+        {
+            try
+            {
+                GetCodemapObject PostDataArrived = CS.GetPostData<GetCodemapObject>(this.Request);
+                PostDataArrived.Configuration.Locale = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+                
+                SessionImplObject sdmxObj = null;
+                string SESSION_KEY =
+                    PostDataArrived.Configuration.EndPoint +
+                    PostDataArrived.Dataflow.id + PostDataArrived.Dataflow.agency + PostDataArrived.Dataflow.agency +
+                    System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.Trim();
+                
+                SESSION_KEY = MainController.RemoveSpecialCharacters(SESSION_KEY);
+
+                if (Session[SESSION_KEY] != null && Session[SESSION_KEY] is SessionImplObject
+                    && !string.IsNullOrEmpty(((SessionImplObject)Session[SESSION_KEY]).SavedCodemap))
+                    sdmxObj = (SessionImplObject)Session[SESSION_KEY];
+
+                ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+                if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
+                    throw new Exception("ConnectionString not set");
+
+
+                CodemapWidget codemapWidget = new CodemapWidget(PostDataArrived, sdmxObj);
+
+                SessionImplObject ret = codemapWidget.GetCodemap(connectionStringSetting);
+
+                if (Session[SESSION_KEY] == null) Session[SESSION_KEY] = ret;
+                else ((SessionImplObject)Session[SESSION_KEY]).MergeObject(ret);
+                
+                return CS.ReturnForJQuery(ret.SavedCodemap);
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(ex.Message);
+            }
+        }
+       
+        public ActionResult GetLayout()
+        {
+            try
+            {
+                GetCodemapObject PostDataArrived = CS.GetPostData<GetCodemapObject>(this.Request);
+                PostDataArrived.Configuration.Locale = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+
+                SessionImplObject sdmxObj = null;
+                string SESSION_KEY =
+                    PostDataArrived.Configuration.EndPoint +
+                    PostDataArrived.Dataflow.id + PostDataArrived.Dataflow.agency + PostDataArrived.Dataflow.agency +
+                    System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.Trim();
+                
+                SESSION_KEY = MainController.RemoveSpecialCharacters(SESSION_KEY);
+
+                if (Session[SESSION_KEY] != null && Session[SESSION_KEY] is SessionImplObject)
+                    sdmxObj = (SessionImplObject)Session[SESSION_KEY];
+
+                LayoutWidget layoutWidget = new LayoutWidget(PostDataArrived, sdmxObj);
+                SessionImplObject ret = layoutWidget.GetLayout();
+
+                if (Session[SESSION_KEY] == null) Session[SESSION_KEY] = ret;
+                else ((SessionImplObject)Session[SESSION_KEY]).MergeObject(ret);
+
+                return CS.ReturnForJQuery(ret.SavedDefaultLayout);
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(ex.Message);
+            }
+        }
+
+        public ActionResult GetDefaultLayout()
+        {
+            try
+            {
+                GetCodemapObject PostDataArrived = CS.GetPostData<GetCodemapObject>(this.Request);
+                PostDataArrived.Configuration.Locale = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+
+                SessionImplObject sdmxObj = null;
+                string SESSION_KEY =
+                    PostDataArrived.Configuration.EndPoint +
+                    PostDataArrived.Dataflow.id + PostDataArrived.Dataflow.agency + PostDataArrived.Dataflow.agency +
+                    System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.Trim();
+                
+                SESSION_KEY = MainController.RemoveSpecialCharacters(SESSION_KEY);
+
+                if (Session[SESSION_KEY] != null && Session[SESSION_KEY] is SessionImplObject)
+                    sdmxObj = (SessionImplObject)Session[SESSION_KEY];
+                                                         
+                ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+                if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
+                    throw new Exception("ConnectionString not set");
+
+                LayoutWidget layoutWidget = new LayoutWidget(PostDataArrived, sdmxObj);
+                SessionImplObject ret = layoutWidget.GetLayout(connectionStringSetting);
+                
+                //if(ret==null) ret = layoutWidget.GetLayout();
+
+                if (Session[SESSION_KEY] == null)  Session[SESSION_KEY] = ret;
+                else ((SessionImplObject)Session[SESSION_KEY]).MergeObject(ret);
+
+                return CS.ReturnForJQuery(ret.SavedDefaultLayout);
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(ex.Message);
+            }
+        }
+
+        public ActionResult GetChartData() 
+        {
+            try
+            {
+                // Not remove this linee
+                Utils.App_Data_Path = HttpContext.Server.MapPath("~/App_Data/");
+                
+                GetChartObject PostDataArrived = CS.GetPostData<GetChartObject>(this.Request);
+                PostDataArrived.Configuration.Locale = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+
+                SessionImplObject sdmxObj = null;
+                //Controllo che non esiste in Cache
+
+                string SESSION_KEY =
+                    PostDataArrived.Configuration.EndPoint +
+                    PostDataArrived.Dataflow.id + PostDataArrived.Dataflow.agency + PostDataArrived.Dataflow.agency +
+                    System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.Trim();
+                
+                SESSION_KEY = MainController.RemoveSpecialCharacters(SESSION_KEY);
+
+                if (Session[SESSION_KEY] != null && Session[SESSION_KEY] is SessionImplObject)
+                    sdmxObj = (SessionImplObject)Session[SESSION_KEY];
+
+                ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+                if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
+                    throw new Exception("ConnectionString not set");
+
+                ChartWidget dataWidget = new ChartWidget(PostDataArrived, sdmxObj);
+
+                SessionImplObject ret = dataWidget.GetDataChart();
+
+                if (Session[SESSION_KEY] == null) Session[SESSION_KEY] = ret;
+                else ((SessionImplObject)Session[SESSION_KEY]).MergeObject(ret);
+
+                return CS.ReturnForJQuery(ret.SavedChart);
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(ex.Message);
+            }
+        }
+
+        public ActionResult Get_DOTSTAT_StructureObject()
+        {
+            try
+            {
+                GetCodemapObject PostDataArrived = CS.GetPostData<GetCodemapObject>(this.Request);
+                PostDataArrived.Configuration.Locale = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+
+                SessionImplObject sdmxObj = null;
+                string SESSION_KEY =
+                    PostDataArrived.Configuration.EndPoint +
+                    PostDataArrived.Dataflow.id + PostDataArrived.Dataflow.agency + PostDataArrived.Dataflow.agency +
+                    System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.Trim();
+
+                SESSION_KEY = MainController.RemoveSpecialCharacters(SESSION_KEY);
+
+                if (Session[SESSION_KEY] != null && Session[SESSION_KEY] is SessionImplObject
+                    && !string.IsNullOrEmpty(((SessionImplObject)Session[SESSION_KEY]).SavedCodemap))
+                    sdmxObj = (SessionImplObject)Session[SESSION_KEY];
+
+                ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+                if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
+                    throw new Exception("ConnectionString not set");
+
+
+                DOTSTAT_Widget dotstatWidget = new DOTSTAT_Widget(PostDataArrived, sdmxObj);
+
+                SessionImplObject ret = dotstatWidget.GetDsd();
+
+                if (Session[SESSION_KEY] == null) Session[SESSION_KEY] = ret;
+                else ((SessionImplObject)Session[SESSION_KEY]).MergeObject(ret);
+
+                return CS.ReturnForJQuery(ret.SavedCodemap);
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(ex.Message);
+            }
+        }
+       
+    }
+}

@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{72621094-F32D-496F-80AA-DF3E24532A87}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ISTAT.WebClient.WidgetEngine</RootNamespace>
+    <AssemblyName>ISTAT.WebClient.WidgetEngine</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EstatSdmxSourceExtension">
+      <HintPath>..\ISTAT.WebClient.Libraries\EstatSdmxSourceExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="EstatSdmxSourceExtension.CustomRequests">
+      <HintPath>..\ISTAT.WebClient.Libraries\EstatSdmxSourceExtension.CustomRequests.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\ISTAT.WebClient.Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\ISTAT.WebClient.Libraries\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\ISTAT.WebClient.Libraries\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ISTAT.WebClient.Libraries\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
+      <HintPath>..\ISTAT.WebClient.Libraries\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ISTAT.WebClient.Libraries\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder">
+      <HintPath>..\ISTAT.WebClient.Libraries\Microsoft.Practices.ObjectBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\ISTAT.WebClient.Libraries\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Org.Sdmx.Resources.SdmxMl.Schemas.V10">
+      <HintPath>..\ISTAT.WebClient.Libraries\Org.Sdmx.Resources.SdmxMl.Schemas.V10.dll</HintPath>
+    </Reference>
+    <Reference Include="Org.Sdmx.Resources.SdmxMl.Schemas.V20">
+      <HintPath>..\ISTAT.WebClient.Libraries\Org.Sdmx.Resources.SdmxMl.Schemas.V20.dll</HintPath>
+    </Reference>
+    <Reference Include="Org.Sdmx.Resources.SdmxMl.Schemas.V21">
+      <HintPath>..\ISTAT.WebClient.Libraries\Org.Sdmx.Resources.SdmxMl.Schemas.V21.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\ISTAT.WebClient.Libraries\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SdmxApi">
+      <HintPath>..\ISTAT.WebClient.Libraries\SdmxApi.dll</HintPath>
+    </Reference>
+    <Reference Include="SdmxDataParser">
+      <HintPath>..\ISTAT.WebClient.Libraries\SdmxDataParser.dll</HintPath>
+    </Reference>
+    <Reference Include="SdmxEdiParser">
+      <HintPath>..\ISTAT.WebClient.Libraries\SdmxEdiParser.dll</HintPath>
+    </Reference>
+    <Reference Include="SdmxObjects">
+      <HintPath>..\ISTAT.WebClient.Libraries\SdmxObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="SdmxParseBase">
+      <HintPath>..\ISTAT.WebClient.Libraries\SdmxParseBase.dll</HintPath>
+    </Reference>
+    <Reference Include="SdmxQueryBuilder">
+      <HintPath>..\ISTAT.WebClient.Libraries\SdmxQueryBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="SdmxSourceUtil">
+      <HintPath>..\ISTAT.WebClient.Libraries\SdmxSourceUtil.dll</HintPath>
+    </Reference>
+    <Reference Include="SdmxStructureMutableParser">
+      <HintPath>..\ISTAT.WebClient.Libraries\SdmxStructureMutableParser.dll</HintPath>
+    </Reference>
+    <Reference Include="SdmxStructureParser">
+      <HintPath>..\ISTAT.WebClient.Libraries\SdmxStructureParser.dll</HintPath>
+    </Reference>
+    <Reference Include="SdmxStructureRetrieval">
+      <HintPath>..\ISTAT.WebClient.Libraries\SdmxStructureRetrieval.dll</HintPath>
+    </Reference>
+    <Reference Include="SdmxXmlConstants">
+      <HintPath>..\ISTAT.WebClient.Libraries\SdmxXmlConstants.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TabularWriters">
+      <HintPath>..\ISTAT.WebClient.Libraries\TabularWriters.dll</HintPath>
+    </Reference>
+    <Reference Include="Xml.Schema.Linq">
+      <HintPath>..\ISTAT.WebClient.Libraries\Xml.Schema.Linq.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Builder\Tree\JSTreeConstants.cs" />
+    <Compile Include="Builder\Tree\JsTreeNode.cs" />
+    <Compile Include="Builder\Tree\JSTreeMetadata.cs" />
+    <Compile Include="Model\BaseDataAbstract.cs" />
+    <Compile Include="Model\DataCriteria.cs" />
+    <Compile Include="Model\DataObjectForStreaming.cs" />
+    <Compile Include="Model\DataReader\DataSetReader.cs" />
+    <Compile Include="Model\DataReader\DataViewReader.cs" />
+    <Compile Include="Model\DataReader\IDataSetStore.cs" />
+    <Compile Include="Model\DataReader\SdmxDataReader.cs" />
+    <Compile Include="Model\DataRender\internal\AbstractDataSetModel.cs" />
+    <Compile Include="Model\DataRender\DataRender.cs" />
+    <Compile Include="Model\DataRender\internal\ComponentValueDictionary.cs" />
+    <Compile Include="Model\DataRender\internal\DataSetModelStore.cs" />
+    <Compile Include="Model\DataRender\internal\DisplayModeStatus.cs" />
+    <Compile Include="Model\DataRender\internal\IDataSetModel.cs" />
+    <Compile Include="Model\DataRender\ToHtml\CSVLayoutRenderer.cs" />
+    <Compile Include="Model\DataRender\ToHtml\CsvRenderer.cs" />
+    <Compile Include="Model\DataRender\ToHtml\HtmlRenderer.cs" />
+    <Compile Include="Model\DataRender\ToHtml\HtmlRenderer2.cs" />
+    <Compile Include="Model\DataRender\ToHtml\IDataSetRenderer.cs" />
+    <Compile Include="Model\DataRender\ToHtml\PdfRenderer.cs" />
+    <Compile Include="Model\DataRender\ToHtml\XlsRenderer.cs" />
+    <Compile Include="Model\DBData\DataSetStoreDB.cs" />
+    <Compile Include="Model\DBData\DBInfo.cs" />
+    <Compile Include="Model\WebServiceSelector.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WidgetBuild\CodemapWidget.cs" />
+    <Compile Include="WidgetBuild\ChartWidget.cs" />
+    <Compile Include="WidgetBuild\DashboardWidget.cs" />
+    <Compile Include="WidgetBuild\DOTSTAT_Widget.cs" />
+    <Compile Include="WidgetBuild\TemplateWidget.cs" />
+    <Compile Include="WidgetBuild\DataWidget.cs" />
+    <Compile Include="WidgetBuild\LayoutWidget.cs" />
+    <Compile Include="WidgetBuild\ProfileWidget.cs" />
+    <Compile Include="WidgetBuild\QueryWidget.cs" />
+    <Compile Include="WidgetBuild\SettingsWidget.cs" />
+    <Compile Include="WidgetBuild\TreeWidget.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ISTAT.WebClient.WidgetComplements\ISTAT.WebClient.WidgetComplements.csproj">
+      <Project>{ff73c24f-5d27-4771-a398-ce2630da46a8}</Project>
+      <Name>ISTAT.WebClient.WidgetComplements</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Model\DataRender\html_finish.ftl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\DataRender\html_start.ftl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\DataRender\xls_finish.ftl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\DataRender\xls_start_dot.ftl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Model\DataRender\xls_start_comma.ftl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

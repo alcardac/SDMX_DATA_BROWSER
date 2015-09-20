@@ -1,0 +1,14 @@
+﻿html, body { margin: 0; padding: 0.25em; }
+body { font-family: Verdana, Arial, sans-serif; font-size: 0.75em; }
+
+table.skeys { border-collapse: collapse; margin: 1.5em 0 0.5em 0; }
+table.skeys td { padding: 3px; }
+table.skeys, table.skeys td { border: 1px solid #006699; #3399CC; }
+table.skeys td.skeytitle { text-align: right; font-weight: bold; background-color: #DFEFFC; }
+
+table.hvkeys { width: 100%; border-collapse: collapse; }
+table.hvkeys, table.hvkeys td { border: 1px solid #3399CC; }
+td.hkeytitle, td.vkeytitle { font-weight: bold; padding: 3px; }
+td.hkeytitle, td.hkeyvalue, td.vkeytitle, td.vkeyvalue { text-align: center; background-color: #DFEFFC }
+
+td.measure { text-align: center; vertical-align: middle; }

@@ -1,0 +1,13 @@
+﻿<div style="display:none">
+    <div id="${items.type.getId()}">codes</div>
+</div>
+<div class="help-message">{{html msg.html_criteria_help_codes}}</div>
+<div class="op-links">
+    <a href="javascript:criteria.events.updateAllCodes(criteria.action.selectAll)">${msg.label_select_all}</a> -
+    <a href="javascript:criteria.events.updateAllCodes(criteria.action.deselectAll)"> ${msg.label_deselect_all}</a> -
+    <a href="javascript:criteria.events.updateAllCodes(criteria.action.invert)"> ${msg.label_invert_selection}</a>
+</div>
+<input type="hidden" id="${items.concept.getId()}" value="${query.component.ConceptRef}"/>
+<input type="hidden" id="${items.warn.getId()}" value="${query.warn}"/>
+<div id="${items.codesTree.getId()}"/>
+

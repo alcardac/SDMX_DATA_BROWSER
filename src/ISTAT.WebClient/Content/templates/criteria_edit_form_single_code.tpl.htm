@@ -1,0 +1,16 @@
+﻿<div style="display:none">
+    <div id="${items.type.getId()}">single</div>
+</div>
+<div class="help-message">{{html msg.html_criteria_help_single_code}}</div>
+<input type="hidden" id="${items.concept.getId()}" value="${query.component.ConceptRef}"/>
+<!--<input type="hidden" id="criteria-component-index" value="${index}"/>
+<input type="hidden" id="criteria-code-count" value="${query.codes.Items.length}"/>-->
+<div id="${items.codesTree.getId()}">
+    <ul>
+        <li id="CLV_${query.codes.Items[0].Id}" class="jstree-checked ui-state-disabled" rel="disabled" >
+            <a href="#">
+                [${query.codes.Items[0].Id}] - ${nsicGetLocalizedName(query.codes.Items[0])} 
+            </a>
+        </li>
+    </ul>
+</div>

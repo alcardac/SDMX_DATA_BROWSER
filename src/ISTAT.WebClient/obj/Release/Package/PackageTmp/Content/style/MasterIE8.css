@@ -1,0 +1,207 @@
+﻿#header {
+    background:#FFF !important;
+    color:#666;
+    border:0px !important;
+    height: 70px;
+    margin:0px;
+    padding:0px 0px 0px 0px;
+    /*position:fixed;
+    top:0;*/
+    width: 100%;
+}
+
+/* #header link */
+#header a:link {
+    color: #666;
+    text-decoration:none;
+}
+#header a:visited {
+    border:0px;
+    color: #666;
+    text-decoration:none;
+}
+#header a:hover, a:focus {
+    border-bottom: 2px solid;
+    color: #666;
+    text-decoration:none;
+}
+#header a:active {
+    color: #666;
+    text-decoration:none;
+}
+
+#header #header-left a:hover, a:focus{
+    border-bottom: none !important;
+}
+
+#header #header-left {
+    float:left;
+    font-size: 25px;
+    font-family: Times New Roman;
+    width:50%;
+}
+
+#header #header-left img{
+    border:0px !important;
+    margin: 10px;
+    max-height:55px;
+    max-width:300px;
+}
+
+#header #header-right {
+    float:left;
+    height: 60px;
+    width:50%;
+}
+
+#header #header-right div {
+    margin: 10px 10px 0px 0px;
+    text-align: right;
+}
+
+#menu {
+    background:#666;
+    color:#FFF;
+    height:40px;
+    margin:0px;
+    padding:0px;
+    /*position:fixed;
+    top:70px; /*#header's height*/
+    width:100%;
+}
+
+#menu #menu-left {
+    float:left;
+    padding: 10px 0px 0px 0px;
+    text-align: left;
+}
+
+#menu #menu-center {
+    float:left;     
+    padding: 6px 0px 0px 0px;
+    text-align: center;
+}
+
+#menu #menu-right {
+    float:right;
+    padding: 10px 10px 0px 0px;
+    text-align: right;
+}
+
+#menu #menu-right div {
+    float:left;
+    margin:0px 0px 0px 0px;
+    text-align: center;
+}
+
+#menu #menu-right ul {
+    cursor:default;
+    margin: 0px 0px 0px -20px;
+}
+
+#menu #menu-right ul li {
+    cursor:pointer;
+    display: inline;
+    font-size: 14px;
+    margin: 0px 5px 0px 5px;
+    text-transform: uppercase;
+}
+
+#menu #menu-right ul li:hover, li:focus {
+    border-bottom: 2px solid;
+}
+
+#menu #menu-right ul li:first-child {
+    font-size: 12px;
+}
+
+#menu #menu-right ul li:last-child {
+    font-size: 18px;
+}
+
+#menu #select-locale-button {
+    margin: -4px 0px 0px 10px;
+    width: 150px !important;
+}
+
+#select-ws {
+    margin: 0px 0px 0px 10px;
+    width: 150px !important;
+}
+#menu #select-ws-button {
+    margin: -4px 0px 0px 10px;
+    width: 150px !important;
+}  
+
+#select-dash {
+    margin: 0px 0px 0px 10px;
+    width: 250px !important;
+}
+#select-dash-button {
+    margin: 0px 0px 0px 10px;
+    width: 250px !important;
+}  
+
+#footer {
+    background:#F4F4F4;
+    border-top:1px solid #ccc;
+    bottom:0;
+    color: #666;
+    height:35px;
+    position:fixed;
+    text-align: center;
+    width: 100%;
+    z-index:100;
+}
+
+#footer ul li {
+    border-right: 1px solid;
+    display: inline;
+    margin: 0px 5px 0px 5px;
+    padding: 0px 10px 0px 0px;
+}
+
+/* #footer link - start */
+#footer a:link {
+    color: #666;
+    text-decoration:none;
+}
+#footer a:visited {
+    color: #666;
+    text-decoration:none;
+}
+#footer a:hover, a:focus {
+    border-bottom: 2px solid;
+    color: #666;
+    text-decoration:none;
+}
+#footer a:active {
+    color: #666;
+    text-decoration:none;
+}
+/* #footer link - end */
+
+#footer ul {
+    padding: 0px 0px 0px 0px !important;
+}
+
+#footer ul li:last-child {
+    border-right: none;
+    display: inline;
+    margin: 0px 5px 0px 5px;
+    padding: 0px 10px 0px 0px;
+}
+       /*
+.close-left {
+    background:url(../../Images/toggler-left.png);
+    border:0px !important;
+    height: 32px !important;
+    margin:100px 0px 0px 2px !important;
+}
+
+.open-left {
+    background:url(../../Images/toggler-right.png);
+    border:0px !important;
+    height: 32px !important;
+    margin:100px 0px 0px 19px !important;
+}         */

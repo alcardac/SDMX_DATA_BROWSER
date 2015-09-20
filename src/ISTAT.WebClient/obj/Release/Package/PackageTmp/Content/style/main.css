@@ -1,0 +1,368 @@
+/* GLOBAL STYLE */
+/* -------------------------------------------------------------------------- */
+
+html, body {
+    width: 100%; height: 100%; margin: 0; padding: 0;
+    overflow: hidden;
+}
+
+body { font-family: Verdana, Arial, sans-serif; font-size: 12px; }
+
+a {
+    outline: none; text-decoration: none; color: #2E6E9E;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* FIXES FOR IE 7 */
+/* -------------------------------------------------------------------------- */
+
+p { margin: 2px 0; }
+
+/* GENERIC STYLES */
+/* -------------------------------------------------------------------------- */
+
+.help-message {
+    margin: 4px 0; font-size: 11px; text-align: justify;
+}
+.error-message {
+    color: #CC0000; text-align: justify;
+}
+
+.main-label {
+    font-weight: bold; margin: 4px 0;
+}
+
+div#count
+{
+	font-size: 11px;text-align:right;
+}
+div#count-label {
+    display:inline;
+}
+div#count-number {
+    font-weight: bold; display:inline;
+}
+.dialog-message {
+    padding: 1em 0; border: 1px solid #4297D7;
+    background: #DFEFFC url("../../Scripts/jquery/jquery-ui-1.8.5.all/css/redmond/images/ui-bg_glass_85_dfeffc_1x400.png") repeat-x scroll 50% 50%;
+}
+
+.page-links {
+    text-align: right; white-space: nowrap; overflow: hidden;
+}
+
+.page-links-label {
+    font-weight: bold;
+}
+
+.page-links a {
+    font-weight: bold; color: #2E6E9E;
+}
+
+.op-links {
+    text-align: right; 
+    white-space: nowrap; 
+    overflow: hidden;
+    font-size: 11px; 
+    font-weight: bold;
+    margin-bottom: 5px;
+    width:100%;
+}
+
+.df-links {
+    text-align: left; 
+    white-space: nowrap; 
+    overflow: hidden;
+    font-size: 11px; 
+    font-weight: bold;
+    margin-bottom: 5px;
+    width:100%;
+}
+
+img.tooltip { cursor: pointer; }
+
+/* MAIN DECORATOR */
+/* -------------------------------------------------------------------------- */
+
+div#page-content {
+    width: 920px; height: 100%; margin: 0 auto;
+}
+
+div#page-header {
+    height: 89px; background-color: #FFFFFF;
+}
+
+div#page-header-left {
+    float: left; width: 358px; height: 87px;
+    background: #3399CC url("../../Images/logo.png") no-repeat scroll left top;
+}
+
+div#page-header-right {
+    float:right; width: 562px; height: 87px;
+    background: #3399CC url("../../Images/bgTopRight.png") no-repeat scroll right top;
+}
+
+div#page-toolbar {
+    height: 20px; line-height: 20px; background-color: #043F81;
+}
+
+div#page-toolbar-left {
+    float: left;
+}
+
+div#page-toolbar-right {
+    float: right;
+}
+
+div#page-body {
+}
+
+div#page-footer {
+    overflow: hidden; border:1px solid #3399CC; border-top: none; padding: 2px 1px; font-size: 10px;
+    background-color: #043F81; color: white;
+}
+
+div#page-footer-copyright {
+    float: left;
+}
+
+div#page-footer-version {
+    float: right;
+}
+
+div#pb-workarea
+{
+    overflow:visible !important;    
+}
+
+/* DATAFLOWS TREE */
+/* -------------------------------------------------------------------------- */
+
+div#dataflows-tree {
+    overflow: hidden;
+}
+
+div#dataflows-tree .jstree-clicked {
+    background-color: #043F81; color: white; text-shadow:1px 1px 1px black;
+}
+
+div#dataflows-tree li.dataflow-item div {
+    display: inline;
+}
+
+div#dataflows-tree li.dataflow-item div.dataflow-name {
+    font-style: italic;
+}
+
+div#dataflows-tree li.dataflow-item .dataflow-agency, div#dataflows-tree li.dataflow-item .dataflow-version {
+    display: none;
+}
+
+/* PAGE BODY */
+/* -------------------------------------------------------------------------- */
+
+div#pb-workarea-pages {
+    height: 100%;
+    padding:10px;
+}
+
+/* QUERY BUILDER - CRITERIA */
+/* -------------------------------------------------------------------------- */
+
+.ui-tabs-panel
+{
+    width:100%;
+    float:left;
+}   
+div#criteria-component-tabs ul.ui-tabs-nav li { font-size: 9px; }
+div#criteria-component-tabs ul.ui-tabs-nav { *padding-bottom: 1px; }
+
+/* time */
+table#criteria-edit-time {
+    margin: auto;
+}
+table#criteria-edit-time td {
+    padding: 0 3px; text-align: center;
+}
+
+table#criteria-edit-time td.time-header {
+    font-weight: bold; text-align: center;
+}
+
+table#criteria-edit-time td.time-label {
+    text-align: right; font-weight: bold;
+}
+
+/* codes */
+div#criteria-codes-tree .jstree-clicked {
+    background-color: #043F81; color: white; text-shadow:1px 1px 1px black;
+}
+
+/* QUERY BUILDER - VIEW RESULTS */
+/* -------------------------------------------------------------------------- */
+
+p.dataflowTitle
+{
+    margin:0px;
+    padding:0px;
+}
+
+/* buttons */
+div#results-buttons { float:left;width:100%;margin:4px 0px;}
+
+/* axis */
+/* See http://grasshopperpebbles.com/css/css-inline-block-ie7-hack/ for details about IE7 hack */
+
+.container-component  { float:left;   width:100%; margin:0px; padding:0px;}
+.container-component ul.results-layout-axis { list-style-type: none; margin: 0; padding: 0; min-height:100px;min-width:250px; }
+.container-component ul.results-layout-axis li {display:block; float:left; list-style-type: none; margin: 0; padding: 0; width:100%; }  
+.container-component ul.results-layout-axis li.fixed{ float:left;width:100%; margin:0px; padding:0px;}
+.container-component ul.results-layout-axis li div.component {
+    width:auto;
+    cursor: move;
+    font-size: 9px; 
+    background-color: #FBEC88;
+    border: 1px solid #3399CC;
+}
+.container-component ul.results-layout-axis li div.component-white {                              
+    width:auto;
+    cursor: default; 
+    font-size: 9px;
+    background-color: #FFFFFF;
+    border: 1px solid #3399CC;
+}                              
+.container-component #results-axis-slice ul.results-layout-axis li{ float:left;   width:50%; }
+.container-component #results-axis-slice ul.results-layout-axis li.fixed { float:left; width:100%; }
+
+.container-component #results-axis-slice,
+.container-component #results-axis-vertical,
+.container-component #results-axis-horizontal{ text-align: center; vertical-align:top; white-space: nowrap; border:1px solid #3399cc;}
+
+
+/* slice keys */
+table#results-slice-keys {float:left;width: 100%; margin:4px 0px; }
+table#results-slice-keys td { border: none;  margin:4px 0px; padding: 0; vertical-align:top; }
+table#results-slice-keys td.key-name { width:25%; text-align: right; font-weight: bold; }
+table#results-slice-keys td.key-value { width:75%; text-align: left; font-weight: lighter; }
+
+/* results */
+.header-result { float:left; width:100%; }
+.header-result p { float:left;  }
+
+p.help-button { padding:0px; margin:0px; width:100%; cursor:pointer; }
+p.help-button span{ float:left;padding:0px;  margin:0px; }
+
+#results-container .help-message{float:left;}
+
+.container-result-data{float:left; position: relative; overflow:auto;}
+.container-result-data #results-data-inner { width:100%; height:auto; padding:0px;  margin:0px; }
+.container-result-data #results-data-inner table{ width: 100%; border-collapse: collapse; }
+.container-result-data #results-data-inner table tr td {  padding: 0px; margin:0px; text-align: center;border:1px solid #3399CC; }
+.container-result-data #results-data-inner table tr td> table tr td { border: none; }
+.container-result-data #results-data-inner .hkeytitle, 
+.container-result-data #results-data-inner .hkeyvalue, 
+.container-result-data #results-data-inner .vkeytitle, 
+.container-result-data #results-data-inner .vkeyvalue,
+.container-result-data #results-data-inner .measure { width:100%; }
+.container-result-data #results-data-inner .measure {
+    border: none !important;
+    text-align:right;
+    padding:4px;
+}
+.container-result-data #results-data-inner .hkeytitle,
+.container-result-data #results-data-inner .vkeytitle {
+    text-decoration:none !important;
+    font-weight: bold;
+    background: #DFEFFC url("../../Scripts/jquery/jquery-ui-1.8.5.all/css/redmond/images/ui-bg_glass_85_dfeffc_1x400.png") repeat-x scroll 50% 50%;
+}
+.container-result-data #results-data-inner .togglablekey, 
+.container-result-data #results-data-inner .togglablekeyvalue {
+    cursor: pointer;
+    text-decoration:underline;
+    padding:4px;
+    width:auto !important;
+}
+
+.ui-icon{cursor: pointer;}
+
+table.table-info-extra
+{
+    display:none;
+    border: none; 
+    margin: 0; 
+    padding: 0;
+    width:100% !important;    
+}
+table.table-info-extra .dialog-wrap-info-extra
+{          
+    width:16px;
+    height:16px;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+span.dialog-btn-info-extra
+{          
+    float:left;
+    cursor: pointer;
+    width:16px;
+    height:16px;
+}
+table.table-info-extra .dialog-lbl-title-info-extra
+{
+    border-top:1px solid #3399CC;
+    font-weight:bold;
+    text-align:center;    
+}
+table.table-info-extra .dialog-lbl-subtitle-info-extra
+{
+    font-weight:bold;
+    text-align:center;    
+}
+table.table-info-extra tr.dialog-row-highlighted-info-extra
+{
+    color:Red;    
+}
+table.table-info-extra .dialog-lbl-concept-info-extra
+{
+    width:50%;
+    font-weight:bold;
+    text-align:right;  
+    vertical-align:top;
+    color:#000000;
+}
+table.table-info-extra .dialog-lbl-concept-value-info-extra
+{            
+    width:50%;
+    font-weight:lighter;
+    text-align:left; 
+    vertical-align:top;
+    color:#000000;
+}
+table.table-info-extra .dialog-lbl-concept-value-info-extra span
+{ 
+    font-weight:bold;
+    vertical-align:top; 
+    color:#FF0000;
+}
+.dialog-row-value-info-extra
+{
+    background-color:rgba(251, 236, 136, 1);  
+}
+.dialog-wrap-info-extra
+{
+    width:16px;
+    height:16px;    
+}
+.container-result-data
+{
+    width:100%;
+    height:100%;
+    overflow:auto;    
+}
+
+

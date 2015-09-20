@@ -1,0 +1,245 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using ISTAT.WebClient.Models;
+using ISTAT.WebClient.WidgetComplements.Model.JSObject;
+using ISTAT.WebClient.WidgetEngine.WidgetBuild;
+
+namespace ISTAT.WebClient.Controllers
+{
+    public class DashBoardController : Controller
+    {
+        private ControllerSupport CS = new ControllerSupport();
+
+        private string ConnectionString
+        {
+            get
+            {
+                ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+                if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
+                    throw new Exception("ConnectionString not set");
+                return connectionStringSetting.ConnectionString;
+            }
+        }
+
+        public ActionResult PreviewDashboard()
+        {
+            try
+            {
+                GetDashboardObject PostDataArrived = CS.GetPostData<GetDashboardObject>(this.Request);
+                List<GetDashboardObject> DashBoardObject;
+
+                DashboardWidget qw = new DashboardWidget(ConnectionString);
+
+                DashBoardObject = qw.Load(PostDataArrived.id);
+                Session["DashBoard"] = DashBoardObject[0];
+
+                return CS.ReturnForJQuery(DashBoardObject);
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(new JavaScriptSerializer().Serialize(new ISTAT.WebClient.Models.ControllerSupport.StringResult() { Msg = ex.Message }));
+            }
+        }
+
+        public ActionResult CreateDashboard()
+        {
+            try
+            {
+                GetDashboardObject DashBoardObject = CS.GetPostData<GetDashboardObject>(this.Request);
+
+                DashboardWidget dBWidget = new DashboardWidget(ConnectionString);
+
+                DashBoardObject.id = dBWidget.CreateDashBoard(DashBoardObject);
+
+                if (DashBoardObject.id == -1)
+                    return CS.ReturnForJQuery(JSONConst.Error);
+
+                Session["DashBoard"] = DashBoardObject;
+
+                AddRow();
+
+                return CS.ReturnForJQuery(JSONConst.Success);
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(JSONConst.Error);
+            }
+
+        }
+
+        public ActionResult AddRow()
+        {
+            DashboardRow DBRow;
+
+            try
+            {
+                DashboardWidget qw = new DashboardWidget(ConnectionString);
+
+                GetDashboardObject DashBoardObject = (GetDashboardObject)Session["DashBoard"];
+
+                DBRow = qw.AddRow(DashBoardObject.id, false, -1);
+
+                if (DashBoardObject.rows == null)
+                    DashBoardObject.rows = new List<DashboardRow>();
+
+                DashBoardObject.rows.Add(DBRow);
+
+                Session["DashBoard"] = DashBoardObject;
+
+                return CS.ReturnForJQuery(DBRow);
+
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(new JavaScriptSerializer().Serialize(new ISTAT.WebClient.Models.ControllerSupport.StringResult() { Msg = ex.Message }));
+            }
+        }
+
+        public ActionResult UpdateRow()
+        {
+            try
+            {
+                DashboardWidget qw = new DashboardWidget(ConnectionString);
+                DashboardRow UpdatedDashBoardRow;
+
+                DashboardRow PostDataArrived = CS.GetPostData<DashboardRow>(this.Request);
+
+                GetDashboardObject DashBoardObject = (GetDashboardObject)Session["DashBoard"];
+
+                UpdatedDashBoardRow = qw.UpdateRow(PostDataArrived);
+
+                DashBoardObject.rows.Remove(DashBoardObject.rows.Find(c => c.id == PostDataArrived.id));
+                DashBoardObject.rows.Add(UpdatedDashBoardRow);
+
+                Session["DashBoard"] = DashBoardObject;
+
+                return CS.ReturnForJQuery(UpdatedDashBoardRow);
+
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(new JavaScriptSerializer().Serialize(new ISTAT.WebClient.Models.ControllerSupport.StringResult() { Msg = ex.Message }));
+            }
+        }
+
+        public ActionResult DeleteRow()
+        {
+            DashboardRow DBRow = CS.GetPostData<DashboardRow>(this.Request);
+
+            try
+            {
+
+                DashboardWidget qw = new DashboardWidget(ConnectionString);
+
+                GetDashboardObject DashBoardObject = (GetDashboardObject)Session["DashBoard"];
+
+                qw.DeleteRow(DBRow.id);
+
+                DashBoardObject.rows.Remove(DashBoardObject.rows.Find(c => c.id == DBRow.id));
+
+                Session["DashBoard"] = DashBoardObject;
+
+                return CS.ReturnForJQuery(DBRow);
+
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(new JavaScriptSerializer().Serialize(new ISTAT.WebClient.Models.ControllerSupport.StringResult() { Msg = ex.Message }));
+            }
+        }
+
+        public ActionResult AddWidget()
+        {
+            WidgetObject woRet;
+
+            try
+            {
+                DashboardWidget qw = new DashboardWidget(ConnectionString);
+
+                GetDashboardObject DashBoardObject = (GetDashboardObject)Session["DashBoard"];
+                WidgetObject PostDataArrived = CS.GetPostData<WidgetObject>(this.Request);
+
+                woRet = qw.AddWidget(PostDataArrived);
+
+                DashBoardObject.rows.Find(r => r.id == woRet.rowID).widgets.Add(woRet);
+
+                Session["DashBoard"] = DashBoardObject;
+
+                return CS.ReturnForJQuery(woRet);
+
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(new JavaScriptSerializer().Serialize(new ISTAT.WebClient.Models.ControllerSupport.StringResult() { Msg = ex.Message }));
+            }
+        }
+
+        public ActionResult UpdateWidget()
+        {
+            bool ret = true;
+
+            try
+            {
+                DashboardWidget qw = new DashboardWidget(ConnectionString);
+
+                GetDashboardObject DashBoardObject = (GetDashboardObject)Session["DashBoard"];
+                WidgetObject PostDataArrived = CS.GetPostData<WidgetObject>(this.Request);
+
+                ret = qw.UpdateWidget(PostDataArrived);
+
+                DashboardRow dRow = DashBoardObject.rows.Find(r => r.id == PostDataArrived.rowID);
+
+                dRow.widgets.Remove(dRow.widgets.Find(w => w.id == PostDataArrived.id));
+                dRow.widgets.Add(PostDataArrived);
+
+                Session["DashBoard"] = DashBoardObject;
+
+                return CS.ReturnForJQuery(ret);
+
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(new JavaScriptSerializer().Serialize(new ISTAT.WebClient.Models.ControllerSupport.StringResult() { Msg = ex.Message }));
+            }
+        }
+
+        public ActionResult DeleteWidget()
+        {
+            bool ret = true;
+
+            try
+            {
+                DashboardWidget qw = new DashboardWidget(ConnectionString);
+
+                GetDashboardObject DashBoardObject = (GetDashboardObject)Session["DashBoard"];
+                WidgetObject PostDataArrived = CS.GetPostData<WidgetObject>(this.Request);
+
+                ret = qw.DeleteWidget(PostDataArrived.id);
+
+                DashboardRow dRow = DashBoardObject.rows.Find(r => r.widgets.Find(w => w.id == PostDataArrived.id) != null);
+
+                dRow.widgets.Remove(dRow.widgets.Find(w => w.id == PostDataArrived.id));
+
+                Session["DashBoard"] = DashBoardObject;
+
+                return CS.ReturnForJQuery(ret);
+
+            }
+            catch (Exception ex)
+            {
+                return CS.ReturnForJQuery(new JavaScriptSerializer().Serialize(new ISTAT.WebClient.Models.ControllerSupport.StringResult() { Msg = ex.Message }));
+            }
+        }
+
+        public ActionResult AddWidgetText(int wdgID, TextLocalised textLocalised)
+        {
+            throw new NotImplementedException();
+        }
+
+    }
+}

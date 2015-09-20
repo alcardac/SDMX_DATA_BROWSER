@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <div id="DivLogin">
+
+
+    </div>
+    
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript">
+
+        var _endPoint = "http://localhost:22920";
+        jQuery(document).ready(function () {
+
+            var data = {
+                endpoint: _endPoint,
+                local_msg: {
+                    errore_caricamento_dati: "Errore Caricamento Dati",
+                    registrazione_effettuata: 'Registrazione Effettuata',
+                    registrazione_fallita: 'Operazione Non Riuscita',
+                    compila_campi: 'Compila i Campi Obbligatori',
+                    length_psw: 'La password deve contenere almeno 8 caratteri',
+                    conf_psw: 'Il campo "Conferma Password" deve essere uguale al campo "Password"',
+                    privacy: 'Devi accettare il trattamento dei dati',
+                },
+                local_interface : {
+                    nome: 'Nome',
+                    cognome: 'Cognome',
+                    sesso: 'Sesso',
+                    eta: 'Eta',
+                    residenza: 'Residenza',
+                    titolo_studio: 'Titolo di Studio',
+                    cond_prof: 'Condizione Professionale',
+                    settore_econ: 'Settore Economico',
+                    lingua: 'Lingua preferita per le comunicazioni',
+                    temi_interesse: 'Temi di interesse (opzionale)',
+                    indirizzo_email: 'Indirizzo di posta elettronica',
+                    password: 'Password',
+                    conferma_password: 'Confermare la password',
+                    informativa_privacy: "I dati verranno trattati nel rispetto della disciplina dettata dal d.lgs. n. 196/2003. Il titolare del trattamento dei dati è l'Istituto nazionale di statistica, via Cesare Balbo n. 16 - 00184 Roma",
+                    label_autoriz_trattamento_dati: 'Autorizzo il trattamento dei dati',
+                    button: 'Registra',
+
+                }
+            };
+            
+            $("#DivLogin").load(_endPoint + "/Widget/widgetRegistration.html", null, function (responseTxt, statusTxt, xhr) {
+                
+                if (statusTxt == "success") {
+                   
+                    SetupWidget_widgetRegistration(data, OnSuccessLogin, OnFailLogin);
+
+                } else if (statusTxt == "error") {
+                    alert("Error: " + xhr.status + ": " + xhr.statusText);
+                }
+            });
+
+        });
+
+        function OnSuccessLogin(msg) {
+            var strjson = JSON.stringify(msg);
+            alert("dal client registrazione ok utente:" + strjson);
+        }
+        function OnFailLogin(msg) {
+
+            alert("dal client " + msg);
+        }
+
+    </script>
+
+</body>
+</html>

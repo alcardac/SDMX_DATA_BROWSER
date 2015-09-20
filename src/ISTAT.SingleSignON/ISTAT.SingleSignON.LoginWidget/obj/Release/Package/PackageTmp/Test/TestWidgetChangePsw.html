@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <div id="DivLogin">
+
+
+    </div>
+    
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript">
+        var _endPoint = "http://localhost:22920";
+        jQuery(document).ready(function () {
+            var data = {
+                endpoint: _endPoint,
+                code_user: "f8aadde2-5720-4630-9a98-0be42ba7df83",
+                local_msg: {
+                    operazione_riuscita: "Modifiche Effettuate",
+                    operazione_non_riuscita: "Operazione Non Riuscita",
+                    compila_i_campi: "Compila i Campi",
+                    length_psw: "La password deve contenere almeno 8 caratteri",
+                    conf_psw: 'Il campo "Conferma Password" deve essere uguale al campo "Nuova Password"',
+                },
+                local_interface: {
+                    psw: 'New Password',
+                    conferma_psw: 'Conf Passw',
+                    old_psw: 'Passw',
+                    button: 'Invia',
+                }
+            };
+
+            $("#DivLogin").load(_endPoint + "/Widget/widgetChangePassword.html", null, function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    SetupWidget_widgetChangePassword(data, OnSuccessLogin, OnFailLogin);
+                } else if (statusTxt == "error") {
+                    alert("Error: " + xhr.status + ": " + xhr.statusText);
+                }
+            });
+
+        });
+        function OnSuccessLogin(msg) {
+            var strjson = JSON.stringify(msg);
+            alert("dal client " + strjson);
+        }
+        function OnFailLogin(msg) {
+            alert("dal client " + msg);
+        }
+
+    </script>
+
+</body>
+</html>

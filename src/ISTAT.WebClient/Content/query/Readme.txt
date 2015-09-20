@@ -1,0 +1,1 @@
+Save in this folder SDMX-ML data query with nameing : AGENGYID+ID+VERSION.query.xml

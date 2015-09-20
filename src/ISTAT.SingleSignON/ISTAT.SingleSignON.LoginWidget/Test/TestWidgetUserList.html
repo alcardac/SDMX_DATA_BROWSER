@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <div id="DivLogin">
+
+
+    </div>
+    
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript">
+
+        var _endPoint = "http://localhost:22920";
+        jQuery(document).ready(function () {
+            var data = {
+                endpoint: _endPoint,
+                local_msg: {
+                    error_caricamento_dati: 'Si è verificato un errore nel caricamento dei dati',
+                    lista_vuota: 'Nessun utente è presente nella lista',
+                    operazione_non_riuscita: 'Operazione Non Riuscita',
+                    conferma_operazione: "Sei sicuro di voler cancellare l'utente selezionato?",
+                    operazione_effettuata: "Utente cancellato correttamente",
+                },
+                local_interface : {
+                    buttonC: 'Cancella',
+                    buttonM: 'Modifica',
+                    buttonMPSW: 'Mod Psw',
+                }
+            };
+
+            $("#DivLogin").load(_endPoint + "/Widget/widgetListUser.html", null, function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    SetupWidget_widgetListUser(data, OnSuccessLogin, OnFailLogin, OnEditCall, OnEditCall2);
+                } else if (statusTxt == "error") {
+                    alert("Error: " + xhr.status + ": " + xhr.statusText);
+                }
+            });
+        });
+
+        function OnSuccessLogin(msg) {
+            alert("dal client cancellazione effettuata :" + msg);
+        }
+        function OnSuccessLogin_changeUser(msg) {
+            alert("dal client modifiche  effettuate utente:" + msg);
+        }
+        function OnSuccessLogin_changePsw(msg) {
+            alert("dal client modifiche  effettuate correttamente");
+        }
+        function OnFailLogin(msg) {
+            alert("dal client " + msg);
+        }
+        function OnEditCall(msg) {
+            $("#DivLogin").load(_endPoint + "/Widget/widgetChangeUser.html", null, function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    var data = {
+                        endpoint: _endPoint,
+                        code_user: msg,
+                        local_msg: {
+                            error_caricamento_dati: 'Si è verificato un errore nel caricamento dei dati',
+                            error_utente_non_presente: 'Errore: Utente Non Presente',
+                            campi_obbligatori: 'Compila i Campi',
+                            operazione_effettuata: 'Operazione Effettuata',
+                            operazione_fallita: 'Operazione Non Riuscita',
+                        },
+                        local_interface: {
+                            nome: 'Nome',
+                            cognome: 'Cognome',
+                            sesso: 'Sesso',
+                            età: 'Età',
+                            residenza: 'Residenza',
+                            titolo_studio: 'Titolo di Studio',
+                            cond_prof: 'Condizione Professionale',
+                            settore_econ: 'Settore Economico',
+                            lingua: 'Lingua preferita per le comunicazioni',
+                            temi_interesse: 'Temi di interesse (opzionale)',
+                            indirizzo_email: 'Indirizzo di posta elettronica',
+                            password: 'Password',
+                            conferma_password: 'Confermare la password',
+                            informativa_privacy: "I dati verranno trattati nel rispetto della disciplina dettata dal d.lgs. n. 196/2003. Il titolare del trattamento dei dati è l'Istituto nazionale di statistica, via Cesare Balbo n. 16 - 00184 Roma",
+                            label_autoriz_trattamento_dati: 'Autorizzo il trattamento dei dati',
+                        }
+                    };
+                    SetupWidget_widgetChangeUser(data, OnSuccessLogin_changeUser, OnFailLogin);
+                } else if (statusTxt == "error") {
+                    alert("Error: " + xhr.status + ": " + xhr.statusText);
+                }
+            });
+        }
+
+        function OnEditCall2(msg) {
+            $("#DivLogin").load(_endPoint + "/Widget/widgetChangePassword.html", null, function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    var data = {
+                        endpoint: _endPoint,
+                        code_user: msg,
+                        local_msg: {
+                            operazione_riuscita: "Modifiche Effettuate",
+                            operazione_non_riuscita: "Operazione Non Riuscita",
+                            compila_i_campi: "Compila i Campi",
+                            length_psw: "La password deve contenere almeno 8 caratteri",
+                            conf_psw: 'Il campo "Conferma Password" deve essere uguale al campo "Nuova Password"',
+                        },
+                        local_interface: {
+                            psw: 'New Password',
+                            conferma_psw: 'Conf Passw',
+                            old_psw: 'Passw',
+                            button: 'Invia',
+                        }
+                    };
+                    SetupWidget_widgetChangePassword(data, OnSuccessLogin_changePsw, OnFailLogin);
+                } else if (statusTxt == "error") {
+                    alert("Error: " + xhr.status + ": " + xhr.statusText);
+                }
+            });
+        }
+
+    </script>
+
+</body>
+</html>

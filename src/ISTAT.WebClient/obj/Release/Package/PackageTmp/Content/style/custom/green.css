@@ -1,0 +1,301 @@
+﻿footer, header, #footer, #header
+{
+    background:#3a945d !important;
+    color:#FFF;
+}
+
+footer a:hover,footer a:link,footer a:visited,header a:hover,header a:link,header a:visited
+{
+    color:#FFF !important;
+}
+
+#footer a:hover,#footer a:link,#footer a:visited,#header a:hover,#header a:link,#header a:visited
+{
+    color:#FFF !important;
+}
+
+.show-theme:hover {
+    background: #0B4521 !important;
+}
+
+menu, #menu
+{
+    background:#0B4521 !important;
+}
+
+h1
+{
+    background:#D2EDDD !important;
+    color:#0B4521 !important;
+}
+
+h2
+{
+    color:#0B4521 !important;
+}
+
+h3
+{
+    color: #0B4521;
+}
+
+/*TOGGLER*/
+
+#split-toggler
+{
+    border-left: 2px solid #0B4521;
+}
+
+#panel_info_extra_toggler
+{
+    border-right: 2px solid #0B4521;
+}
+
+#panel_info_extra_toggler .close-right
+{
+    background: #0B4521;
+    border: 1px solid;
+    border-color: #0B4521;
+}
+
+.close-left
+{
+    background: #0B4521;
+    border-color:#0B4521;
+}
+
+.open-left
+{
+    background: #0B4521;
+    border-color:#0B4521;
+}
+
+.ui-widget-header
+{
+    background: #3a945d;
+}
+
+.div-container .div-heading
+{
+    background: #3a945d;
+}
+
+.color-option.selected, .color-option:hover {
+    background: #EEF9F2 !important;
+}
+
+input[type=radio]:checked:before {
+    color: #3a945d !important;
+}
+
+.tb_data .tr_data .th_fixed
+{
+    background: #3A945D !important;
+}
+
+.tb_data .tr_data .th_code
+{
+    background: #9DD0B2 !important;
+}
+
+.tb_data .tr_data:nth-child(even)
+{
+  background: #D2EDDD !important;
+}
+
+.tb_data, .tb_data tbody, .tb_data tr, .tb_data td, .tb_data th
+{
+    border-color: #A9C3B4;
+}
+
+.tb_layout p
+{
+    background: #9DD0B2;
+    color: #0B4521;
+}
+
+.tb_layout td
+{
+    background:#D2EDDD;
+    border: 1px solid #9DD0B2;
+}
+
+.ul_layout_fxd .li_layout
+{
+    background: #FFF;
+    border:1px solid #3a945d;
+    color: #3a945d;
+}
+
+.ul_layout_cnt .li_layout
+{
+    background: #3a945d;
+    color: #FFF;
+}
+.data-option {
+    background: #D2EDDD;
+    color: #0B4521;
+}
+
+.data-option:hover{
+    background: #0B4521;
+    color: #FFF;
+}
+
+.data-option-sel {
+    background: #FFFFFF;
+    color: #0B4521;
+    border-bottom-color:#0B4521 !important;
+}
+
+.saveBox
+{
+    border-color:#0B4521;
+}
+
+/*QUERIES*/
+DIV.queryContainer DIV.query:nth-child(odd) {
+    background: #D2EDDD;
+}
+DIV.queryContainer DIV.query:nth-child(even) {
+    background: #AFD8C0;
+}
+/*WEBSERVICES*/
+DIV.ContWS:nth-child(odd) {
+    background: #D2EDDD;
+}
+DIV.ContWS:nth-child(even) {
+    background: #AFD8C0;
+}
+/*PROFILES*/
+DIV.queryContainer DIV.user:nth-child(odd) {
+    background: #D2EDDD;
+}
+DIV.queryContainer DIV.user:nth-child(even) {
+    background: #AFD8C0;
+}
+/*SUPERADMIN*/
+.superAdmin {
+  background: #3A945D !important;
+}
+
+
+.configured {
+    background:#3A945D !important;
+    color:#FFFFFF !important;
+}
+
+.setRow {
+    background: #0B4521 !important;
+}
+
+.divRow {
+    border-color: #0B4521 !important;
+}
+
+.half:nth-child(2) {
+    border-left: 1px solid #0B4521;
+}
+
+
+footer, #footer, h1 {
+    border:0px !important;
+}
+
+/*TREE*/
+
+li[rel="category"][aria-level^="2"] {
+    background-color: #FFF !important;
+}
+
+li.jstree-open[rel="category"] {
+    background-color: #A3A2A2 !important;
+}
+
+li.jstree-open[rel="category"] > a {
+    color: #FFF !important;
+}
+
+li[rel="category"]{
+    background-color: #e6e6e6 !important;
+}
+
+li:not(.jstree-open)[rel="category"][aria-level^="2"]>a:hover {
+    background: #0B4521 !important;
+    color: #FFF !important;
+}
+
+li[rel="dataflow"],
+li[rel="virtual-dataflow"] {
+    background-color: #FAFAFA !important;
+}
+
+
+li[rel="dataflow"]>a:not(.jstree-clicked):hover {
+    background: #0B4521 !important;
+    color: #FFF !important;
+}
+
+li[rel="dataflow"]>a.jstree-clicked {
+    color: #0B4521 !important;
+    padding: 0px 0px 0px 2px !important;
+}
+
+li.jstree-closed > i.jstree-icon:before, li.jstree-open > i.jstree-icon:before {color:#0B4521 !important;}
+
+.hvkeys span.dialog-btn-info-extra:before {
+    color: #0B4521;
+}
+
+select.data-option {
+  color: #0B4521 !important;
+}
+
+select.data-option:hover {
+  color: #0B4521 !important;
+}
+
+li[rel="virtual-dataflow"]>a>i {
+    color:#0B4521;
+}
+
+.jstree-extrainfo {
+    color:#0B4521;
+}
+
+.tree-button i {
+    color:#0B4521;
+}
+
+/*TREE CUSTOM*/
+
+.jstree li[rel="category-scheme"] > a > .jstree-icon:before,
+.jstree li[rel="category"] > a > .jstree-icon:before,
+.jstree li[rel="dataflow"] > a > .jstree-icon:before{
+  color: #0B4521;
+}
+
+.jstree li[rel="category"] > a:hover > .jstree-icon:before{
+  color: #FFF;
+}
+
+.jstree li[rel="dataflow"] > a:hover > .jstree-icon:before{
+  color: #FFF;
+}
+
+li[rel="dataflow"] > a.jstree-clicked > .jstree-icon:before{
+  color: #0B4521;
+}
+
+.jstree-anchor > i.jstree-icon.jstree-checkbox:hover:before { color:#0B4521 !important;}
+.jstree-anchor.jstree-checked > i.jstree-icon.jstree-checkbox:hover:before { color:#0B4521 !important;}
+
+.removeRow i {
+    color:#fff;
+}
+
+.table_slice {
+  border-color: #FFF;
+  background-color: #3a945d !important;
+  color: #fff;
+}

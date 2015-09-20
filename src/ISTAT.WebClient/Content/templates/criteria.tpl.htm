@@ -1,0 +1,39 @@
+﻿<!-- page links -->
+
+
+<!-- help messages 
+<div class="help-message">${msg.html_criteria_help_1}</div>
+<div class="help-message">${msg.html_criteria_help_2}</div>
+-->
+
+<!-- list of existing criteria -->
+<div class="main-label">${msg.label_criteria}</div>
+<div id="count">
+    <div id="count-label">{{html msg.label_count}}</div>
+        <div id="count-number">
+            {{if query.count > -1}} 
+                ${query.count}
+            {{else}}
+                N/A
+            {{/if}}
+        </div>
+</div>
+<div id="${items.componentTabs.getId()}">
+    <ul>
+         {{each(i,component) query.Components}}
+         <!-- TODO check for coded/uncoded -->
+            <li><a href="#CRITERIA-${component.Component.Id}" title="${nsicGetLocalizedName(component.Concept)}"><span>${component.Component.Id}</span></a></li>
+         {{/each}}
+    </ul>
+
+{{each(i,component) query.Components}}
+    <div id="CRITERIA-${component.Component.Id}">
+        <div class="main-label">
+            ${nsicGetLocalizedName(component.Concept)}
+        </div>
+    </div>
+{{/each}}
+</div>
+<!-- the real edit form, the content depending on component's type -->
+<div id="${items.editForm.getId()}"/>
+

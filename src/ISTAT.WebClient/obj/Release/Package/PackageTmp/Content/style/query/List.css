@@ -1,0 +1,84 @@
+﻿DIV.queryContainer {
+    float:none;
+    width:60%;
+    margin: 0 auto;
+}
+
+DIV.queryContainer DIV.query {
+    margin:0px 0px 2px 0px;
+}
+ 
+DIV.queryContainer DIV.query:first-of-type, :not(.query) + .query {
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+
+DIV.queryContainer DIV.query:last-of-type {
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+}
+
+DIV.queryContainer DIV.query:nth-child(odd) {
+    background: #EAEAEA;
+}
+DIV.queryContainer DIV.query:nth-child(even) {
+    background: #ccc;
+}
+ 
+DIV.query {
+    width:100%;
+    height: 30px;
+}
+
+DIV.lista_vuota {
+    float:none;
+    width:100%;
+    padding: 5px;
+    border-bottom: 1px solid #d49f9f;
+}
+
+DIV.query_title {
+    float:left;
+    width:60%;
+    overflow : hidden;
+    padding: 8px 0px 0px 10px;
+}
+
+DIV.buttons {
+    float:right;
+    height: 100%;
+    width:35%;
+    text-align:right;
+}
+
+SPAN.button {
+    border-left:2px solid #FFF;
+    margin: 0px;
+    width: 42%;
+    padding: 10px 10px 10px 5px;
+    height: 100%;
+    text-align: center;
+    line-height: 30px;
+}
+input.button {
+    cursor:pointer;
+    background: none;
+    border: none;
+    font-weight: bold;
+    padding:0px;
+    text-transform: lowercase;
+}
+
+input.button:hover {
+    border-bottom:2px solid;
+}
+
+.button i {
+    font-size:15px;
+    margin:0px -3px 0px 0px;
+}
+
+.button i.icon-upload-2 {
+    margin:0px 2px 0px 3px;
+}
+ 

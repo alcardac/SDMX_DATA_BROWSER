@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISTAT.WebClientCachingService", "ISTAT.WebClientCachingService\ISTAT.WebClientCachingService.csproj", "{8E71B482-3975-44CC-9539-70EB514867F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISTAT.WebClient.WidgetComplements", "..\ISTAT.WebClient.WidgetComplements\ISTAT.WebClient.WidgetComplements.csproj", "{FF73C24F-5D27-4771-A398-CE2630DA46A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISTAT.WebClient.WidgetEngine", "..\ISTAT.WebClient.WidgetEngine\ISTAT.WebClient.WidgetEngine.csproj", "{72621094-F32D-496F-80AA-DF3E24532A87}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ISTAT.WebClientCachingService Setup", "ISTAT.WebClientCachingService Setup\ISTAT.WebClientCachingService Setup.vdproj", "{AD3E0CC4-24A4-4FBC-ADC6-40DABBCEA6CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISTAT.WebClientCachingMonitor", "..\ISTAT.WebClientCachingMonitor\ISTAT.WebClientCachingMonitor.csproj", "{15C4E083-5741-477B-A153-D0C24F80C245}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E71B482-3975-44CC-9539-70EB514867F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E71B482-3975-44CC-9539-70EB514867F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E71B482-3975-44CC-9539-70EB514867F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E71B482-3975-44CC-9539-70EB514867F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF73C24F-5D27-4771-A398-CE2630DA46A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF73C24F-5D27-4771-A398-CE2630DA46A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF73C24F-5D27-4771-A398-CE2630DA46A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF73C24F-5D27-4771-A398-CE2630DA46A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72621094-F32D-496F-80AA-DF3E24532A87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72621094-F32D-496F-80AA-DF3E24532A87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72621094-F32D-496F-80AA-DF3E24532A87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72621094-F32D-496F-80AA-DF3E24532A87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD3E0CC4-24A4-4FBC-ADC6-40DABBCEA6CA}.Debug|Any CPU.ActiveCfg = Debug
+		{AD3E0CC4-24A4-4FBC-ADC6-40DABBCEA6CA}.Release|Any CPU.ActiveCfg = Release
+		{15C4E083-5741-477B-A153-D0C24F80C245}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15C4E083-5741-477B-A153-D0C24F80C245}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15C4E083-5741-477B-A153-D0C24F80C245}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15C4E083-5741-477B-A153-D0C24F80C245}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

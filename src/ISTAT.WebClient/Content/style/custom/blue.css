@@ -1,0 +1,303 @@
+﻿footer, header, #footer, #header
+{
+    background:#3A5795 !important;
+    color:#FFF;
+}
+
+footer a:hover,footer a:link,footer a:visited,header a:hover,header a:link,header a:visited
+{
+    color:#FFF !important;
+}
+
+#footer a:hover,#footer a:link,#footer a:visited,#header a:hover,#header a:link,#header a:visited
+{
+    color:#FFF !important;
+}
+
+.show-theme:hover {
+    background: #272a30 !important;
+}
+
+menu, #menu
+{
+    background:#272a30 !important;
+}
+
+h1
+{
+    background:#D4DCED !important;
+    color:#272a30 !important;
+}
+
+h2
+{
+    color:#272a30 !important;
+}
+
+h3
+{
+    color: #272a30;
+}
+
+/*TOGGLER*/
+
+#split-toggler
+{
+    border-left: 2px solid #272a30;
+}
+
+#panel_info_extra_toggler
+{
+    border-right: 2px solid #272a30;
+}
+
+#panel_info_extra_toggler .close-right
+{
+    background: #272a30;
+    border: 1px solid;
+    border-color: #272a30;
+}
+
+.close-left
+{
+    background: #272a30;
+    border-color:#272a30;
+}
+
+.open-left
+{
+    background: #272a30;
+    border-color:#272a30;
+}
+
+/*TOGGLER*/
+
+.ui-widget-header
+{
+    background: #3A5795;
+}
+
+.div-container .div-heading
+{
+    background: #3A5795;
+}
+
+.color-option.selected, .color-option:hover {
+    background: #EAEDF2 !important;
+}
+
+input[type=radio]:checked:before {
+    color: #3A5795 !important;
+}
+
+.tb_data .tr_data .th_fixed
+{
+    background: #3A5795 !important;
+}
+
+.tb_data .tr_data .th_code
+{
+    background: #ABBBDF !important;
+}
+
+.tb_data .tr_data:nth-child(even)
+{
+  background: #D4DCED !important;
+}
+
+.tb_data, .tb_data tbody, .tb_data tr, .tb_data td, .tb_data th
+{
+    border-color: #98A2B6;
+}
+
+.tb_layout p
+{
+    background: #ABBBDF;
+    color: #272A30;
+}
+
+.tb_layout td
+{
+    background:#D4DCED;
+    border: 1px solid #ABBBDF;
+}
+
+.ul_layout_fxd .li_layout
+{
+    background: #FFF;
+    border:1px solid #3A5795;
+    color: #3A5795;
+}
+
+.ul_layout_cnt .li_layout
+{
+    background: #3A5795;
+    color: #FFF;
+}
+
+.data-option {
+    background: #D4DCED;
+    color: #3A5795;
+}
+
+.data-option:hover{
+    background: #3A5795;
+    color: #FFF;
+}
+
+.data-option-sel {
+    background: #FFFFFF;
+    color: #3A5795;
+    border-bottom-color:#3A5795 !important;
+}
+
+.saveBox
+{
+    border-color:#272A30;
+}
+
+/*QUERIES*/
+DIV.queryContainer DIV.query:nth-child(odd) {
+    background: #E7ECF5;
+}
+DIV.queryContainer DIV.query:nth-child(even) {
+    background: #CFDAEF;
+}
+/*WEBSERVICES*/
+DIV.ContWS:nth-child(odd) {
+    background: #E7ECF5;
+}
+DIV.ContWS:nth-child(even) {
+    background: #CFDAEF;
+}
+/*PROFILES*/
+DIV.queryContainer DIV.user:nth-child(odd) {
+    background: #E7ECF5;
+}
+DIV.queryContainer DIV.user:nth-child(even) {
+    background: #CFDAEF;
+}
+/*SUPERADMIN*/
+.superAdmin {
+  background: #3A5795 !important;
+}
+
+.configured {
+    background:#3A5795 !important;
+    color:#FFFFFF !important;
+}
+
+.setRow {
+    background: #000 !important;
+}
+
+.divRow {
+    border-color: #000 !important;
+}
+
+.half:nth-child(2) {
+    border-left: 1px solid #000;
+}
+
+footer, #footer, h1 {
+    border:0px !important;
+}
+
+/*TREE*/
+
+li[rel="category"][aria-level^="2"] {
+    background-color: #FFF !important;
+}
+
+li.jstree-open[rel="category"] {
+    background-color: #A3A2A2 !important;
+}
+
+li.jstree-open[rel="category"] > a {
+    color: #FFF !important;
+}
+
+li[rel="category"]{
+    background-color: #e6e6e6 !important;
+}
+
+li:not(.jstree-open)[rel="category"][aria-level^="2"]>a:hover {
+    background: #3A5795 !important;
+    color: #FFF !important;
+}
+
+li[rel="dataflow"],
+li[rel="virtual-dataflow"] {
+    background-color: #FAFAFA !important;
+}
+
+
+li[rel="dataflow"]>a:not(.jstree-clicked):hover {
+    background: #3A5795 !important;
+    color: #FFF !important;
+}
+
+li[rel="dataflow"]>a.jstree-clicked {
+    color: #3A5795 !important;
+    padding: 0px 0px 0px 2px !important;
+}
+
+li.jstree-closed > i.jstree-icon:before, li.jstree-open > i.jstree-icon:before {color:#3A5795 !important;}
+
+.hvkeys span.dialog-btn-info-extra:before {
+    color: #3A5795;
+}
+
+select.data-option {
+  color: #3A5795 !important;
+}
+
+select.data-option:hover {
+  color: #3A5795 !important;
+}
+
+
+li[rel="virtual-dataflow"]>a>i {
+    color:#3A5795;
+}
+
+.jstree-extrainfo {
+    color:#3A5795;
+}
+
+.tree-button i {
+  color:  #3A5795 !important;
+}
+
+.table_slice {
+  border-color: #FFF;
+  background-color: #3A5795 !important;
+  color: #fff;
+}
+
+/*TREE CUSTOM*/
+
+.jstree li[rel="category-scheme"] > a > .jstree-icon:before,
+.jstree li[rel="category"] > a > .jstree-icon:before,
+.jstree li[rel="dataflow"] > a > .jstree-icon:before{
+  color: #3A5795;
+}
+
+.jstree li[rel="category"] > a:hover > .jstree-icon:before{
+  color: #FFF;
+}
+
+.jstree li[rel="dataflow"] > a:hover > .jstree-icon:before{
+  color: #FFF;
+}
+
+li[rel="dataflow"] > a.jstree-clicked > .jstree-icon:before{
+  color: #FFF;
+}
+
+.jstree-anchor > i.jstree-icon.jstree-checkbox:hover:before { color:#3A5795 !important;}
+.jstree-anchor.jstree-checked > i.jstree-icon.jstree-checkbox:hover:before { color:#3A5795 !important;}
+
+.removeRow i {
+    color:#fff;
+}

@@ -1,0 +1,20 @@
+﻿footer, header
+{
+    background:#000 !important;
+}
+
+menu
+{
+    background:#4C4C4C !important;
+}
+
+/*IE 8*/
+#footer, #header
+{
+    background:#000 !important;
+}
+
+#menu
+{
+    background:#4C4C4C !important;
+}

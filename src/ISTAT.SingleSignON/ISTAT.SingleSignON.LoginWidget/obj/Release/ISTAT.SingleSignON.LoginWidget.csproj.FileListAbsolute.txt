@@ -1,0 +1,13 @@
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\bin\App_Data\DBUser.mdf
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\bin\App_Data\DBUser_log.ldf
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\bin\Service.Config
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\bin\ISTAT.SingleSignON.LoginWidget.dll
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\bin\ISTAT.SingleSignON.LoginWidget.pdb
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\bin\ISTAT.SingleSignON.Service.dll
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\bin\EntityFramework.dll
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\bin\ISTAT.SingleSignON.Service.pdb
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\bin\EntityFramework.xml
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\obj\Release\ISTAT.SingleSignON.LoginWidget.csprojResolveAssemblyReference.cache
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\obj\Release\ISTAT.SingleSignON.LoginWidget.dll
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\obj\Release\ISTAT.SingleSignON.LoginWidget.pdb
+D:\SDMX_RI\OpenPro\ISTAT.WebClient\src\ISTAT.SingleSignON\ISTAT.SingleSignON.LoginWidget\bin\Sql\ISTAT.SingleSignON.DB.sql

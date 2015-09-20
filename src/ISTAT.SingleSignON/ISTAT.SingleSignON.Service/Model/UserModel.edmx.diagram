@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0a26a997315f42f991461835ce04a574" Name="Diagram1">
+        <EntityTypeShape EntityType="DBUserModel.Age" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBUserModel.Agency" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBUserModel.Country" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBUserModel.Language" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBUserModel.Localisation" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBUserModel.Position" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBUserModel.Preference" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBUserModel.Role" Width="1.5" PointX="0.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBUserModel.Sex" Width="1.5" PointX="0.75" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBUserModel.Study" Width="1.5" PointX="0.75" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBUserModel.User" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBUserModel.UserPreference" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <AssociationConnector Association="DBUserModel.FK_User_Age" ManuallyRouted="false" />
+        <AssociationConnector Association="DBUserModel.FK_User_Agency" ManuallyRouted="false" />
+        <AssociationConnector Association="DBUserModel.FK_User_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="DBUserModel.FK_User_Language" ManuallyRouted="false" />
+        <AssociationConnector Association="DBUserModel.FK_User_Position" ManuallyRouted="false" />
+        <AssociationConnector Association="DBUserModel.FK_UserPreference_Preference" ManuallyRouted="false" />
+        <AssociationConnector Association="DBUserModel.FK_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="DBUserModel.FK_User_Sex" ManuallyRouted="false" />
+        <AssociationConnector Association="DBUserModel.FK_User_Study" ManuallyRouted="false" />
+        <AssociationConnector Association="DBUserModel.FK_UserPreference_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,137 @@
+﻿<style type="text/css">
+    DIV.container {
+        width: 200px;
+        border: 1px solid #d49f9f;
+        margin: 0 auto;
+    }
+    DIV.subcontainer {
+    } 
+
+    DIV.subcontainer_dati {
+        width: 90%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+
+    DIV.button {
+        width: 90%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+
+    DIV.voce {
+        margin-bottom: 10px;
+    }
+
+    a.link:hover {
+        text-decoration: underline;
+        color: #993333;
+    }
+
+    input.button_login {
+        width: 50%;
+        margin-left: 40px;
+    }
+</style>
+
+
+<script type="text/javascript">
+ 
+    var local_msg;
+    var local_interface;
+
+    function checkLetters(str) {
+        var check = false;
+        if ((str.indexOf("<") > -1) || (str.indexOf(">") > -1)) {
+            check = true;
+        }
+
+        return check;
+    }
+
+    function LocalizeString(data) {
+        local_msg = {
+            login_effettuato: 'Login Effettuato ',
+            login_fallito: 'Nome Utente o Password Non Corretti '
+        }
+        if (data.local_msg != null) {
+            $.extend(local_msg, data.local_msg);
+        } 
+       
+        local_interface = {
+            utente: 'User',
+            password: 'Passw',
+            button: 'Login'
+        }
+        if (data.local_interface != null) {
+            $.extend(local_interface, data.local_interface);
+        }
+        
+        
+    }
+
+    function SetupWidget_widgetLogin(data, successCall, errorCall) {
+       
+        LocalizeString(data);
+        
+        $('#utente div label').text(local_interface.utente);
+        $('#password_div_label').text(local_interface.password);
+        $('#id_button_login').val(local_interface.button);
+
+        $("#id_button_login").click(function () {
+            if ((checkLetters($('#id_utente').val())) || (checkLetters($('#id_psw').val()))) {
+                errorCall(local_msg.login_fallito);
+            } else {
+                try {
+                dati = '{ "Email":"' + $('#id_utente').val() + '", "Password": "' + $('#id_psw').val() + '" }';
+
+                    $.ajax({
+                        type: "POST",
+                        url: data.endpoint + "/service/Login",
+                        async: true,
+                        data: dati,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (msg) {
+                            successCall(msg);
+                        },
+                        error: function (msg) {
+                            errorCall(local_msg.login_fallito);
+                        }
+                    });
+                }
+                catch (ex) {
+                    errorCall(ex);
+                }
+            }
+            
+        });
+
+    }
+
+
+
+
+</script>
+<div class="container">
+    <div class="subcontainer">
+        <div class="subcontainer_dati">
+            <div class="voce" id="utente">
+                <div>
+                    <label id="utente div label"></label></div>
+                <div>
+                    <input id="id_utente" type="text"/></div>
+            </div>
+            <div class="voce" id="psw">
+                <div>
+                    <label id="password_div_label"></label></div>
+                <div>
+                    <input id="id_psw" type="password" /></div>
+            </div>
+        </div>
+        <div class="button">
+            <input class="button_login" id="id_button_login" type="button">
+        </div>
+    </div>
+</div>

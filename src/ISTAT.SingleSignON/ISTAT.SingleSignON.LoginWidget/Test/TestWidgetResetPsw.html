@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="DivLogin">
+
+
+    </div>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript">
+
+        var _endPoint = "http://localhost:22920";
+        jQuery(document).ready(function () {
+
+            var data = {
+                endpoint: _endPoint,
+                code_user: "c6e91b9b-cf81-4a34-acc6-645800dfd44f",
+                local_msg: {
+                    reset_effettuato: "E' stata inviata una mail a [mail] con la nuova password",//il campo [mail] verrà sostituito con la mail dell'utente
+                    reset_fallito: 'Operazione Non Riuscita',
+                    sender: 'mittente@mittente.it',
+                    mailTemplate: '<div class="mail_template"><p class="mail_template">ciao la tua nuova password è: ##NEWPASSWORD## </p></div>',
+                    subject_mail: 'Invio nuova password',
+                    mailSMTPServer: 'SMTP.ISTAT.IT',
+                    compila: 'Inserisci una mail',
+                },
+                local_interface :{
+                    label: "Email",
+                }
+            };
+
+            $("#DivLogin").load(_endPoint + "/Widget/widgetResetPassword.html", null, function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    SetupWidget_widgetResetPassword(data, OnSuccessLogin, OnFailLogin);
+                } else if (statusTxt == "error") {
+                    alert("Error: " + xhr.status + ": " + xhr.statusText);
+                }
+            });
+
+        });
+        function OnSuccessLogin(msg) {
+
+            alert("dal client " + msg);
+        }
+        function OnFailLogin(msg) {
+
+            alert("dal client " + msg);
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+﻿<div class="result_main">
+    <h3 title="${dataflow.id}+${dataflow.agency}+${dataflow.version}">
+        {{if dataflow.name}}
+            {{html dataflow.name}}
+        {{else}}
+            ${dataflow.id}+${dataflow.agency}+${dataflow.version}
+        {{/if}}
+    </h3>
+    {{if dataflow.description}}<p>{{html dataflow.description}}</p>{{/if}}
+</div>
