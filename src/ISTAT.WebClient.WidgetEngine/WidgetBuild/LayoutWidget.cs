@@ -92,30 +92,33 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
                 //if (this.SessionObj.DafaultLayout == null)
                 this.SessionObj.DafaultLayout = new Dictionary<string, LayoutObj>();
 
-                // Get automatic timeserie layout
-                System.Data.SqlClient.SqlConnection Sqlconn = new System.Data.SqlClient.SqlConnection(connectionStringSetting.ConnectionString);
-                Sqlconn.Open();
-                string sqlquery = string.Format("Select * from Template where [tmplKey]='{0}'",
-                    new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(
-                    LayObj.Dataflow.id + "+" + LayObj.Dataflow.agency + "+" + LayObj.Dataflow.version + "+" + LayObj.Configuration.EndPoint).Replace("'", "''"));
-                using (System.Data.SqlClient.SqlCommand comm = new System.Data.SqlClient.SqlCommand(sqlquery, Sqlconn))
+                //if (connectionStringSetting.ConnectionString!=null && connectionStringSetting.ConnectionString.ToLower() != "file")
+                if (connectionStringSetting.ConnectionString != null )
                 {
-                    var reader = comm.ExecuteReader();
-                    if (reader.Read())
+                    // Get automatic timeserie layout
+                    System.Data.SqlClient.SqlConnection Sqlconn = new System.Data.SqlClient.SqlConnection(connectionStringSetting.ConnectionString);
+                    Sqlconn.Open();
+                    string sqlquery = string.Format("Select * from Template where [tmplKey]='{0}'",
+                        new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(
+                        LayObj.Dataflow.id + "+" + LayObj.Dataflow.agency + "+" + LayObj.Dataflow.version + "+" + LayObj.Configuration.EndPoint).Replace("'", "''"));
+                    using (System.Data.SqlClient.SqlCommand comm = new System.Data.SqlClient.SqlCommand(sqlquery, Sqlconn))
                     {
-                        string layout = reader.GetString(reader.GetOrdinal("Layout"));
-                        this.SessionObj.DafaultLayout[Utils.MakeKey(df)] =
-                            (LayoutObj)new JavaScriptSerializer().Deserialize(layout, typeof(LayoutObj));
+                        var reader = comm.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            string layout = reader.GetString(reader.GetOrdinal("Layout"));
+                            this.SessionObj.DafaultLayout[Utils.MakeKey(df)] =
+                                (LayoutObj)new JavaScriptSerializer().Deserialize(layout, typeof(LayoutObj));
 
-                        this.SessionObj.DafaultLayout[Utils.MakeKey(df)].block_axis_x = reader.GetBoolean(reader.GetOrdinal("BlockXAxe"));
-                        this.SessionObj.DafaultLayout[Utils.MakeKey(df)].block_axis_y = reader.GetBoolean(reader.GetOrdinal("BlockYAxe"));
-                        this.SessionObj.DafaultLayout[Utils.MakeKey(df)].block_axis_z = reader.GetBoolean(reader.GetOrdinal("BlockZAxe"));
+                            this.SessionObj.DafaultLayout[Utils.MakeKey(df)].block_axis_x = reader.GetBoolean(reader.GetOrdinal("BlockXAxe"));
+                            this.SessionObj.DafaultLayout[Utils.MakeKey(df)].block_axis_y = reader.GetBoolean(reader.GetOrdinal("BlockYAxe"));
+                            this.SessionObj.DafaultLayout[Utils.MakeKey(df)].block_axis_z = reader.GetBoolean(reader.GetOrdinal("BlockZAxe"));
 
 
+                        }
                     }
+                    Sqlconn.Close();
                 }
-                Sqlconn.Close();
-
                 DefaultLayoutResponseObject defaultLayoutResponseObject = new DefaultLayoutResponseObject();
                 defaultLayoutResponseObject.DefaultLayout = (this.SessionObj.DafaultLayout.ContainsKey(Utils.MakeKey(df))) ? this.SessionObj.DafaultLayout[Utils.MakeKey(df)] : null;
 
@@ -186,7 +189,18 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
                 d.AgencyId == this.LayObj.Dataflow.agency && d.Id == this.LayObj.Dataflow.id && d.Version == this.LayObj.Dataflow.version);
 
             ISdmxObjects Structure = null;
+/*
             if (dataflow != null)
+            {
+                Structure = GetSDMXObject.GetStructure(dataflow, this.SessionObj.SdmxObject.DataStructures);
+                Structure.AddDataflow(dataflow);
+            }
+            */
+            if (dataflow != null && this.SessionObj.SdmxObject.HasConceptSchemes)
+            {
+                Structure = this.SessionObj.SdmxObject;
+            }
+            else if (dataflow != null && !this.SessionObj.SdmxObject.HasConceptSchemes)
             {
                 Structure = GetSDMXObject.GetStructure(dataflow, this.SessionObj.SdmxObject.DataStructures);
                 Structure.AddDataflow(dataflow);

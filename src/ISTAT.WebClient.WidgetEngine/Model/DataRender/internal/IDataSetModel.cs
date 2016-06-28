@@ -69,6 +69,8 @@
         /// </summary>
         OrderedDictionary SliceKeyValues { get; }
 
+        //StringDictionary SliceKeyValues { get; }
+
         /// <summary>
         /// Gets all keys used to define the slice (z axis) of the data which must be rendered.
         /// </summary>
@@ -132,6 +134,8 @@
         /// </summary>
         void Initialize();
 
+        void Initialize(List<DataCriteria> Criterias);
+
         /// <summary>
         /// Reload the <see cref="AllValidKeys"/> in order to get the current localized description
         /// </summary>
@@ -177,6 +181,8 @@
         /// After this function is called, all other model's data (like the valid values for slice keys) may change.
         /// </remarks>
         void UpdateAxis(List<string> slice, List<string> horizontal, List<string> vertical);
+
+        void UpdateAxis(List<string> slice, List<string> horizontal, List<string> vertical, List<DataCriteria> Criterias);
 
         /// <summary>
         /// Updates the value for a slice key.

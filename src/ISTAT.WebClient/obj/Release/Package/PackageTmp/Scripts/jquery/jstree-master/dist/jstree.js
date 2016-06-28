@@ -2461,14 +2461,17 @@
 
 		    //***************************************
 		    // Valerio Istat 27/07/2015 - Aggiunge bottone info su foglie di tipo df
+            // Fabio Istat 21/10/2015 - Aggiunge il bottone solo se esiste una descrizione df
 		    //***************************************
 			if (obj.type == "virtual-dataflow"
                 || obj.type == "xs-dataflow"
                 || obj.type == "dataflow") {
-			    if (obj.a_attr.hasOwnProperty('DataflowDesc') && obj.a_attr.DataflowDesc!=null) {
+			    if (obj.a_attr.hasOwnProperty('DataflowDesc') && obj.a_attr.DataflowDesc != null && obj.a_attr.DataflowDesc != '[]') {
 
 			        var _temp3 = document.createElement('I');
-			        _temp3.className = 'jstree-extrainfo jstree-icon jstree-themeicon jstree-themeicon-custom icon-info';
+			        //_temp3.className = 'jstree-anchor jstree-icon jstree-themeicon jstree-themeicon-custom icon-info';
+			        _temp3.className = 'icon-info';
+			        
 			        _temp3.setAttribute('role', 'presentation');
 			        _temp3.setAttribute('onclick', 'ShowInfoExtraDF(this);');
 

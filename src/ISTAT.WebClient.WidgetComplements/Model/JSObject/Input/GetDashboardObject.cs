@@ -13,6 +13,12 @@ namespace ISTAT.WebClient.WidgetComplements.Model.JSObject
         
     }
 
+    public class WidgetInfo
+    {
+        public string dsbTitle { get; set; }
+        public string wdgTitle { get; set; }
+    }
+
     public class WidgetObject
     {
         public int id { get; set; }

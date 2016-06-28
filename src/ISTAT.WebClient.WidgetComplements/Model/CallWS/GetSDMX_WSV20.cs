@@ -43,6 +43,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
     using ISTAT.WebClient.WidgetComplements.Model.Enum;
     using ISTAT.WebClient.WidgetComplements.Model.Exceptions;
     using ISTAT.WebClient.WidgetComplements.Model.Settings;
+    using ISTAT.WebClient.WidgetComplements.Model.JSObject;
 
     /// <summary>
     /// An implementation of the <see cref="IGetSDMX"/> that retrieves structural metadata and data from a SDMX v2.0 web service
@@ -125,6 +126,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
             this._defaultHeader = new HeaderImpl("NSIClient", "NSIClient");
             Utils.PopulateHeaderFromSettings(this._defaultHeader);
         }
+
 
         #endregion
 
@@ -257,6 +259,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
 
             return this.GetCodelist(dataflow, codelistRef, criterias, info, Constrained);
         }
+
         
         /// <summary>
         /// Get the maximum number of observations that can be retrieved given the specified criteria
@@ -734,6 +737,61 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
             }
         }
 
+        /// <summary>
+        /// Retrieves all available categorisations.
+        /// </summary>
+        /// <returns>
+        ///   a list of &amp;lt;c&amp;gt;ISdmxObjects&amp;lt;/c&amp;gt; instances; the result won&amp;apos;t be &amp;lt;c&amp;gt;null&amp;lt;/c&amp;gt; if there are no
+        ///   dataflows, instead an empty list will be returned
+        /// </returns>
+        public ISdmxObjects RetrieveCategorisations()
+        {
+
+            Logger.Info(Resources.InfoGettingCategorySchemes);
+
+            ISdmxObjects response = new SdmxObjectsImpl();
+
+            //get dataflows
+            var dataflowRefBean = new StructureReferenceImpl(SdmxStructureType.GetFromEnum(SdmxStructureEnumType.Dataflow));
+            //get category scheme
+            var catSch = new StructureReferenceImpl(SdmxStructureType.GetFromEnum(SdmxStructureEnumType.CategoryScheme));
+
+            IList<IStructureReference> refs = new List<IStructureReference>();
+            refs.Add(catSch);
+            refs.Add(dataflowRefBean);
+            try
+            {
+                response = this.SendQueryStructureRequest(refs, false);
+
+                if (response.CategorySchemes != null && response.Dataflows != null)
+                {
+                    Logger.Info(Resources.InfoSuccess);
+                }
+            }
+            catch (NsiClientException e)
+            {
+                Logger.Error(Resources.ExceptionGettingDataflow);
+                Logger.Error(e.Message, e);
+                throw;
+            }
+            catch (DataflowException e)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(Resources.ExceptionGettingDataflow);
+                Logger.Error(e.Message, e);
+                throw new NsiClientException(Resources.ExceptionGettingDataflow, e);
+            }
+            if (response.Dataflows != null && response.Dataflows.Count == 0)
+            {
+                throw new DataflowException(Resources.NoResultsFound);
+            }
+            return response;
+        }
+
+
 
         /// <summary>
         /// Constructs a SOAP envelope request, with a body that includes the operation as element and the W3C Document and saves the SDMX Part of the response to the specified ouput
@@ -797,6 +855,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
             webRequest.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
 
             string soapAction = this._wsdlConfig.GetSoapAction(operationName);
+            //if (soapAction != null && soapAction != "")
             if (soapAction != null)
             {
                 webRequest.Headers.Add(SoapConstants.SoapAction, soapAction);
@@ -868,6 +927,31 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
             var doc = new XmlDocument();
             doc.LoadXml(xdoc.ToString());
             this.SendRequest(doc, operation, tempFileName);
+        }
+
+
+        /// <summary>
+        /// Get the SDMX Query Request
+        /// </summary>
+        /// <param name="query">
+        /// The SDMX Query
+        /// </param>
+        /// <param name="operation">
+        /// The Web Service function
+        /// </param>
+        /// <param name="tempFileName">
+        /// The temp file name
+        /// </param>
+       /* private void SendSdmxQuery(
+            IDataQuery query,
+            SDMXWSFunction operation,
+            string tempFileName)*/
+       public void GetSdmxQuery(IDataQuery query, out string request)
+        {
+            IDataQueryBuilderManager dataQueryBuilderManager = new DataQueryBuilderManager(new DataQueryFactory());
+            var xdoc = dataQueryBuilderManager.BuildDataQuery(query, new QueryMessageV2Format());
+            var doc = new XmlDocument();
+            request=xdoc.ToString();
         }
 
         /// <summary>

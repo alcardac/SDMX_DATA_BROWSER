@@ -1,5 +1,4 @@
-﻿
-namespace ISTAT.WebClient.WidgetComplements.Model
+﻿namespace ISTAT.WebClient.WidgetComplements.Model.JSObject
 {
     using ISTAT.WebClient.WidgetComplements.Model.Properties;
     using ISTAT.WebClient.WidgetComplements.Model.Exceptions;
@@ -11,11 +10,19 @@ namespace ISTAT.WebClient.WidgetComplements.Model
     using Newtonsoft.Json;
     using ISTAT.WebClient.WidgetComplements.Model.Enum;
 
-    public class EndpointSettings: ICloneable
+    public class EndpointSettings : ICloneable
     {
+        private EndpointSettings endpointSetting;
+
         public EndpointSettings()
         {
             this.Prefix = "web";
+        }
+
+        public EndpointSettings(EndpointSettings endpointSetting)
+        {
+            // TODO: Complete member initialization
+            this.endpointSetting = endpointSetting;
         }
 
         public string Locale { get; set; }

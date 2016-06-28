@@ -1,4 +1,5 @@
 ﻿using ISTAT.WebClient.WidgetComplements.Model;
+using ISTAT.WebClient.WidgetComplements.Model.Enum;
 using ISTAT.WebClient.WidgetComplements.Model.CallWS;
 using ISTAT.WebClient.WidgetComplements.Model.JSObject;
 using System;
@@ -33,5 +34,8 @@ namespace ISTAT.WebClient.WidgetEngine.Model
             return obj;
             
         }
+
+
     }
+
 }

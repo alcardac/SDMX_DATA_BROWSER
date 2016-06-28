@@ -2,17 +2,17 @@
 <%@ Import Namespace="ISTAT.WebClient.WidgetComplements.Model.App_GlobalResources" %>
 
 <asp:Content ID="Headcontainer" ContentPlaceHolderID="ContentHeader" runat="server">
-    <script src="<%=Url.Content("~/Scripts/istat-widget-manager.js")%>"></script>
-    <script src="<%=Url.Content("~/Scripts/istat-widget-dataset.js")%>"></script>
-    <script src="<%=Url.Content("~/Scripts/istat-client.js")%>"></script>
-    <script src="<%=Url.Content("~/Scripts/pages/redirectLogin.js")%>"></script>
-    <script src="<%=Url.Content("~/Scripts/pages/dashboardElements.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/istat-widget-manager.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/istat-widget-dataset.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/istat-client.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/pages/redirectLogin.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/pages/dashboardElements.js")%>"></script>
     
-    <link href="<%=Url.Content("~/Content/style/widgets/Layout.css")%>" rel="stylesheet" />
+    <link href="<%=ResolveClientUrl("~/Content/style/widgets/Layout.css")%>" rel="stylesheet" />
     <script type="text/javascript">
         // redirect to login page if access denied
         if (sessionStorage.user_code == null) {
-            window.location.href = "<%=Url.Content("~/")%>WebClient/Login";
+            window.location.href = "<%=ResolveClientUrl("~/")%>WebClient/Login";
         };
     </script>
 
@@ -136,6 +136,7 @@
                     
                                 "<div class='div_inputPop'><div class='lab_inputPop'><%=Messages.label_useUncategorysed %></div><div class='divInp'><input class='inputPop' id='UseUncategorysed' type='checkbox' value='true'/></div><div class='clear-box'></div></div>" +
                                 "<div class='div_inputPop'><div class='lab_inputPop'><%=Messages.label_useVirtualDF %></div><div class='divInp'><input class='inputPop' id='UseVirtualDf' type='checkbox' value='true'/></div><div class='clear-box'></div></div>" +
+                                "<div class='div_inputPop'><div class='lab_inputPop'>ORDINAMENTO</div><div class='divInp'><input class='inputPop' id='Ordinamento' type='text'/></div><div class='clear-box'></div></div>" +      
                                 "</div>");
 
             $(createWS).dialog({
@@ -189,6 +190,7 @@
                             var aus = $(createWS).find("#ProxyServerPort").val();
                             var b_ProxyServerPort = ($.isNumeric(aus)) ? parseInt(aus) : 0;
                             
+
                             var ws_obj = {
                                 IDNode:$(createWS).find("#IDNode").val(),//"ID",
                                 Title: $(createWS).find("#Title").val(),//"SEP",
@@ -212,8 +214,10 @@
                                 Active: false,
                                 UseUncategorysed: b_UseUncategorysed,
                                 UseVirtualDf: b_UseVirtualDf,
+                                //aggiunta fabio
+                                Ordinamento: $(createWS).find("#Ordinamento").val()
+                                //fine aggiunta
                             };
-
                             
                             var div3 = document.createElement('div');
                             $(div3).addClass('divInput');
@@ -245,10 +249,19 @@
                             $("<i class='icon-trash'></i>").appendTo(div4);
                             $(button).appendTo(div4);
 
+                            //aggiunta fabio
+                            var div5 = document.createElement('div');
+                            $(div5).addClass('divLabel');
+                            $(div5).text(ws_obj.Ordinamento);
+                            //fine
+
                             $(div3).appendTo(div);
                             $(div2).appendTo(div);
                             $(div4).appendTo(div);
-                            
+
+                            //aggiunta fabio
+                            $(div5).appendTo(div);
+                            //fine
                             $(div).appendTo("#containerWS");
 
                             var t = $(div3).parents('.ContWS');
@@ -321,13 +334,17 @@
             var minSel = false;
             var listWS = [];
 
-            $(".check_n").each(function () {
+            //$(".check_n").each(function () {
+            //modifica fabio make _index to Ordinamento
+            $(".check_n").each(function (_index) {
                 var _value_obj = clientParseJsonToObject(this.value);
+                //aggiunta fabio
+                _value_obj.Ordinamento=_index;
+                //fine aggiunta
                 _value_obj.active = $(this).prop("checked");
                 if (_value_obj.active) minSel = true;
                 listWS.push(_value_obj);
             });
-            //alert(listWS.toLocaleString());
             if (minSel) {
                 var _view_tree = ($("#view_tree").prop("checked")) ? "true" : "false";
                 var _view_tree_req = ($("#view_tree_req").prop("checked")) ? "true" : "false";
@@ -342,12 +359,13 @@
                     endpoints: listWS
                 };
 
+                
 
                 clientPostJSON(
                     "Settings/SetSettings", clientParseObjectToJson(data),
                     function (jsonString) {
 
-                        DrawHTML_ListWs("#containerWS");
+                        DrawHTML_ListWsNEW("#containerWS");
 
                         if (callBack != undefined) callBack();
                     },
@@ -388,7 +406,7 @@
             clientPostJSON(
                     "Settings/GetSettings", null,
                     function (jsonString) {
-
+                        
                         var _sett_obj = clientParseJsonToObject(jsonString);
                         if (_sett_obj != "") {
 
@@ -414,7 +432,6 @@
                             var WS_no_view = true;
 
                             $.each(endpoints, function (index, value) {
-
                                 var hideDiv = false;
                                 idxPag++;
                                 if (idxPag < pagFrom || idxPag > (pagTo - 1)) {
@@ -423,8 +440,6 @@
                                 } else {
                                     WS_no_view = false;
                                 }
-
-                                
                                 var div3 = document.createElement('div');
                                 $(div3).addClass('divInput');
 
@@ -442,6 +457,8 @@
                                 var div2 = document.createElement('div');
                                 $(div2).addClass('divLabel');
                                 $(div2).text(value.Title + " - " + value.EndPoint);
+
+
 
                                 var div4 = document.createElement('div');
                                 $(div4).addClass('divButton');
@@ -503,8 +520,161 @@
         }
 
 
+        //nuova funzione fabio 
+        function DrawHTML_ListWsNEW(dest) {
+            $(dest).empty();
+            $(dest).append("<i class='icon-spin6 animate-spin'></i>"+client.main.messages.text_wait);
+            var list_container=document.createElement("div");
+
+            var ul=document.createElement("ul");
+            $(ul).attr('id', "listWS");
+            $(ul).css("list-style-type", "none"); 
+            $(ul).appendTo(list_container);
+            
+            
+            clientPostJSON(
+                    "Settings/GetSettings", null,
+                    function (jsonString) {
+                        
+                        var _sett_obj = clientParseJsonToObject(jsonString);
+                        if (_sett_obj != "") {
+
+                            var div_pag = DrawHTML_Pagging(
+                                curIdxPaging,
+                                _sett_obj.endpoints.length,
+                                elemnPaging,
+                                function (idx) {
+                                    curIdxPaging = idx;
+                                    DrawHTML_ListWs("#containerWS");
+                                }
+                            );
+                            
+                            $(div_pag).appendTo(list_container);
+                            $(div_pag).buttonset();
+                           
+                            var pagFrom = (curIdxPaging * elemnPaging);
+                            var pagTo = pagFrom + elemnPaging;
+                            var idxPag = -1;
+                            //alert("curIdxPaging: " + curIdxPaging+"pagFrom: " + pagFrom+"pagTo: " + pagTo);
+                            endpoints= _sett_obj.endpoints;
+
+                            //aggiunta fabio
+                            endpoints.sort(function(obj1, obj2) {
+                                // Ascending: sort by Ordinamento
+                                return obj1.Ordinamento - obj2.Ordinamento;
+                            });
+                            //fine aggiunta 
+
+                            var WS_no_view = true;
+
+                            $.each(endpoints, function (index, value) {
+                                var hideDiv = false;
+                                idxPag++;
+                                if (idxPag < pagFrom || idxPag > (pagTo - 1)) {
+                                    hideDiv = true;
+                                    //alert("check");
+                                } else {
+                                    WS_no_view = false;
+                                }
+                                var div3 = document.createElement('div');
+                                $(div3).addClass('divInput');
+
+                                //ripristino l'ordinamento secondo l'index degli oggetti
+                                value.Ordinamento=index;
+
+
+                                var input = document.createElement('input');
+                                $(input).attr('type', 'checkbox');
+                                $(input).attr('name', value.EndPoint);
+                                $(input).attr('value', clientParseObjectToJson(value));
+
+                                if (value.Active == true) $(input).attr('checked', 'checked');
+
+                                $(input).attr('onclick', "saveAll();");
+                                $(input).addClass('check_n');
+                                $(input).appendTo(div3);
+
+                                var div2 = document.createElement('div');
+                                $(div2).addClass('divLabel');
+                                //$(div2).text(value.Title + " - " + value.EndPoint);
+                                $(div2).text(value.Title + " - " + value.EndPoint + " - " + value.Ordinamento);
+
+
+                                var div4 = document.createElement('div');
+                                $(div4).addClass('divButton');
+
+                                var button = document.createElement('input');
+                                $(button).attr('type', 'button');
+                                $(button).attr('value', "<%= Messages.label_remove_query%>");
+
+                                $(button).addClass('RemoveWS');
+                                $("<i class='icon-trash'></i>").appendTo(div4);
+                                $(button).appendTo(div4);
+                                $(button).click(function () { removeWS($(this).parents('.ContWS')); });
+
+                                var li = document.createElement('li');
+
+                                var idTit = value.Title.replace(/ /g, '_');
+
+                                $(div3).appendTo(li);
+                                $(div2).appendTo(li);
+                                $(div4).appendTo(li);
+                                $("<div class='clear-box'></div>").appendTo(li);
+                                $(li).addClass('ContWS');
+
+                                $(li).appendTo(ul);
+
+                                if (hideDiv) {
+                                    $(li).hide();
+                                }
+                                
+                            });
+
+                            if (WS_no_view == true) {
+                                $('#btn_pag0').click();
+                            }
+                        }
+
+                        $("#addWS").empty();
+                        $("#id_view_tree").empty();
+                        $("#id_view_tree_req").empty();
+                        $("#id_more_ws").empty();
+                        $("#id_view_uncategorised").empty();
+                        $("#addWS").append('<input id="add_wbs" class="mainButtons" type="button" value="<%= Messages.label_addWebService%>" onclick="addWebServ();"/>');
+                    $("#id_view_tree").append('<input id="view_tree" type="checkbox" ' + (((_sett_obj != "") ? _sett_obj.settings.view_tree == true : false) ? 'checked="checked"' : '') + ' name="view_tree" onclick="saveAll();"/><i class="icon-flow-cascade"></i><label><%= Messages.label_tree_display%></label>');
+                        $("#id_view_tree_req").append('<input id="view_tree_req" type="checkbox" ' + (((_sett_obj != "") ? _sett_obj.settings.view_tree_req == true : false) ? 'checked="checked"' : '') + ' name="view_tree_req" onclick="saveAll();"/><i class="icon-flow-cascade"></i><label><%= Messages.label_tree_display_request%></label>');
+                        $("#id_more_ws").append('<input id="more_ws" type="checkbox" ' + (((_sett_obj != "") ? _sett_obj.settings.view_tree_select == true : false) ? 'checked="checked"' : '') + ' name="more_ws" onclick="saveAll();"/><i class="icon-table"></i><label><%= Messages.label_more_web_services%></label>');
+                    
+                        $(".mainButtons").button();
+                        
+                        $(dest).empty();
+                        $(list_container).appendTo(dest);
+
+                    },
+                function (event, status, errorThrown) {
+                    errorThrown = 'SetupJsonTree';
+                    clientAjaxError(event, status, errorThrown);
+                    return;
+                }, false);
+        }
+
+
+
+
         jQuery(document).ready(function () {
-            DrawHTML_ListWs("#containerWS");
+            DrawHTML_ListWsNEW("#containerWS");
+            
+            //aggiunta fabio
+            $('#listWS').sortable({
+                items: "> li",
+                start: function (e, ui) {
+                    ui.placeholder.height(ui.item.children().height());
+                },
+                stop: function(event, ui) {
+                    saveAll();
+                }
+            });
+            //fine aggiunta
         });
 
     </script>

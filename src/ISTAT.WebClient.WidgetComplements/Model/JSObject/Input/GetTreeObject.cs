@@ -10,7 +10,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model.JSObject
     public class GetTreeObject
     {
         public EndpointSettings Configuration { get; set; }
-       
+        public string Locale { get; set; }
 
     }
 }

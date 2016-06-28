@@ -66,11 +66,13 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
             ChartObj = chartObj;
             SessionObj = sessionObj;
             GetSDMXObject = WebServiceSelector.GetSdmxImplementation(this.ChartObj.Configuration);
+            //sessionObj.SdmxObject.
             BDO = new BaseDataObject(chartObj.Configuration, System.IO.Path.GetTempFileName());
 
             this.cFrom = cFrom;
             this.cTo = cTo;
         }
+
 
         public SessionImplObject GetDataChart()
         {
@@ -133,7 +135,9 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
                         codes.Add(codeItem.Id, TextTypeHelper.GetText(codeItem.Names, this.ChartObj.Configuration.Locale));
                     codemap.Add(ConceptId, codes);
                     
-                    var useFix20 = (ConfigurationManager.AppSettings["UseFix20Criteria"].ToString().ToLower() == "true");
+                    //var useFix20 = (ConfigurationManager.AppSettings["UseFix20Criteria"].ToString().ToLower() == "true");
+                    //fabio prova
+                    var useFix20 = (ConfigurationManager.AppSettings["UseFix20Criteria"].ToString().ToLower() == "false");
                     if (useFix20)
                     {
                         if (!(codelist.Items.Count > 1)) {
@@ -177,6 +181,20 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
 
                 IDataSetStore store = BDO.GetDataset(df, kf, Criterias, ref DataCache, false);
 
+                string DBFileName = null;
+                //IDataSetStore store = BDO.FindDataCache(df, kf, Criterias, ref DataCache, false, out DBFileName);
+                //if (store == null) store = BDO.GetDataset(df, kf, Criterias, ref DataCache);                
+                //if (store == null) store = BDO.GetDataset(df, kf, Criterias, ref DataCache, false);
+
+
+
+
+
+
+                //da vedere se eliminare aggiunta fabio per svuotare datacache
+                SessionObj.DataCache = null;
+               
+                
                 SessionObj.DataCache = DataCache;
 
                 DataObjectForStreaming DataStream = new DataObjectForStreaming()
@@ -245,13 +263,43 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
                 }
                 if (primary_max != null && primary_min!=null)
                 {
-                    ChartResponse.primary_max = (decimal)primary_max;
-                    ChartResponse.primary_min = (decimal)primary_min;
+                    //decimal delta = (decimal)primary_max - (decimal)primary_min;
+                    //ChartResponse.primary_max = (decimal)primary_max;
+                    //ChartResponse.primary_min = (decimal)primary_min;
+
+                    if (primary_max > 0)
+                    { ChartResponse.primary_max = (decimal)(primary_max * 1.1m); }
+                    else if (primary_max == 0) { ChartResponse.primary_max = (decimal)-1.1m; }
+                    else
+                    { ChartResponse.primary_max = (decimal)(primary_max * 0.9m); }
+
+                    if (primary_min > 0)
+                    { ChartResponse.primary_min = (decimal)(primary_min * 0.9m); }
+                    else if (primary_min == 0) { ChartResponse.primary_min = (decimal)-1.1m; }
+                    else
+                    { ChartResponse.primary_min = (decimal)(primary_min * 1.1m); }
+
+
+
                 } 
                 if (secondary_max != null && secondary_min!=null)
                 {
-                    ChartResponse.secondary_max = (decimal)secondary_max;
-                    ChartResponse.secondary_min = (decimal)secondary_min;
+                    //ChartResponse.secondary_max = (decimal)secondary_max;
+                    //ChartResponse.secondary_min = (decimal)secondary_min;
+
+                    if (secondary_max > 0)
+                    { ChartResponse.secondary_max = (decimal)(secondary_max * 1.1m); }
+                    else if (secondary_max == 0) { ChartResponse.secondary_max = (decimal) -1.1m; }
+                    else
+                    { ChartResponse.secondary_max = (decimal)(secondary_max * 0.9m); }
+
+                    if (secondary_min > 0)
+                    { ChartResponse.secondary_min = (decimal)(secondary_min * 0.9m); }
+                    else if (secondary_min == 0) { ChartResponse.secondary_min = (decimal) -1.1m; }
+                    else
+                    { ChartResponse.secondary_min = (decimal)(secondary_min * 1.1m); }
+
+
                 }
 
                 this.SessionObj.SavedChart = ser.Serialize(ChartResponse);
@@ -332,7 +380,7 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
 
                 var obs_val = datareader[kf.PrimaryMeasure.Id];
                 var xcode = (string)datareader[XConcept];
-                var xCodeName = TextTypeHelper.GetText(codelists[XConcept].GetCodeById(xcode).Names, this.ChartObj.Configuration.Locale);
+                var xCodeName = (string) TextTypeHelper.GetText(codelists[XConcept].GetCodeById(xcode).Names, this.ChartObj.Configuration.Locale);
 
                 //fabio 12/08/2015
                 //string customKeyCode = (ChartObj.CustomKey != null) ? datareader[ChartObj.CustomKey].ToString() : string.Empty;

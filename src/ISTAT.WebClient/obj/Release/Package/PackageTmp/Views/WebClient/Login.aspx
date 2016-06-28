@@ -2,7 +2,7 @@
 <%@ Import Namespace="ISTAT.WebClient.WidgetComplements.Model.App_GlobalResources" %>
 
 <asp:Content ID="Headcontainer" ContentPlaceHolderID="ContentHeader" runat="server">
-    <link href="<%=Url.Content("~/Content/style/widgets/Login.css")%>" rel="stylesheet" />
+    <link href="<%=ResolveClientUrl("~/Content/style/widgets/Login.css")%>" rel="stylesheet" />
 </asp:Content>
  
 <asp:Content ID="Maincontainer" ContentPlaceHolderID="MainContainer" runat="server">
@@ -25,7 +25,7 @@
 
 <asp:Content ID="Footercontainer" ContentPlaceHolderID="ContentFooter" runat="server">
     <!-- JS Widget START -->
-    <script src="<%= Url.Content("~/Scripts/pages/login.js")%>"></script>
+    <script src="<%= ResolveClientUrl("~/Scripts/pages/login.js")%>"></script>
     <script type="text/javascript">
 
         var _endPoint = "<%=ConfigurationManager.AppSettings["SingleSignOnUrl"].ToString() %>";
@@ -128,7 +128,7 @@
                         sessionStorage.setItem("email", obj.Email);
                         sessionStorage.setItem("user_isSA", objProf.IsSuperAdmin);
                         sessionStorage.setItem("user_role", JSON.stringify(objProf.UserRole));
-                        window.location.href = "<%=Url.Content("~/")%>WebClient/Index";
+                        window.location.href = "<%=ResolveClientUrl("~/")%>WebClient/Index";
                     }
                     
                 },
@@ -166,7 +166,7 @@
                     sessionStorage.setItem("user_role", JSON.stringify({ RoleId: "<%= (int)ISTAT.WebClient.WidgetComplements.Model.Enum.UserRolesEnum.User %>", Role: "<%=ISTAT.WebClient.WidgetComplements.Model.Enum.UserRolesEnum.User.ToString() %>" }));
                         
 
-                    window.location.href = "<%=Url.Content("~/")%>WebClient/Index";
+                    window.location.href = "<%=ResolveClientUrl("~/")%>WebClient/Index";
                 }
             }
         });

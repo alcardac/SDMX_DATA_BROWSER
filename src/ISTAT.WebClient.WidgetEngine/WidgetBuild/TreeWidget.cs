@@ -4,6 +4,7 @@ using ISTAT.WebClient.WidgetComplements.Model.App_GlobalResources;
 using ISTAT.WebClient.WidgetComplements.Model.CallWS;
 using ISTAT.WebClient.WidgetComplements.Model.JSObject;
 using ISTAT.WebClient.WidgetComplements.Model.Properties;
+using ISTAT.WebClient.WidgetComplements.Model.Settings;
 using ISTAT.WebClient.WidgetEngine.Builder.Tree;
 using ISTAT.WebClient.WidgetEngine.Model;
 using log4net;
@@ -49,6 +50,11 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
             ConnectionString = connectionString;
         }
 
+        public TreeWidget()
+        {
+            // TODO: Complete member initialization
+        }
+
         public SessionImplObject GetTree()
         {
             var ser = new JavaScriptSerializer();
@@ -59,8 +65,13 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
                 //string decimalCulture=TreeObj.Configuration.Locale;
                 //TreeObj.Configuration.Locale = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
                 CacheTree ct = new CacheTree(ConnectionString, TreeObj.Configuration);
+                //controlla il parametro CachedTree del webconfig se utilizzare o meno la cache
+                bool UseWidgetCache = (WebClientSettings.Instance != null) ? WebClientSettings.Instance.CachedTree : false;
 
-                string JsonTree = ct.GetCachedTree();
+                string JsonTree = null;
+                if (UseWidgetCache)
+                { JsonTree = ct.GetCachedTree(); }
+
                 if (!string.IsNullOrEmpty(JsonTree))
                     return new SessionImplObject() { SavedTree = JsonTree };
 
@@ -101,6 +112,65 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
             }
 
         }
+
+        public SessionImplObject GetTreeLocale()
+        {
+            var ser = new JavaScriptSerializer();
+            string json;
+
+            try
+            {
+                //string decimalCulture=TreeObj.Configuration.Locale;
+                TreeObj.Configuration.Locale = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName.ToUpper();
+                CacheTree ct = new CacheTree(ConnectionString, TreeObj.Configuration);
+                //controlla il parametro CachedTree del webconfig se utilizzare o meno la cache
+                bool UseWidgetCache = (WebClientSettings.Instance != null) ? WebClientSettings.Instance.CachedTree : false;
+
+                string JsonTree = null;
+                if (UseWidgetCache)
+                { JsonTree = ct.GetCachedTree(); }
+
+                if (!string.IsNullOrEmpty(JsonTree))
+                    return new SessionImplObject() { SavedTree = JsonTree };
+
+                ISdmxObjects SdmxOBJ = GetSdmxObject(TreeObj.Configuration);
+
+                //TreeObj.Configuration.Locale = decimalCulture;
+
+                List<JsTreeNode> nodelist = BuildJSTree(SdmxOBJ, System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName);
+                if (nodelist == null || nodelist.Count == 0)
+                {//Invio Errore
+                    var x = new { error = true, dataflowError = true, message = ISTAT.WebClient.WidgetComplements.Model.App_GlobalResources.Messages.no_results_found };
+                    throw new Exception(ser.Serialize(x));
+                }
+
+                json = ser.Serialize(nodelist);
+
+                ct.SaveCachedTree(json);
+
+                return new SessionImplObject() { SavedTree = json, SdmxObject = SdmxOBJ };
+            }
+            catch (InvalidOperationException ex)
+            {
+                Logger.Warn(Resources.ErrorMaxJsonLength);
+                Logger.Warn(ex.Message, ex);
+                throw new Exception(ErrorOccured);
+
+            }
+            catch (ArgumentException ex)
+            {
+                Logger.Warn(Resources.ErrorRecursionLimit);
+                Logger.Warn(ex.Message, ex);
+                throw new Exception(ErrorOccured);
+            }
+            catch (Exception ex)
+            {
+                Logger.Warn(ex.Message, ex);
+                throw new Exception(ErrorOccured);
+            }
+
+        }
+
 
         public string GetTreeforCache(string TwoLetterISO)
         {
@@ -457,7 +527,20 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
                 search_key = "@SOURCE=";
                 string dataflow_source = value.Substring(value.IndexOf(search_key) + search_key.Length);
                 dataflow_source = dataflow_source.Substring(0, dataflow_source.IndexOf(end_key));
-                
+
+                search_key = "@SEP=";
+                string decimal_separator ="";
+                if (value.IndexOf(search_key) != -1)
+                {
+                    decimal_separator = value.Substring(value.IndexOf(search_key) + search_key.Length);
+                    decimal_separator = decimal_separator.Substring(0, decimal_separator.IndexOf(end_key));
+                }
+                else
+                { decimal_separator = TreeObj.Configuration.DecimalSeparator; }
+
+                //fabio forzo il sep prova debug del separatore decimale
+                //if (dataflow.Id == "PARAS") { decimal_separator = ","; }
+
                 List<string> valueDesc=new List<string>();
                 if(dataflow.HasAnnotationType(VirtualDataflowTypeDescAnn)) {
                     var vrtDfDesc = dataflow.GetAnnotationsByType(VirtualDataflowTypeDescAnn);
@@ -491,7 +574,7 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
                     endpoint_2,
                     endpoint_type,
                     dataflow_source,
-                    TreeObj.Configuration.DecimalSeparator,
+                    decimal_separator,
                     valueDesc,
                     valueUrls);
             }

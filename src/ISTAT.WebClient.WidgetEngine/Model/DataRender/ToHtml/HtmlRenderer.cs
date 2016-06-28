@@ -396,6 +396,8 @@
             }
 
             //var time = state.InputRow[state.Model.KeyFamily.TimeDimension.Id] as string;
+            NumberStyles style;
+            style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign;
 
             var val = state.InputRow[state.Model.KeyFamily.PrimaryMeasure.Id] as string;
             if (string.IsNullOrEmpty(val) 
@@ -405,7 +407,12 @@
             }
             else {
                 decimal decVal = 0;
-                if (decimal.TryParse(val.ToString(), NumberStyles.AllowDecimalPoint, cFrom, out decVal))
+                Int32 intVal = 0;
+                if (Int32.TryParse(val.ToString(), out intVal))
+                {
+                    val = intVal.ToString();
+                }
+                else if (decimal.TryParse(val.ToString(), style, cFrom, out decVal))
                 {
                     val = decVal.ToString("F1", cTo);
                 }
@@ -927,7 +934,7 @@
 
             var v = new Dictionary<string, decimal>();
 
-            reader = state.Model.GetReader(true);
+            //reader = state.Model.GetReader(true);
             while (reader.Read())
             {
                 state.InputRow = reader;

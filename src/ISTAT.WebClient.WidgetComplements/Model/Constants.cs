@@ -81,13 +81,17 @@ namespace ISTAT.WebClient.WidgetComplements.Model
         /// </summary>
         public const string ConnectionStringSettingsName = "temp";
 
+        /// <summary>
+        /// Database file name format
+        /// </summary>
+        public const string FileDBFileNameFormat = "{0}-{1}.sqlite";
       
 
         ///// <summary>
         ///// In memory database connection string settings
         ///// </summary>
-        //public static readonly ConnectionStringSettings InMemoryDBSettings = new ConnectionStringSettings(
-        //    ConnectionStringSettingsName, string.Format(CultureInfo.InvariantCulture, FileDBSettingsFormat, ":memory:"), SystemDataSqlite);
+        public static readonly ConnectionStringSettings InMemoryDBSettings = new ConnectionStringSettings(
+            ConnectionStringSettingsName, string.Format(CultureInfo.InvariantCulture, FileDBSettingsFormat, ":memory:"), SystemDataSqlite);
          
          
         /// <summary>

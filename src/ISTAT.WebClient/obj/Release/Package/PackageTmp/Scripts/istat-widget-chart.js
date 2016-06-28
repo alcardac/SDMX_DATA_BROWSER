@@ -32,6 +32,8 @@ function WidgetChart(options) {
         }
     };
 
+    //alert(settings.widget.configuration );
+
     this.Setup = function () {
 
         try {

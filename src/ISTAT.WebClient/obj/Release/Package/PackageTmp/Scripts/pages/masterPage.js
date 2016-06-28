@@ -60,7 +60,11 @@ function SetupMasterPage() {
         };
     }
     else {
-        $("#user_login").css("display", "inline");
+        if (sessionStorage.view_login != undefined && sessionStorage.view_login=="true")
+        { $("#user_login").css("display", "inline"); }
+        else
+        { $("#user_login").css("display", "none"); }
+
         $("#user_logout").css("display", "none");
         $("#user_dashboard").css("display", "none");
         $("#user_welcome").css("display", "none");
@@ -145,6 +149,7 @@ function SetupMasterPage() {
 
     $('#select-locale').selectmenu({
         change: function (event, ui) {
+            sessionStorage.setItem("select-locale", $(this).val());
             ChangeLocale($(this).val());
         }
     });
@@ -155,13 +160,55 @@ function ChangeLocale(twoLetterIso) {
     var data = {
         locale: twoLetterIso
     };
+    var dataTreeLocale = null;
     var UrlChangeLocale = "Settings/SetLocale";
+
+
     clientPostJSON(
         UrlChangeLocale, clientParseObjectToJson(data),
         function (jsonString) {
-            var jsonData = clientParseJsonToObject(jsonString);
 
             location.reload();
+            /*
+            var jsonData = clientParseJsonToObject(jsonString);
+            var resultTree = null;
+            var resultMessage = null;
+            $.ajax(
+                {
+                    url: client.main.config.baseURL+"Main/GetTreeLocale",
+                    type: 'post',
+                    dataType: 'json',
+                    async: false,
+                    cache: false,
+                    success: function (datareturn) {
+                        resultTree = clientParseJsonToObject(datareturn);
+                    }
+                }
+            );
+
+            $.ajax(
+                 {
+                     url: client.main.config.baseURL+"Settings/GetMessages",
+                     type: 'post',
+                     dataType: 'json',
+                     async: false,
+                     cache: false,
+                     success: function (datareturn) {
+                         resultMessage = datareturn;
+
+                         clientRetrieveMessagesChangeLocale(data.locale, resultMessage);
+                         DrawHTML_ButtonControl("#main-treeview");
+                         //DrawHTML("#main-table-dataset");
+                         $("#main-table-dataset").empty();
+                         SetupJsTree("#main-treeview", resultTree, null, "#main-table-dataset", null);
+
+                     }
+                 }
+             );
+
+             */
+            
+
 
         },
         function (event, status, errorThrown) {
@@ -171,6 +218,9 @@ function ChangeLocale(twoLetterIso) {
         },
         true
     );
+
+ 
+
 }
 function checkLetter(str) {
     var check = false;

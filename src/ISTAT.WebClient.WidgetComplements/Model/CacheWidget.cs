@@ -15,7 +15,59 @@ namespace ISTAT.WebClient.WidgetComplements.Model
 
         public CacheWidget(string connectionString)
         {
-            Sqlconn = new SqlConnection(connectionString);
+            if (connectionString != null && connectionString.ToLower() != "file")
+            { Sqlconn = new SqlConnection(connectionString); }
+            else
+            { Sqlconn = null; }
+        }
+
+        public WidgetInfo GetWidgetInfo(string locale, int widgetID)
+        {
+            WidgetInfo wdgInfo = new WidgetInfo();
+            SqlDataReader oReader;
+
+            try
+            {
+
+                using (SqlCommand oComm = new SqlCommand())
+                {
+
+                    if (Sqlconn.State == ConnectionState.Closed)
+                        Sqlconn.Open();
+
+                    oComm.Connection = Sqlconn;
+                    oComm.CommandType = CommandType.StoredProcedure;
+                    oComm.CommandText = "Caching.GetWidgetInfo";
+
+                    SqlParameter pLocale = new SqlParameter("@LOCALE", SqlDbType.VarChar, 5);
+                    pLocale.Value = locale;
+                    oComm.Parameters.Add(pLocale);
+
+                    SqlParameter pWidgetID = new SqlParameter("@WDG_ID", SqlDbType.Int);
+                    pWidgetID.Value = widgetID;
+                    oComm.Parameters.Add(pWidgetID);
+
+                    oReader = oComm.ExecuteReader();
+
+                    if (oReader.Read())
+                    {
+                        wdgInfo.dsbTitle = oReader["dsb_text_Title"].ToString();
+                        wdgInfo.wdgTitle = oReader["wdg_text_Title"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (Sqlconn.State == ConnectionState.Open)
+                    Sqlconn.Close();
+            }
+
+            return wdgInfo;
+
         }
 
         public void DeleteExpiredWidget(int secondsToExpire)
@@ -243,8 +295,8 @@ namespace ISTAT.WebClient.WidgetComplements.Model
                     oComm.Parameters.Add(pLocale);
 
                     reader = oComm.ExecuteReader();
-                    
-                    if(reader.Read())
+
+                    if (reader.Read())
                     {
                         savedWidget = new SavedWidget();
                         savedWidget.savedWidgetID = (int)reader["SWID"];
@@ -253,7 +305,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model
                         savedWidget.locale = reader["Locale"].ToString();
                         savedWidget.dtUpdate = Convert.ToDateTime(reader["DTUpdate"]);
                     }
-         
+
                 }
 
                 return savedWidget;

@@ -47,7 +47,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
     using ISTAT.WebClient.WidgetComplements.Model.Enum;
     using ISTAT.WebClient.WidgetComplements.Model.Exceptions;
     using ISTAT.WebClient.WidgetComplements.Model.Settings;
-
+    using ISTAT.WebClient.WidgetComplements.Model.JSObject;
     /// <summary>
     /// An implementation of the <see cref="IGetSDMX"/> that retrieves structural metadata and data from a SDMX v2.1 web service
     /// </summary>
@@ -282,6 +282,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
             return this._nsiClientWs.GetCodelist(dataflow, dsd, component, criterias, Constrained);
         }
 
+
         /// <summary>
         /// Get the maximum number of observations that can be retrieved given the specified criteria
         /// </summary>
@@ -301,6 +302,84 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
         {
             return this._nsiClientWs.GetDataflowDataCount(dataflow, criteria);
         }
+
+        /// <summary>
+        /// Retrieves all available categorisations.
+        /// </summary>
+        /// <returns>
+        ///   a list of &amp;lt;c&amp;gt;ISdmxObjects&amp;lt;/c&amp;gt; instances; the result won&amp;apos;t be &amp;lt;c&amp;gt;null&amp;lt;/c&amp;gt; if there are no
+        ///   dataflows, instead an empty list will be returned
+        /// </returns>
+        public ISdmxObjects RetrieveCategorisations()
+        {
+
+            Logger.Info(Resources.InfoGettingCategorySchemes);
+
+            // Get category schemes and categorisations
+            ISdmxObjects responseCategorySchemes = new SdmxObjectsImpl();
+            string requestCategoryScheme = this.RetrieveCategorySchemesAndCategorisations();
+
+            // Get dataflows
+            ISdmxObjects responseDataflows = new SdmxObjectsImpl();
+            string requestDataFlows = this.RetrieveDataflows();
+
+            try
+            {
+                try
+                {
+                    responseCategorySchemes = this.SendQueryStructureRequest(requestCategoryScheme);
+                }
+                catch (DataflowException ex)
+                {
+                    //do nothing
+                }
+                responseDataflows = this.SendQueryStructureRequest(requestDataFlows);
+
+                // Remove from structure (ISdmxObjects) the DSDS built with SDMX v2.0
+                var structureSdmxV20DSD = responseDataflows.DataStructures.Where(o => o.Annotations.Any(a => a.FromAnnotation() == CustomAnnotationType.SDMXv20Only)).ToArray();
+                foreach (var sdmxV20Only in structureSdmxV20DSD)
+                {
+                    responseDataflows.RemoveDataStructure(sdmxV20Only);
+                }
+
+                // DSDS with annotation
+                var sdmxV20onlyReferences = structureSdmxV20DSD.Select(o => o.AsReference).ToArray();
+
+                // Add the DSDS built with Sdmx V2.0
+                ISdmxObjects responseDSD = new SdmxObjectsImpl();
+                if (sdmxV20onlyReferences.Length > 0)
+                {
+                    responseDSD = this._nsiClientWs.SendQueryStructureRequest(sdmxV20onlyReferences, false);
+                    responseDataflows.Merge(responseDSD);
+                }
+
+                responseCategorySchemes.Merge(responseDataflows);
+
+                if (responseCategorySchemes.CategorySchemes != null && responseCategorySchemes.Dataflows != null)
+                {
+                    Logger.Info(Resources.InfoSuccess);
+                }
+            }
+            catch (NsiClientException e)
+            {
+                Logger.Error(Resources.ExceptionGettingDataflow);
+                Logger.Error(e.Message, e);
+                throw;
+            }
+            catch (DataflowException e)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(Resources.ExceptionGettingDataflow);
+                Logger.Error(e.Message, e);
+                throw new NsiClientException(Resources.ExceptionGettingDataflow, e);
+            }
+
+            return responseCategorySchemes;
+        }
+
 
         /// <summary>
         /// Retrieves all available categorisations.
@@ -733,6 +812,25 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
 
 
         }
+
+        /// <summary>
+        /// Get the SDMX Query Request
+        /// </summary>
+        /// <param name="query">
+        /// The query
+        /// </param>
+        /// <param name="request">
+        /// The output request
+        /// </param>
+        public void GetSdmxQuery(IDataQuery query, out string request)
+        {
+            IDataQueryFormat<string> structureQueryFormat = new RestQueryFormat();
+            IDataQueryFactory dataQueryFactory = new DataQueryFactory();
+            IDataQueryBuilderManager dataQueryBuilderManager = new DataQueryBuilderManager(dataQueryFactory);
+            request = dataQueryBuilderManager.BuildDataQuery(query, structureQueryFormat);
+
+        }
+
 
         /// <summary>
         /// Setup the specified <paramref name="client"/> network authentication and proxy configuration

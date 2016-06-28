@@ -82,6 +82,29 @@ namespace ISTAT.WebClient.WidgetEngine.Model.DBData
             this.CreateConnection();
         }
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DBInfo"/> class. 
+        /// </summary>
+        /// <param name="connectionStringSettings">
+        /// The db connection settings
+        /// </param>
+        public DBInfo(ConnectionStringSettings connectionStringSettings)
+        {
+            if (connectionStringSettings == null)
+            {
+                throw new ArgumentNullException("connectionStringSettings");
+            }
+
+            DictionaryConfigurationSource source = new DictionaryConfigurationSource();
+            ConnectionStringsSection section = new ConnectionStringsSection();
+            section.ConnectionStrings.Add(connectionStringSettings);
+            source.Add("connectionStrings", section);
+            this._database = new DatabaseProviderFactory(source).Create(connectionStringSettings.Name);
+            this.CreateConnection();
+        }
+
+
         #endregion
 
         #region Public Properties

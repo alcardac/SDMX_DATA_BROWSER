@@ -5,7 +5,7 @@
         <script type="text/javascript">
             // redirect to login page if access denied
             if (sessionStorage.user_code == null) {
-                window.location.href = "<%=Url.Content("~/")%>WebClient/Login";
+                window.location.href = "<%=ResolveClientUrl("~/")%>WebClient/Login";
         };
     </script>
 </asp:Content>
@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="dash-info-box-icon">
-                    <a href="<%=Url.Content("~/WebClient/Profiles")%>" class="info-link">
+                    <a href="<%=ResolveClientUrl("~/WebClient/Profiles")%>" class="info-link">
                         <i class="icon-group-circled profile"></i>
                     </a>
                 </div>
@@ -30,7 +30,7 @@
                     <%=Messages.label_dashManagement %>
                 </div>
                 <div class="dash-info-box-icon">
-                    <a href="<%=Url.Content("~/WebClient/DashboardsManagement")%>" class="info-link">
+                    <a href="<%=ResolveClientUrl("~/WebClient/DashboardsManagement")%>" class="info-link">
                         <i class="icon-desktop-circled visits"></i>
                     </a>
                 </div>
@@ -43,7 +43,7 @@
                     <%=Messages.label_dashLayout %>
                 </div>
                 <div class="dash-info-box-icon">
-                    <a href="<%=Url.Content("~/WebClient/Layout")%>" class="info-link">
+                    <a href="<%=ResolveClientUrl("~/WebClient/Layout")%>" class="info-link">
                         <i class="icon-website-circled home"></i>
                     </a>
                 </div>
@@ -53,7 +53,7 @@
                     <%=Messages.dashboard_ManagementTemplate %>
                 </div>
                 <div class="dash-info-box-icon">
-                    <a href="<%=Url.Content("~/WebClient/TemplatesManagement")%>" class="info-link">
+                    <a href="<%=ResolveClientUrl("~/WebClient/TemplatesManagement")%>" class="info-link">
                         <i class="icon-edit-circled queries"></i>
                     </a>
                 </div>

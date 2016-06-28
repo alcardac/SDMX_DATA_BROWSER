@@ -1,13 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/ViewMasterPage.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 <%@ Import Namespace="ISTAT.WebClient.WidgetComplements.Model.App_GlobalResources" %>
 <asp:Content ID="Headcontainer" ContentPlaceHolderID="ContentHeader" runat="server">
-    <script src="<%=Url.Content("~/Scripts/jquery/colorpicker/colpick.js")%>"></script>
-    <script src="<%=Url.Content("~/Scripts/pages/dashboardElements.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/jquery/colorpicker/colpick.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/pages/dashboardElements.js")%>"></script>
 
     <script type="text/javascript">
         // redirect to login page if access denied
         if (sessionStorage.user_code == null) {
-            window.location.href = "<%=Url.Content("~/")%>WebClient/Login";
+            window.location.href = "<%=ResolveClientUrl("~/")%>WebClient/Login";
         };
     </script>
 
@@ -206,5 +206,5 @@
     </div>
 </asp:Content>
 <asp:Content ID="Footercontainer" ContentPlaceHolderID="ContentFooter" runat="server">
-    <script type="text/javascript" src="<%=Url.Content("~/Scripts/pages/settings.js")%>"></script>
+    <script type="text/javascript" src="<%=ResolveClientUrl("~/Scripts/pages/settings.js")%>"></script>
 </asp:Content>

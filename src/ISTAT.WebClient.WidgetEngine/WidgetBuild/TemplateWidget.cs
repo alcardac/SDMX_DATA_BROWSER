@@ -18,6 +18,12 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
         private const string ErrorOccuredMess = "{\"error\" : true, \"message\" : {0} }";
         private static readonly ILog Logger = LogManager.GetLogger(typeof(QueryWidget));
 
+        public TemplateWidget()
+        {
+
+        }
+
+
         public TemplateWidget(string connectionString)
         {
             Sqlconn = new SqlConnection(connectionString);

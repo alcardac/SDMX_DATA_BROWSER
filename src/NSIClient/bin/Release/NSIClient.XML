@@ -1,0 +1,1966 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Estat.Nsi.Client</name>
+    </assembly>
+    <members>
+        <member name="T:Estat.Nsi.Client.FooterMessageException">
+            <summary>
+            Footer Message Exception
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.DataflowException">
+            <summary>
+            TODO: Update summary.
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.NsiClientWSRest">
+            <summary>
+            An implementation of the <see cref="T:Estat.Nsi.Client.INsiClient"/> that retrieves structural metadata and data from a SDMX v2.1 web service
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.INsiClient">
+            <summary>
+            Defines the methods which must be implemented by a service class used for retrieving data from a NSI instance.
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.INsiClient.ExecuteQuery(Org.Sdmxsource.Sdmx.Api.Model.Data.Query.IDataQuery,Estat.Nsi.Client.SDMXWSFunction,System.String)">
+            <summary>
+            Execute SDMX Query against the NSI WS to retrieve SDMX-ML Data as a Stream
+            </summary>
+            <param name="query">
+            The SDMX Query to execute
+            </param>
+            <param name="operationName">
+            The type of operation, GetCompactData or GetCrossSectionalData
+            </param>
+            <returns>
+            The SDMX-ML data as a stream.
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.INsiClient.ExecuteQuery(Org.Sdmxsource.Sdmx.Api.Model.Data.Query.IDataQuery,Estat.Nsi.Client.SDMXWSFunction,System.Int32,System.String)">
+            <summary>
+            Execute SDMX Query against the NSI WS to retrieve SDMX-ML Data as a Stream
+            </summary>
+            <param name="query">
+            The SDMX Query to execute
+            </param>
+            <param name="operationName">
+            The type of operation, GetCompactData or GetCrossSectionalData
+            </param>
+            <param name="observationLimit">
+            The maximum number of observations to return
+            </param>
+            <returns>
+            The SDMX-ML data as a stream.
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.INsiClient.RetrieveCategorisations">
+            <summary>
+            Retrieves all available categorisations.
+            </summary>
+            <returns>
+              ISdmxObjects&amp;lt;/c&amp;gt; instance; the result won&amp;apos;t be &amp;lt;c&amp;gt;null&amp;lt;/c&amp;gt; if there are
+              no SdmxObject, instead an empty list will be returned
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.INsiClient.GetCodelist(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject,Org.Sdmxsource.Sdmx.Api.Model.Objects.Base.IComponent,Org.Sdmxsource.Sdmx.Api.Model.Mutable.Registry.IContentConstraintMutableObject)">
+            <summary>
+            Gets a bean with data about the codelist for specified dataflow and component.
+            The dataflow can be retrieved from <see cref="!:RetrieveDataflow"/> and the component from <see cref="M:Estat.Nsi.Client.INsiClient.GetStructure(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,System.Collections.Generic.ISet{Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject})"/>
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <param name="dsd">
+            The dsd
+            </param>
+            <param name="component">
+            The component
+            </param>
+            <param name="criteria">
+            The criteria includes a set of Member and MemberValue(s) for each dimension. The Member has componentRef the dimension conceptRef and the MemberValue(s) specify the selected codes for this dimension.
+            </param>
+            <returns>
+            A <c>CodeListBean</c> with the requested data
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.INsiClient.GetDataflowDataCount(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,Org.Sdmxsource.Sdmx.Api.Model.Mutable.Registry.IContentConstraintMutableObject)">
+            <summary>
+            Get the maximum number of observations that can be retrieved given the specified criteria
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <param name="criteria">
+            The criteria includes a set of Member and MemberValue(s) for each dimension. Each member should have member values else they shouldn't be included. It can be null
+            </param>
+            <returns>
+            The maximum number of observations
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.INsiClient.GetStructure(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,System.Collections.Generic.ISet{Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject})">
+            <summary>
+            Gets a bean with data about the key family for specified dataflow.
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <returns>
+            a <c>StructureBean</c> instance with requested data; the result is never <c>null</c> or  incomplete, instead an exception is throwed away if something goes wrong and not all required data is successfully retrieved
+            </returns>
+            <remarks>
+            The resulted bean will contain exactly one key family, but also will include any concepts <del>and codelists</del> referenced by the key family.
+            </remarks>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSRest._emptyCategoryScheme">
+            <summary>
+            Empty list of <see cref="!:CategorySchemeBean"/>
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSRest._emptyDataflowList">
+            <summary>
+            Empty list of <see cref="!:DataflowBean"/>
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSRest._config">
+            <summary>
+             The Web Service Client configuration
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSRest._defaultHeader">
+            <summary>
+            Default Header
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSRest.Logger">
+            <summary>
+            Log class
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSRest._nsiClientWs">
+            <summary>
+            The _nsi client ws.
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:Estat.Nsi.Client.NsiClientWSRest"/> class.
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.#ctor(Estat.Nsi.Client.WsInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Estat.Nsi.Client.NsiClientWSRest"/> class. 
+            </summary>
+            <param name="config">
+            The config
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.ExecuteQuery(Org.Sdmxsource.Sdmx.Api.Model.Data.Query.IDataQuery,Estat.Nsi.Client.SDMXWSFunction,System.String)">
+            <summary>
+            Execute SDMX Query against the NSI WS to retrieve SDMX-ML Data as a Stream
+            </summary>
+            <param name="query">
+            The SDMX Query to execute
+            </param>
+            <param name="operationName">
+            The type of operation, GetCompactData or GetCrossSectionalData
+            </param>
+            <param name="tempFileName">
+            The temporary file name
+            </param>
+            <exception cref="T:Estat.Nsi.Client.NsiClientException">
+            Failute to execute query
+            </exception>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.ExecuteQuery(Org.Sdmxsource.Sdmx.Api.Model.Data.Query.IDataQuery,Estat.Nsi.Client.SDMXWSFunction,System.Int32,System.String)">
+            <summary>
+            Execute SDMX Query against the NSI WS to retrieve SDMX-ML Data as a Stream
+            </summary>
+            <param name="query">
+            The SDMX Query to execute
+            </param>
+            <param name="operationName">
+            The type of operation, GetCompactData or GetCrossSectionalData
+            </param>
+            <param name="observationLimit">
+            The maximum number of observations to return
+            </param>
+            <param name="tempFileName">
+            The temporary fila name
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.GetCodelist(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject,Org.Sdmxsource.Sdmx.Api.Model.Objects.Base.IComponent,Org.Sdmxsource.Sdmx.Api.Model.Mutable.Registry.IContentConstraintMutableObject)">
+            <summary>
+            Gets a bean with data about the codelist for specified dataflow and component.
+            The dataflow can be retrieved from <see cref="M:Estat.Nsi.Client.NsiClientWSRest.RetrieveCategorisations"/> and the component from <see cref="M:Estat.Nsi.Client.NsiClientWSRest.GetStructure(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,System.Collections.Generic.ISet{Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject})"/>
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <param name="dsd">
+            The dsd
+            </param>
+            <param name="component">
+            The component
+            </param>
+            <param name="criteria">
+            The criteria includes a set of Member and MemberValue(s) for each dimension. The Member has componentRef the dimension conceptRef and the MemberValue(s) specify the selected codes for this dimension.
+            </param>
+            <returns>
+            A <c>CodeListBean</c> with the requested data
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.GetDataflowDataCount(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,Org.Sdmxsource.Sdmx.Api.Model.Mutable.Registry.IContentConstraintMutableObject)">
+            <summary>
+            Get the maximum number of observations that can be retrieved given the specified criteria
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <param name="criteria">
+            The criteria includes a set of Member and MemberValue(s) for each dimension. Each member should have member values else they shouldn't be included. It can be null
+            </param>
+            <returns>
+            The maximum number of observations or -1 if it can't be parsed or it is not available
+            </returns>
+            <exception cref="T:Estat.Nsi.Client.NsiClientException">
+            NSI WS communication error or parsing error
+            </exception>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.RetrieveCategorisations">
+            <summary>
+            Retrieves all available categorisations.
+            </summary>
+            <returns>
+              a list of &amp;lt;c&amp;gt;ISdmxObjects&amp;lt;/c&amp;gt; instances; the result won&amp;apos;t be &amp;lt;c&amp;gt;null&amp;lt;/c&amp;gt; if there are no
+              dataflows, instead an empty list will be returned
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.RetrieveCategorySchemesAndCategorisations">
+            <summary>
+            Retrieves all available categorisations and category schemes.
+            </summary>
+            <returns>
+            The <see cref="T:System.String"/>.
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.RetrieveDataflows">
+            <summary>
+            Retrieves all available dataflows.
+            </summary>
+            <returns>
+            The <see cref="T:System.String"/>.
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.GetStructure(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,System.Collections.Generic.ISet{Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject})">
+            <summary>
+            Gets a bean with data about the key family for specified dataflow.
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <param name="dataStructures">
+            The data Structures.
+            </param>
+            <returns>
+            a <c>StructureBean</c> instance with requested data; the result is never <c>null</c> or  incomplete, instead an exception is throwed away if something goes wrong and not all required data is successfully retrieved
+            </returns>
+            <remarks>
+            The resulted bean will contain exactly one key family, but also will include any concepts and codelists referenced by the key family.
+            </remarks>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.SendQueryStructureRequest(System.String)">
+            <summary>
+            Sends the specified <paramref name="request"/> to the Web Service defined by <see cref="F:Estat.Nsi.Client.NsiClientWSRest._config"/> 
+            </summary>
+            <param name="request">
+            The <see cref="T:Org.Sdmxsource.Sdmx.Api.Model.Objects.Reference.Complex.IComplexStructureQuery"/>
+            </param>
+            <returns>
+            The ISdmxObjects returned by the Web Service
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.SendRequest(System.String,System.String,Estat.Nsi.Client.NsiClientWSRest.RequestType)">
+            <summary>
+            Constructs a SOAP envelope request, with a body that includes the operation as element and the W3C Document and saves the SDMX Part of the response to the specified ouput
+            The W3C Document contains either a SDMX-ML Query or a SDMX-ML Registry Interface
+            </summary>
+            <param name="request">
+            The W3C Document representation of a SDMX-ML Query or QueryStructureRequest
+            </param>
+            <param name="tempFileName">
+            The temporary file name
+            </param>
+            <param name="requestType">
+            The request type
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            request is null
+            </exception>
+            <exception cref="T:Estat.Nsi.Client.NsiClientException">
+            Error in server response or communication
+            </exception>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSRest.SendSdmxQuery(Org.Sdmxsource.Sdmx.Api.Model.Data.Query.IDataQuery,System.String)">
+            <summary>
+            Sends the SDMX Query Request
+            </summary>
+            <param name="query">
+            The query
+            </param>
+            <param name="tempFileName">
+            The output stream
+            </param>
+        </member>
+        <member name="T:Estat.Nsi.Client.NsiClientWSRest.RequestType">
+            <summary>
+            Request Type
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSRest.RequestType.Data">
+            <summary>
+            The data.
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSRest.RequestType.Structure">
+            <summary>
+            The structure.
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientHelper.Logger">
+            <summary>
+            Log class
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientHelper.HandleSoapFault(System.Net.WebException)">
+            <summary>
+            Handle a SOAP Fault from the WS. It will parse the soap details and throw an NsiClientException
+            </summary>
+            <param name="ex">
+            The soap fault
+            </param>
+            <exception cref="T:Estat.Nsi.Client.NsiClientException">
+            It is always thrown
+            </exception>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientHelper.HandleWsdlException(System.String,System.Exception,System.String)">
+            <summary>
+            Handle WSDL related exception and return an <see cref="T:Estat.Nsi.Client.NsiClientException"/>
+            </summary>
+            <param name="endPoint">
+            The endPoint
+            </param>
+            <param name="ex">
+            The exception.
+            </param>
+            <param name="wsdlUrl">
+            The wsdl url.
+            </param>
+            <returns>
+            A <see cref="T:Estat.Nsi.Client.NsiClientException"/>
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientHelper.HandleWsdlException(System.String,System.Net.WebException,System.String)">
+            <summary>
+            Handle WSDL related exception and return an <see cref="T:Estat.Nsi.Client.DataflowException"/>
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientHelper.LogSdmx(Estat.Nsi.Client.WsInfo,System.Xml.XmlDocument)">
+            <summary>
+            Log the SDMX-ML message stored in the stream.
+            </summary>
+            <param name="config">
+            The config
+            </param>
+            <param name="request">
+            The stream to the SDMX-ML message
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientHelper.LogSdmx(Estat.Nsi.Client.WsInfo,System.String)">
+            <summary>
+            Log the SDMX-ML message stored in the stream.
+            </summary>
+            <param name="config">
+            The config
+            </param>
+            <param name="request">
+            The stream to the SDMX-ML message
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientHelper.LogSdmx(Estat.Nsi.Client.WsInfo,System.String,System.String)">
+            <summary>
+            Log the SDMX-ML message stored in the stream.
+            </summary>
+            <param name="config">
+            The config
+            </param>
+            <param name="tempFileName">
+            The temporary file name
+            </param>
+            <param name="prefix">
+            A prefix message to log before the SDMX-ML message
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientHelper.BuildConceptSchemeRequest(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject)">
+            <summary>
+            Build concept scheme requests from the concept scheme references of the specified KeyFamilyBean object
+            </summary>
+            <param name="kf">
+            The KeyFamily to look for concept Scheme references
+            </param>
+            <returns>
+            A list of concept scheme requests 
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientHelper.TryToDelete(System.String)">
+            <summary>
+            Wrap the Delete method with an exception handler.
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientValidation.Logger">
+            <summary>
+            Log class
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientValidation.CheckConcepts(Org.Sdmxsource.Sdmx.Api.Model.Objects.ISdmxObjects)">
+            <summary>
+            Check if the specified structure has all referenced concept schemes from the first keyfamily
+            </summary>
+            <param name="structure">
+            The StructureBean to check
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientValidation.CheckResponse(Org.Sdmxsource.Sdmx.Api.Model.Objects.ISdmxObjects)">
+            <summary>
+            Check the Status of a QueryStructureResponse.
+            </summary>
+            <remarks>
+            <list type="bullet">
+            <item>
+            If it doesn't exist, do nothing. Maybe there is a bug at the NSI WS implementation so we ignore it hoping that the rest of the message is ok 
+            </item>
+            <item>
+            if the status is Success do nothing.
+            </item>
+            <item>
+            If the status is Warning only log the messages with warning.
+            </item>
+            <item>
+            if the status is failure throw an NsiClientException
+            </item>
+            <item>
+            if Response or response structure are null. An exception is thrown 
+            </item>
+            </list>
+            </remarks>
+            <param name="response">
+            The QueryStructureResponse to check
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientValidation.CheckifStructureComplete(Org.Sdmxsource.Sdmx.Api.Model.Objects.ISdmxObjects,Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject)">
+            <summary>
+            Checks if a structure is complete according to the requirements of <see cref="!:GetStructure"/>
+            </summary>
+            <param name="structure">
+            The StructureBean object to check.
+            </param>
+            <param name="dataflow">
+            The requested dataflow
+            </param>
+            <exception cref="T:Estat.Nsi.Client.NsiClientException">
+            Server response error
+            </exception>
+        </member>
+        <member name="T:Estat.Nsi.Client.SdmxFault">
+            <summary>
+            Sdmx Fault
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.SdmxFault.#ctor(System.Int32,System.String)">
+            <summary>
+            The sdmx fault
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.SdmxFault.GetErrorNumber(System.Xml.XmlDocument)">
+            <summary>
+            Get error number
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.SdmxFault.ErrorNumber">
+            <summary>
+            Gets or sets the error number
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.SdmxFault.ErrorMessage">
+            <summary>
+            Gets or sets the error message
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.SDMXWSFunctionV21">
+            <summary>
+            This enum contains the names of  a subset of the web functions as defined in  <a href="http://sdmx.org/wp-content/uploads/2013/07/SDMX_2_1-SECTION_07_WebServicesGuidelines_2013-041.pdf">SDMX v2.1 Section 03 SOAP-Based SDMX WebServices: WSDL Operations and Behaviours</a>
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.SDMXWSFunctionV21.GetStructureSpecificData">
+            <summary>
+            Obtain Compact Data or CrossSectional Data: This is an exchange invoked by the 
+            Complex Data Query Message, for which the response is data marked up according 
+            to the Compact Data Message.
+            The function should be called "GetStructureSpecificData(ComplexDataQuery)".
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.NsiClientWSV21">
+            <summary>
+            An implementation of the <see cref="T:Estat.Nsi.Client.INsiClient"/> that retrieves structural metadata and data from a SDMX v2.1 web service
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSV21._emptyCategoryScheme">
+            <summary>
+            Empty list of <see cref="!:CategorySchemeBean"/>
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSV21._emptyDataflowList">
+            <summary>
+            Empty list of <see cref="!:DataflowBean"/>
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSV21._config">
+            <summary>
+             The Web Service Client configuration
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSV21._defaultHeader">
+            <summary>
+            Default Header
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSV21.Logger">
+            <summary>
+            Log class
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWSV21._wsdlConfig">
+            <summary>
+            The configuration retrieved from the WSDL
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSV21.#ctor(Estat.Nsi.Client.WsInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Estat.Nsi.Client.NsiClientWS"/> class. 
+            </summary>
+            <param name="config">
+            The config
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSV21.ExecuteQuery(Org.Sdmxsource.Sdmx.Api.Model.Data.Query.IDataQuery,Estat.Nsi.Client.SDMXWSFunction,System.String)">
+            <summary>
+            Execute SDMX Query against the NSI WS to retrieve SDMX-ML Data as a Stream
+            </summary>
+            <param name="query">
+            The SDMX Query to execute
+            </param>
+            <param name="operationName">
+            The type of operation, GetCompactData or GetCrossSectionalData
+            </param>
+            <param name="tempFileName">
+            The temporary file name
+            </param>
+            <exception cref="T:Estat.Nsi.Client.NsiClientException">Failute to execute query</exception>
+            <returns>
+            The SDMX-ML data as a stream.
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSV21.ExecuteQuery(Org.Sdmxsource.Sdmx.Api.Model.Data.Query.IDataQuery,Estat.Nsi.Client.SDMXWSFunction,System.Int32,System.String)">
+            <summary>
+            Execute SDMX Query against the NSI WS to retrieve SDMX-ML Data as a Stream
+            </summary>
+            <param name="query">
+            The SDMX Query to execute
+            </param>
+            <param name="operationName">
+            The type of operation, GetCompactData or GetCrossSectionalData
+            </param>
+            <param name="observationLimit">
+            The maximum number of observations to return
+            </param>
+            <param name="tempFileName">
+            The temporary fila name
+            </param>
+            <returns>
+            The SDMX-ML data as a stream.
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSV21.GetCodelist(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject,Org.Sdmxsource.Sdmx.Api.Model.Objects.Base.IComponent,Org.Sdmxsource.Sdmx.Api.Model.Mutable.Registry.IContentConstraintMutableObject)">
+            <summary>
+            Gets a bean with data about the codelist for specified dataflow and component.
+            The dataflow can be retrieved from <see cref="M:Estat.Nsi.Client.NsiClientWSV21.RetrieveCategorisations"/> and the component from <see cref="M:Estat.Nsi.Client.NsiClientWSV21.GetStructure(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,System.Collections.Generic.ISet{Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject})"/>
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <param name="dsd">
+            The dsd
+            </param>
+            <param name="component">
+            The component
+            </param>
+            <param name="criteria">
+            The criteria includes a set of Member and MemberValue(s) for each dimension. The Member has componentRef the dimension conceptRef and the MemberValue(s) specify the selected codes for this dimension.
+            </param>
+            <returns>
+            A <c>CodeListBean</c> with the requested data
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSV21.GetDataflowDataCount(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,Org.Sdmxsource.Sdmx.Api.Model.Mutable.Registry.IContentConstraintMutableObject)">
+            <summary>
+            Get the maximum number of observations that can be retrieved given the specified criteria
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <param name="criteria">
+            The criteria includes a set of Member and MemberValue(s) for each dimension. Each member should have member values else they shouldn't be included. It can be null
+            </param>
+            <returns>
+            The maximum number of observations or -1 if it can't be parsed or it is not available
+            </returns>
+            <exception cref="T:Estat.Nsi.Client.NsiClientException">
+            NSI WS communication error or parsing error
+            </exception>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSV21.RetrieveCategorisations">
+            <summary>
+            Retrieves all available categorisations.
+            </summary>
+            <returns>
+              a list of &amp;lt;c&amp;gt;ISdmxObjects&amp;lt;/c&amp;gt; instances; the result won&amp;apos;t be &amp;lt;c&amp;gt;null&amp;lt;/c&amp;gt; if there are no
+              dataflows, instead an empty list will be returned
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSV21.RetrieveCategorySchemesAndCategorisations">
+            <summary>
+            Retrieves all available categorisations and category schemes.
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSV21.RetrieveDataflows">
+            <summary>
+            Retrieves all available dataflows.
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSV21.GetStructure(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,System.Collections.Generic.ISet{Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject})">
+            <summary>
+            Gets a bean with data about the key family for specified dataflow.
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <returns>
+            a <c>StructureBean</c> instance with requested data; the result is never <c>null</c> or  incomplete, instead an exception is throwed away if something goes wrong and not all required data is successfully retrieved
+            </returns>
+            <remarks>
+            The resulted bean will contain exactly one key family, but also will include any concepts and codelists referenced by the key family.
+            </remarks>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSV21.SendQueryStructureRequest(Org.Sdmxsource.Sdmx.Api.Model.Objects.Reference.Complex.IComplexStructureQuery,Estat.Nsi.Client.SDMXWSFunctionV21)">
+            <summary>
+            Sends the specified <paramref name="complexStructureQuery"/> to the Web Service defined by <see cref="F:Estat.Nsi.Client.NsiClientWSV21._config"/> 
+            </summary>
+            <param name="complexStructureQuery">The <see cref="T:Org.Sdmxsource.Sdmx.Api.Model.Objects.Reference.Complex.IComplexStructureQuery"/></param>
+            <returns>The ISdmxObjects returned by the Web Service</returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSV21.SendRequest(System.Xml.XmlDocument,Estat.Nsi.Client.SDMXWSFunctionV21,System.String)">
+            <summary>
+            Constructs a SOAP envelope request, with a body that includes the operation as element and the W3C Document and saves the SDMX Part of the response to the specified ouput
+            The W3C Document contains either a SDMX-ML Query or a SDMX-ML Registry Interface
+            </summary>
+            <param name="request">
+            The W3C Document representation of a SDMX-ML Query or QueryStructureRequest
+            </param>
+            <param name="webServiceOperation">
+            The Web Service function
+            </param>
+            <param name="tempFileName">
+            The temporary file name
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            request is null
+            </exception>
+            <exception cref="T:Estat.Nsi.Client.NsiClientException">
+            Error in server response or communication
+            </exception>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWSV21.SendSdmxQuery(Org.Sdmxsource.Sdmx.Api.Model.Data.Query.IDataQuery,Estat.Nsi.Client.SDMXWSFunctionV21,System.String)">
+            <summary>
+            Sends the SDMX Query Request
+            </summary>
+            <param name="query">
+            The SDMX Query
+            </param>
+            <param name="operation">
+            The Web Service function
+            </param>
+            <param name="output">
+            The output stream
+            </param>
+        </member>
+        <member name="T:Estat.Nsi.Client.CustomCodelistConstants">
+            <summary>
+            This class holds constants for custom codelists used in special requests 
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.CustomCodelistConstants.CountCodeList">
+            <summary>
+            The custom dataflow data count codelist
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.CustomCodelistConstants.TimePeriodCodeList">
+            <summary>
+            The custom time dimension start/end codelist
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.CustomCodelistConstants.Agency">
+            <summary>
+            The Agency for custom codelists
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.CustomCodelistConstants.Version">
+            <summary>
+            The version used for custom codelists
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.CustomCodelistConstants.IsCountCodeList(Org.Sdmxsource.Sdmx.Api.Model.Objects.Codelist.ICodelistObject)">
+            <summary>
+            Check if the specified <c>CodeListBean</c> is the special COUNT codelist
+            </summary>
+            <param name="codelist">
+            The <c>CodeListBean</c> object. It should have Id and Agency set. Version is ignored.
+            </param>
+            <returns>
+            True if the  <c>CodeListBean</c> ID and Agency matches the custom <see cref="F:Estat.Nsi.Client.CustomCodelistConstants.CountCodeList"/> and <see cref="F:Estat.Nsi.Client.CustomCodelistConstants.Agency"/>. Else false
+            </returns>
+        </member>
+        <member name="T:Estat.Nsi.Client.HttpConstants">
+            <summary>
+            This class contains a collection of HTTP related constants
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.HttpConstants.Content">
+            <summary>
+            HTTP Header content type
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.HttpConstants.Post">
+            <summary>
+            HTTP POST
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.HttpConstants.Get">
+            <summary>
+            HTTP GET
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.LogErrorEventArgs">
+            <summary>
+            Log event arguments
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.LogErrorEventArgs._message">
+            <summary>
+            The message to log
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.LogErrorEventArgs.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Estat.Nsi.Client.LogErrorEventArgs"/> class. 
+            Initialize a new instance of the LogErrorEventArgs
+            </summary>
+            <param name="message">
+            The message to log
+            </param>
+        </member>
+        <member name="P:Estat.Nsi.Client.LogErrorEventArgs.Message">
+            <summary>
+            Gets the message to log
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.LogError">
+            <summary>
+            Helper class to log errors.
+            TODO move this to logger
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.LogError._instance">
+            <summary>
+            Singleton instance
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.LogError.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:Estat.Nsi.Client.LogError"/> class from being created. 
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.LogError.OnLogErrorEvent(Estat.Nsi.Client.LogErrorEventArgs)">
+            <summary>
+            Raise a ErrorEvent
+            </summary>
+            <param name="e">
+            The log error args
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.LogError.OnLogErrorEvent(System.String)">
+            <summary>
+            Raise a ErrorEvent
+            </summary>
+            <param name="message">
+            The log error args
+            </param>
+        </member>
+        <member name="E:Estat.Nsi.Client.LogError.LogErrorEvent">
+            <summary>
+            Triggered when an log error event occurs.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.LogError.Instance">
+            <summary>
+            Gets the Singleton instance
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.NsiClientWS">
+            <summary>
+            An implementation of the <see cref="T:Estat.Nsi.Client.INsiClient"/> that retrieves structural metadata and data from a SDMX v2.0 web service
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWS._emptyCategoryScheme">
+            <summary>
+            Empty list of <see cref="!:CategorySchemeBean"/>
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWS._emptyDataflowList">
+            <summary>
+            Empty list of <see cref="!:DataflowBean"/>
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWS._config">
+            <summary>
+             The Web Service Client configuration
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWS._defaultHeader">
+            <summary>
+            Default Header
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWS.Logger">
+            <summary>
+            Log class
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NsiClientWS._wsdlConfig">
+            <summary>
+            The configuration retrieved from the WSDL
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWS.#ctor(Estat.Nsi.Client.WsInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Estat.Nsi.Client.NsiClientWS"/> class. 
+            </summary>
+            <param name="config">
+            NSIClient settings
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWS.ExecuteQuery(Org.Sdmxsource.Sdmx.Api.Model.Data.Query.IDataQuery,Estat.Nsi.Client.SDMXWSFunction,System.String)">
+            <summary>
+            Execute SDMX Query against the NSI WS to retrieve SDMX-ML Data as a Stream
+            </summary>
+            <param name="query">
+            The SDMX Query to execute
+            </param>
+            <param name="operationName">
+            The type of operation, GetCompactData or GetCrossSectionalData
+            </param>
+            <exception cref="T:Estat.Nsi.Client.NsiClientException">Failute to execute query</exception>
+            <returns>
+            The SDMX-ML data as a stream.
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWS.ExecuteQuery(Org.Sdmxsource.Sdmx.Api.Model.Data.Query.IDataQuery,Estat.Nsi.Client.SDMXWSFunction,System.Int32,System.String)">
+            <summary>
+            Execute SDMX Query against the NSI WS to retrieve SDMX-ML Data as a Stream
+            </summary>
+            <param name="query">
+            The SDMX Query to execute
+            </param>
+            <param name="operationName">
+            The type of operation, GetCompactData or GetCrossSectionalData
+            </param>
+            <param name="observationLimit">
+            The maximum number of observations to return
+            </param>
+            <returns>
+            The SDMX-ML data as a stream.
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWS.GetCodelist(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject,Org.Sdmxsource.Sdmx.Api.Model.Objects.Base.IComponent,Org.Sdmxsource.Sdmx.Api.Model.Mutable.Registry.IContentConstraintMutableObject)">
+            <summary>
+            Gets a bean with data about the codelist for specified dataflow and component.
+            The dataflow can be retrieved from <see cref="M:Estat.Nsi.Client.NsiClientWS.RetrieveCategorisations"/> and the component from <see cref="M:Estat.Nsi.Client.NsiClientWS.GetStructure(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,System.Collections.Generic.ISet{Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject})"/>
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <param name="component">
+            The component
+            </param>
+            <param name="criteria">
+            The criteria includes a set of Member and MemberValue(s) for each dimension. The Member has componentRef the dimension conceptRef and the MemberValue(s) specify the selected codes for this dimension.
+            </param>
+            <returns>
+            A <c>CodeListBean</c> with the requested data
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWS.GetDataflowDataCount(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,Org.Sdmxsource.Sdmx.Api.Model.Mutable.Registry.IContentConstraintMutableObject)">
+            <summary>
+            Get the maximum number of observations that can be retrieved given the specified criteria
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <param name="criteria">
+            The criteria includes a set of Member and MemberValue(s) for each dimension. Each member should have member values else they shouldn't be included. It can be null
+            </param>
+            <returns>
+            The maximum number of observations or -1 if it can't be parsed or it is not available
+            </returns>
+            <exception cref="T:Estat.Nsi.Client.NsiClientException">
+            NSI WS communication error or parsing error
+            </exception>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWS.RetrieveCategorisations">
+            <summary>
+            Retrieves all available categorisations.
+            </summary>
+            <returns>
+              a list of &amp;lt;c&amp;gt;ISdmxObjects&amp;lt;/c&amp;gt; instances; the result won&amp;apos;t be &amp;lt;c&amp;gt;null&amp;lt;/c&amp;gt; if there are no
+              dataflows, instead an empty list will be returned
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWS.GetStructure(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,System.Collections.Generic.ISet{Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject})">
+            <summary>
+            Gets a bean with data about the key family for specified dataflow.
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <returns>
+            a <c>StructureBean</c> instance with requested data; the result is never <c>null</c> or  incomplete, instead an exception is throwed away if something goes wrong and not all required data is successfully retrieved
+            </returns>
+            <remarks>
+            The resulted bean will contain exactly one key family, but also will include any concepts and codelists referenced by the key family.
+            </remarks>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWS.GetCodelist(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataflowObject,Org.Sdmxsource.Sdmx.Api.Model.Objects.Reference.IStructureReference,Org.Sdmxsource.Sdmx.Api.Model.Mutable.Registry.IContentConstraintMutableObject,System.String)">
+            <summary>
+            Gets a bean with data about the codelist for specified dataflow and codelist ref.
+            The dataflow can be retrieved from <see cref="!:RetrieveDataflow"/>
+            </summary>
+            <param name="dataflow">
+            The dataflow
+            </param>
+            <param name="codelistRef">
+            The codelist reference
+            </param>
+            <param name="criteria">
+            The criteria includes a set of Member and MemberValue(s) for each dimension.
+            </param>
+            <param name="info">
+            Some helper information used for logging
+            </param>
+            <returns>
+            The partial codelist.
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWS.SendQueryStructureRequest(Org.Sdmxsource.Sdmx.Api.Model.Objects.Reference.IStructureReference,System.Boolean)">
+            <summary>
+            Sends the specified <paramref name="reference"/> to the Web Service defined by <see cref="F:Estat.Nsi.Client.NsiClientWS._config"/> 
+            </summary>
+            <param name="reference">
+            The reference
+            </param>
+            <param name="resolveReferences">
+            The resolve references
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWS.SendQueryStructureRequest(System.Collections.Generic.IEnumerable{Org.Sdmxsource.Sdmx.Api.Model.Objects.Reference.IStructureReference},System.Boolean)">
+            <summary>
+            Sends the specified <paramref name="references"/> to the Web Service defined by <see cref="F:Estat.Nsi.Client.NsiClientWS._config"/> 
+            </summary>
+            <param name="references">The <see cref="T:Org.Sdmxsource.Sdmx.Api.Model.Objects.Reference.IStructureReference"/></param>
+            <param name="resolveReferences">
+            The resolve references
+            </param>
+            <returns>The QueryStructureResponse returned by the Web Service</returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWS.SendRequest(System.Xml.XmlDocument,Estat.Nsi.Client.SDMXWSFunction,System.String)">
+            <summary>
+            Constructs a SOAP envelope request, with a body that includes the operation as element and the W3C Document and saves the SDMX Part of the response to the specified ouput
+            The W3C Document contains either a SDMX-ML Query or a SDMX-ML Registry Interface
+            </summary>
+            <param name="request">
+            The W3C Document representation of a SDMX-ML Query or QueryStructureRequest
+            </param>
+            <param name="webServiceOperation">
+            The Web Service function
+            </param>
+            <param name="tempFileName">
+            The temporary file name
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            request is null
+            </exception>
+            <exception cref="T:Estat.Nsi.Client.NsiClientException">
+            Error in server response or communication
+            </exception>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientWS.SendSdmxQuery(Org.Sdmxsource.Sdmx.Api.Model.Data.Query.IDataQuery,Estat.Nsi.Client.SDMXWSFunction,System.String)">
+            <summary>
+            Sends the SDMX Query Request
+            </summary>
+            <param name="query">
+            The SDMX Query
+            </param>
+            <param name="operation">
+            The Web Service function
+            </param>
+            <param name="tempFileName">
+            The temp file name
+            </param>
+        </member>
+        <member name="T:Estat.Nsi.Client.NsiClientException">
+            <summary>
+            The exception used by a NSI client implementations for signaling errors when something goes wrong.
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the NsiClientException class with a specified error message.
+            </summary>
+            <param name="message">
+            The message that describes the error.
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the NsiClientException class with a specified error message and a reference to the inner exception that is the cause of this exception.
+            </summary>
+            <param name="message">
+            The message that describes the error.
+            </param>
+            <param name="innerException">
+            The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Estat.Nsi.Client.NsiClientException"/> class.
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NsiClientException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Estat.Nsi.Client.NsiClientException"/> class with serialized data.
+            </summary>
+            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data about the exception being thrown. 
+            </param><param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination. 
+            </param><exception cref="T:System.ArgumentNullException">The <paramref name="info"/> parameter is null. 
+            </exception><exception cref="T:System.Runtime.Serialization.SerializationException">The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0). 
+            </exception>
+        </member>
+        <member name="T:Estat.Nsi.Client.NSIClientSettings">
+            <summary>
+            Configuration section &lt;NSIClient&gt;
+            </summary>
+            <remarks>
+            Assign properties to your child class that has the attribute 
+            <c>[ConfigurationProperty]</c> to store said properties in the xml.
+            </remarks>
+        </member>
+        <member name="F:Estat.Nsi.Client.NSIClientSettings._instance">
+            <summary>
+            The singleton instance
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.NSIClientSettings._config">
+            <summary>
+            The _ config.
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NSIClientSettings.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:Estat.Nsi.Client.NSIClientSettings"/> class from being created. 
+            Private Constructor used by our factory method.
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.NSIClientSettings.GetSection(System.Configuration.ConfigurationUserLevel)">
+            <summary>
+            Gets the current applications &lt;NSIClient&gt; section.
+            </summary>
+            <param name="configLevel">
+            The &lt;ConfigurationUserLevel&gt; that the config file
+            is retrieved from.
+            </param>
+            <returns>
+            The configuration file's &lt;NSIClient&gt; section.
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.NSIClientSettings.Save">
+            <summary>
+            Saves the configuration to the config file.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.Instance">
+            <summary>
+            Gets the current singleton instance
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.Domain">
+            <summary>
+            Gets or sets the Domain
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.EnableHTTPAuthentication">
+            <summary>
+            Gets or sets a value indicating whether HTTP Authentication is enabled.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.EnableProxy">
+            <summary>
+            Gets or sets a value indicating whether the Proxy is enabled
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.EndPoint">
+            <summary>
+            Gets or sets the Web Service Endpoint URL
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.EndPointV20">
+            <summary>
+            Gets or sets the Web Service Endpoint URL
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.EndPointType">
+            <summary>
+            Gets or sets the Web Service EndpointType 
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.LogSDMX">
+            <summary>
+            Gets or sets a value indicating whether the SDMX input/output traffic should be logged or not
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.Password">
+            <summary>
+            Gets or sets the HTTP Password
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.Prefix">
+            <summary>
+            Gets or sets the Namespace prefix
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.ProxyPassword">
+            <summary>
+            Gets or sets the Proxy Password
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.ProxyServer">
+            <summary>
+            Gets or sets the Proxy server
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.ProxyServerPort">
+            <summary>
+            Gets or sets the Proxy port
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.ProxyUserName">
+            <summary>
+            Gets or sets the Proxy User name
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.UseSystemProxy">
+            <summary>
+            Gets or sets a value indicating whether to enable or disable use of <see cref="P:System.Net.WebRequest.DefaultWebProxy"/> proxy configuration
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.UserName">
+            <summary>
+            Gets or sets the HTTP User name
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.Wsdl">
+            <summary>
+            Gets or sets the Web Service Endpoint URL
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.NSIClientSettings.WsdlV20">
+            <summary>
+            Gets or sets the Web Service Endpoint URL
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.DefaultHeaderId">
+            <summary>
+              Looks up a localized string similar to NSICLIENT_NET.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.defaultLanguage">
+            <summary>
+              Looks up a localized string similar to en.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.EnterMoreCriteria">
+            <summary>
+              Looks up a localized string similar to Enter more criteria to reduce the size of the dataset..
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionCannotLoadWsdlFormat2">
+            <summary>
+              Looks up a localized string similar to CONFIG ERROR:Cannot load the WSDL &apos;{0}&apos; for endpoint &apos;{1}&apos;.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionEndpointNotSet">
+            <summary>
+              Looks up a localized string similar to Endpoint is not set.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionErrorGettingCategorySchemes">
+            <summary>
+              Looks up a localized string similar to Error getting GetCategorySchemes.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionExecuteQuery">
+            <summary>
+              Looks up a localized string similar to Error while ExecuteQuery.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionGetCodelistFormat2">
+            <summary>
+              Looks up a localized string similar to Error getting GetCodelist for {0}. Error : {1}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionGettingDataflow">
+            <summary>
+              Looks up a localized string similar to Error getting GetDataflows.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionGettingStructure">
+            <summary>
+              Looks up a localized string similar to Error getting GetStructure.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionInvalidNumberOfCodeListsFormat1">
+            <summary>
+              Looks up a localized string similar to Zero or more than one codelist returned by the server, for {0}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionKeyFamilyCountNot1">
+            <summary>
+              Looks up a localized string similar to SERVER RESPONSE getStructure ERROR: The number of keyFamilies is not 1.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionMissingConceptSchemeFormat1">
+            <summary>
+              Looks up a localized string similar to SERVER RESPONSE getStructure ERROR: Missing referenced concept  scheme : {0}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionMissingResponse">
+            <summary>
+              Looks up a localized string similar to SERVER RESPONSE ERROR: Missing response.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionMissingStructure">
+            <summary>
+              Looks up a localized string similar to SERVER RESPONSE ERROR: Missing Structure from response.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionParsingCountCodelistFormat0">
+            <summary>
+              Looks up a localized string similar to Error parsing the count codelist for {0}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionReadingConfiguration">
+             <summary>
+               Looks up a localized string similar to Could not read the NSIClient configuration .
+            Reason :.
+             </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionReceivedSoapFault">
+            <summary>
+              Looks up a localized string similar to Received a SOAP FAULT: .
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionServerResponse">
+            <summary>
+              Looks up a localized string similar to SERVER RESPONSE ERROR: .
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionServerResponseInvalidKeyFamily">
+            <summary>
+              Looks up a localized string similar to SERVER RESPONSE getStructure ERROR: The KeyFamily is not the same as the dataflow referenced keyfamily.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.ExceptionZeroCodesFormat1">
+            <summary>
+              Looks up a localized string similar to Zero codes in codelist returned by the server, for {0}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.FailureFromServer">
+            <summary>
+              Looks up a localized string similar to SERVER RESPONSE Failure.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.InfoCountFormat2">
+            <summary>
+              Looks up a localized string similar to Dataflow {0}, Codelist : {1}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.InfoCreatingNsiClient">
+            <summary>
+              Looks up a localized string similar to Creating new  NSI Client.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.InfoGettingCategorySchemes">
+            <summary>
+              Looks up a localized string similar to Getting all category schemes.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.InfoGettingCodelistFormat1">
+            <summary>
+              Looks up a localized string similar to Getting codelist for {0}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.InfoGettingDataFlows">
+            <summary>
+              Looks up a localized string similar to Getting all dataflows.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.InfoGettingStructureFormat3">
+            <summary>
+              Looks up a localized string similar to Getting structure for {0}+{1}+{2}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.InfoGetWSDL">
+            <summary>
+              Looks up a localized string similar to Retrieve/Load WSDL....
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.InfoPartialCodelistFormat3">
+            <summary>
+              Looks up a localized string similar to Dataflow {0}, Component : {1} , Codelist : {2}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.InfoSoapResponse">
+            <summary>
+              Looks up a localized string similar to Soap RESPONSE :.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.InfoSuccess">
+            <summary>
+              Looks up a localized string similar to |--Success.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.InfoWebConfigLocation">
+            <summary>
+              Looks up a localized string similar to {0}
+            Expected location of web.config : {1}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.InfoWSDLSuccess">
+            <summary>
+              Looks up a localized string similar to `-- WSDL loaded successfully!.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.LogMaintainableValidationErrors">
+            <summary>
+              Looks up a localized string similar to {0} has validation errors.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.MaxObservations">
+            <summary>
+              Looks up a localized string similar to Nsi WebService accepts less max_observations than NSI Client: {0}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.NoResultsFound">
+            <summary>
+              Looks up a localized string similar to No results found.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.SdmxFooterMessage">
+            <summary>
+              Looks up a localized string similar to Footer Text: {0}, Code: {1}, Severity: {2}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.SdmxHeaderPreparedDateTimeFormat">
+            <summary>
+              Looks up a localized string similar to yyyy-MM-ddTHH:mm:ss.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.StatusMessageFormat2">
+            <summary>
+              Looks up a localized string similar to `-- {0}: {1}.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.Unauthorized">
+            <summary>
+              Looks up a localized string similar to Unauthorized.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.Properties.Resources.WarningFromServer">
+            <summary>
+              Looks up a localized string similar to SERVER RESPONSE has warnings:.
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.SDMXWSFunction">
+            <summary>
+            This enum contains the names of  a subset of the web functions as defined in  <a href="http://sdmx.org/docs/2_0/SDMX_2_0%20SECTION_07_WebServicesGuidelines.pdf">SDMX v2.0 Section 07 Web Services Guidelines</a>
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.SDMXWSFunction.GetCompactData">
+            <summary>
+            Obtain Compact Data: This is an exchange invoked by the Query Message, for
+            which the response is data marked up according to the Compact Data Message.
+            The function should be called “GetCompactData(Query)”.
+            </summary>        
+        </member>
+        <member name="F:Estat.Nsi.Client.SDMXWSFunction.GetCrossSectionalData">
+            <summary>
+            Obtain Cross-Sectional Data: This is an exchange invoked by the Query
+            Message, for which the response is data marked up according to the Cross-
+            Sectional Data Message. The function should be called
+            “GetCrossSectionalData(Query)”.
+            </summary> 
+        </member>
+        <member name="F:Estat.Nsi.Client.SDMXWSFunction.QueryStructure">
+            <summary>
+            Query Structural Metadata in Repository: This is an exchange invoked by the
+            QueryStructureRequest message, for which the response is a confirmation in the
+            form of a QueryStructureResponse message. The function should be called
+            “QueryStructure(QueryStructureRequest).”
+            </summary> 
+        </member>
+        <member name="T:Estat.Nsi.Client.SoapConstants">
+            <summary>
+            A list of SOAP related constants
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.SoapConstants.Soap11Ns">
+            <summary>
+            SOAP 1.1 namespace
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.SoapConstants.SoapRequest">
+            <summary>
+            This field holds a template for soap 1.1 request envelope
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.SoapConstants.Body">
+            <summary>
+            SOAP Body tag
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.SoapConstants.SoapAction">
+            <summary>
+            SOAPAction HTTP header
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.Utils">
+            <summary>
+            Description of Utils.
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.Utils._timePeriodValidate">
+            <summary>
+            This regex object holds the regular expression that validates the time dimension contrains
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.CopyCollection``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.ICollection{``0})">
+            <summary>
+            The contents from <paramref name="source"/> to <paramref name="destination"/>
+            </summary>
+            <param name="source">
+            The source collection.
+            </param>
+            <param name="destination">
+            The destination collection.
+            </param>
+            <typeparam name="T">
+            The type of the <paramref name="source"/> and <paramref name="destination"/> items
+            </typeparam>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.GetCachedConcept(Org.Sdmxsource.Sdmx.Api.Model.Objects.Base.IComponent,System.Collections.Generic.Dictionary{System.String,Org.Sdmxsource.Sdmx.Api.Model.Objects.ConceptScheme.IConceptObject})">
+            <summary>
+            Get a concept from the specified map from the specified component
+            </summary>
+            <param name="component">
+            The component
+            </param>
+            <param name="conceptMap">
+            The concept id to concept bean map
+            </param>
+            <returns>
+            The concept of the specified component or null
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.GetComponentByName(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject,System.String)">
+            <summary>
+            Get the Dimension or TimeDimension that uses the specified concept id inside a KeyFamily
+            </summary>
+            <param name="keyFamily">
+            The KeyFamily to search
+            </param>
+            <param name="concept">
+            The concept id e.g. "FREQ"
+            </param>
+            <returns>
+            The Dimension or TimeDimension as ComponentBean if found, else null 
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.GetLocalizedName(Org.Sdmxsource.Sdmx.Api.Model.Objects.Base.INameableObject)">
+            <summary>
+            Get localised name for the specified artefact
+            </summary>
+            <param name="identifiable">
+            The artefact
+            </param>
+            <returns>
+            The localized name if it exists or the id 
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.IsTimeSeries(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject)">
+            <summary>
+            Check if the specified <paramref name="keyFamily"/> can do Time Series data
+            </summary>
+            <param name="keyFamily">
+            The <see cref="!:KeyFamilyBean"/>
+            </param>
+            <returns>
+            True if it is a time series DSD else false
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.IsTrueString(System.String)">
+            <summary>
+            This is an utility method that verify if a string text equals "true" constant value
+            The check is done in invariant culture and the string case is ignored.
+            In case the input is null or empty the result is false
+            </summary>
+            <param name="input">
+            The string that needs to be check
+            </param>
+            <returns>
+            The returned values are:
+            <list type="bullet">
+            <item>
+            true in case the string is "true"
+            </item>
+            <item>
+            false in case the string is null or empty or any other string
+            </item>
+            </list>
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.MakeKey(Org.Sdmxsource.Sdmx.Api.Model.Objects.Base.IMaintainableObject)">
+            <summary>
+            Generate a key using the following format AgencyID+ID+Version
+            </summary>
+            <param name="artefact">
+            The artefact to generate the key for
+            </param>
+            <returns>
+            The key
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.MakeKey(Org.Sdmxsource.Sdmx.Api.Model.Objects.Reference.IStructureReference)">
+            <summary>
+            Generate a key using the following format AgencyID+ID+Version
+            </summary>
+            <param name="reference">
+            The artefact reference to generate the key for
+            </param>
+            <returns>
+            The key
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.MakeKey(Org.Sdmxsource.Sdmx.Api.Model.Objects.Reference.ICrossReference)">
+            <summary>
+            Generate a key using the following format AgencyID+ID+Version
+            </summary>
+            <param name="reference">
+            The artefact reference to generate the key for
+            </param>
+            <returns>
+            The key
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.MakeKey(Org.Sdmxsource.Sdmx.Api.Model.Objects.Reference.IMaintainableRefObject)">
+            <summary>
+            Generate a key using the following format AgencyID+ID+Version
+            </summary>
+            <param name="reference">
+            The artefact reference to generate the key for
+            </param>
+            <returns>
+            The key
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.MakeKey(Org.Sdmxsource.Sdmx.Api.Model.Objects.Base.IItemObject,Org.Sdmxsource.Sdmx.Api.Model.Objects.Base.IItemSchemeObject{Org.Sdmxsource.Sdmx.Api.Model.Objects.ConceptScheme.IConceptObject})">
+            <summary>
+            Create a key for the <paramref name="item"/> that belongs to <paramref name="itemScheme"/>
+            </summary>
+            <param name="item">
+            The <see cref="!:ItemBean"/>
+            </param>
+            <param name="itemScheme">
+            The <see cref="!:ItemSchemeBean"/>
+            </param>
+            <returns>
+            A string that uniquely identifies the <paramref name="item"/>
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.MakeKey(System.String,System.String,System.String)">
+            <summary>
+            Make a key from id, agency and version
+            </summary>
+            <param name="id">
+            The ID
+            </param>
+            <param name="agency">
+            The Agency
+            </param>
+            <param name="version">
+            The version
+            </param>
+            <returns>
+            A key id
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.MakeKey(System.String,System.String,System.String,System.String)">
+            <summary>
+            Make a key from concept scheme id, agency and version and concept id
+            </summary>
+            <param name="conceptId">
+            The <see cref="!:ConceptBean"/> Id
+            </param>
+            <param name="conceptSchemeId">
+            The <see cref="!:ConceptSchemeBean"/> id
+            </param>
+            <param name="conceptSchemeAgency">
+            The <see cref="!:ConceptSchemeBean"/> Agency
+            </param>
+            <param name="conceptSchemeVersion">
+            The <see cref="!:ConceptSchemeBean"/> Version
+            </param>
+            <returns>
+            The make key.
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.MakeKeyForConcept(Org.Sdmxsource.Sdmx.Api.Model.Objects.Base.IComponent)">
+            <summary>
+            Make a key for <see cref="!:ConceptBean"/>
+            </summary>
+            <param name="component">
+            The <see cref="!:ComponentBean"/> containing the concept reference
+            </param>
+            <returns>
+            The key for concept.
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.PopulateConceptMap(Org.Sdmxsource.Sdmx.Api.Model.Objects.ISdmxObjects,System.Collections.Generic.Dictionary{System.String,Org.Sdmxsource.Sdmx.Api.Model.Objects.ConceptScheme.IConceptObject})">
+            <summary>
+            Populate the specified map from ConceptSchemes contained in the specified structure
+            </summary>
+            <param name="structure">
+            The structure containing the ConceptSchemes
+            </param>
+            <param name="conceptMap">
+            The concept id to concept bean map
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.ValidateTimePeriod(System.String)">
+            <summary>
+            Validate time period
+            </summary>
+            <param name="time">
+            The time period to validate
+            </param>
+            <returns>
+            <c>True</c> if it is valid; otherwise <c>False</c>
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.Utils.PopulateHeaderFromSettings(Org.Sdmxsource.Sdmx.Api.Model.Header.IHeader)">
+            <summary>
+            Populate the given headerbean object from the apllication settings
+            </summary>
+            <param name="header">
+            The headerBean to populate
+            </param>
+        </member>
+        <member name="T:Estat.Nsi.Client.Validator">
+            <summary>
+            This is a utility class for checking a dsd for compliance 
+            with producing Compact or Cross-Sectional Data. 
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.Validator.ValidateForCompact(Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure.IDataStructureObject)">
+            <summary>
+            This method checks a dsd for compliance with producing Compact Data. 
+            In detail, it checks that if a TimeDimension is present and at least
+            one dimension is frequency dimension. If there is none an error message
+            is returned to the caller
+            </summary>
+            <param name="dsd">
+            The <see cref="!:Estat.Sdmx.Model.Structure.KeyFamilyBean"/>of the DSD to be checked
+            </param>
+            <returns>
+            The error messages in case of invalid dsd or an empty string in case a valid dsd
+            </returns>
+        </member>
+        <member name="T:Estat.Nsi.Client.WSDLSettings">
+            <summary>
+            This class will parse and expose various WSDL settings
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.WSDLSettings._operationParameterName">
+            <summary>
+            This field holds the a map between a web service operation name
+            and the parameter wrapper element name. This is used for connecting to .NET WS.
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.WSDLSettings._soapAction">
+            <summary>
+            This field holds the a map between a web service operation name
+            and the soap action
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.WSDLSettings._wsdl">
+            <summary>
+            Holds the service description of the WSDL set in <see cref="P:Estat.Nsi.Client.NSIClientSettings.Wsdl"/>
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.WSDLSettings.#ctor(Estat.Nsi.Client.WsInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Estat.Nsi.Client.WSDLSettings"/> class. 
+            Initialize a new instance of the WSDLSettings class with NSIClientSettings configuration
+            </summary>
+            <param name="config">
+            The <see cref="T:Estat.Nsi.Client.NSIClientSettings"/> config used to retrieve the WSDL URL and other information such as proxy
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.WSDLSettings.GetParameterName(System.String)">
+            <summary>
+            Get the parameter element name if one exists for the given operation
+            </summary>
+            <param name="operationName">
+            The name of the operation or web method or function
+            </param>
+            <returns>
+            null if there isn't a parameter element name e.g. in Java or the parameter element name (e.g. in .net) 
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.WSDLSettings.GetSoapAction(System.String)">
+            <summary>
+            Get the soapAction URI if one exists for the given operation
+            </summary>
+            <param name="operationName">
+            The name of the operation or web method or function
+            </param>
+            <returns>
+            The "http://schemas.xmlsoap.org/wsdl/soap/" soapAction value or null if there isn't a soapAction 
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.WSDLSettings.GetTargetNamespace">
+            <summary>
+            Get the WSDL target namespace
+            </summary>
+            <returns>
+            The target namespace
+            </returns>
+        </member>
+        <member name="M:Estat.Nsi.Client.WSDLSettings.BuildOperationParameterName">
+            <summary>
+            Populate the <see cref="F:Estat.Nsi.Client.WSDLSettings._operationParameterName"/> dictionary with operation.Name to Parameter name
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.WSDLSettings.GetWSDL(Estat.Nsi.Client.WsInfo)">
+            <summary>
+            Gets the WSDL.
+            </summary>
+            <param name="config">
+            The config.
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.WSDLSettings.ΒuildSoapActionMap">
+            <summary>
+            Populate the <see cref="F:Estat.Nsi.Client.WSDLSettings._soapAction"/> dictionary with operation.Name to soapAction URI
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.WsInfo">
+            <summary>
+            Web Service information &lt;NSIClient&gt;
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.WsInfo.#ctor(Estat.Nsi.Client.NSIClientSettings,Org.Sdmxsource.Sdmx.Api.Constants.SdmxSchemaEnumType)">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.WsInfo.SetupWebRequestAuth(System.Net.WebRequest)">
+            <summary>
+            Setup the specified <paramref name="webRequest"/> network authentication and proxy configuration
+            </summary>
+            <param name="webRequest">
+            The <see cref="T:System.Net.WebRequest"/>
+            </param>
+        </member>
+        <member name="M:Estat.Nsi.Client.WsInfo.SetupRestAuth(RestSharp.RestClient,RestSharp.RestRequest)">
+            <summary>
+            Setup the specified <paramref name="client"/> network authentication and proxy configuration
+            </summary>
+            <param name="client">
+            The <see cref="!:client"/>
+            </param>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.Config">
+            <summary>
+            Gets the Config
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.Domain">
+            <summary>
+            Gets the Domain
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.EnableHTTPAuthentication">
+            <summary>
+            Gets a value indicating whether HTTP Authentication is enabled.
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.EnableProxy">
+            <summary>
+            Gets a value indicating whether the Proxy is enabled
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.EndPoint">
+            <summary>
+            Gets the Web Service Endpoint URL
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.EndPointType">
+            <summary>
+            Gets the Web Service EndpointType 
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.LogSDMX">
+            <summary>
+            Gets a value indicating whether the SDMX input/output traffic should be logged or not
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.Password">
+            <summary>
+            Gets the HTTP Password
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.Prefix">
+            <summary>
+            Gets the Namespace prefix
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.ProxyPassword">
+            <summary>
+            Gets the Proxy Password
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.ProxyServer">
+            <summary>
+            Gets the Proxy server
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.ProxyServerPort">
+            <summary>
+            Gets the Proxy port
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.ProxyUserName">
+            <summary>
+            Gets the Proxy User name
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.UseSystemProxy">
+            <summary>
+            Gets a value indicating whether to enable or disable use of <see cref="P:System.Net.WebRequest.DefaultWebProxy"/> proxy configuration
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.UserName">
+            <summary>
+            Gets the HTTP User name
+            </summary>
+        </member>
+        <member name="P:Estat.Nsi.Client.WsInfo.Wsdl">
+            <summary>
+            Gets the Web Service Endpoint URL
+            </summary>
+        </member>
+        <member name="T:Estat.Nsi.Client.XmlProxyUrlResolver">
+            <summary>
+            A sub class of XmlUrlResolver with proxy support
+            It uses the NSIClientSettings for configuration
+            </summary>
+        </member>
+        <member name="F:Estat.Nsi.Client.XmlProxyUrlResolver._config">
+            <summary>
+            The NSI Client settings
+            </summary>
+        </member>
+        <member name="M:Estat.Nsi.Client.XmlProxyUrlResolver.GetEntity(System.Uri,System.String,System.Type)">
+            <summary>
+            Maps a URI to an object containing the actual resource.
+            An override of <see cref="M:System.Xml.XmlUrlResolver.GetEntity(System.Uri,System.String,System.Type)"/>
+            It will use the <see cref="M:System.Xml.XmlUrlResolver.GetEntity(System.Uri,System.String,System.Type)"/> if no proxy is set.
+            Else it will create a new <see cref="T:System.Net.WebRequest"/> and return the response
+            </summary>
+            <returns>
+            A System.IO.Stream object or null if a type other than stream is specified.
+            </returns>
+            <param name="absoluteUri">The URI returned from <see cref="M:System.Xml.XmlResolver.ResolveUri(System.Uri,System.String)"/></param><param name="role">The current implementation does not use this parameter when resolving URIs. This is provided for future extensibility purposes. For example, this can be mapped to the xlink:role and used as an implementation specific argument in other scenarios. 
+            </param><param name="objectToReturnType">The type of object to return. The current implementation only returns System.IO.Stream objects. 
+            </param><exception cref="T:System.Xml.XmlException"><paramref name="objectToReturnType"/> is neither null nor a Stream type. 
+            </exception><exception cref="T:System.UriFormatException">The specified URI is not an absolute URI. 
+            </exception><exception cref="T:System.ArgumentNullException"><paramref name="absoluteUri"/> is null. 
+            </exception><exception cref="T:System.Exception">There is a runtime error (for example, an interrupted server connection). 
+            </exception>
+        </member>
+        <member name="M:Estat.Nsi.Client.XmlProxyUrlResolver.SetConfig(Estat.Nsi.Client.WsInfo)">
+            <summary>
+            Setter for NSI Client settings
+            The settings are used for Proxy and HTTP authentication
+            </summary>
+            <param name="config">
+            The NSI Client settings
+            </param>
+        </member>
+    </members>
+</doc>

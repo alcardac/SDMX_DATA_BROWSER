@@ -19,9 +19,19 @@ namespace ISTAT.WebClient.Controllers
         {
             get
             {
-                ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
-                if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
-                    throw new Exception("ConnectionString not set");
+
+                ConnectionStringSettings connectionStringSetting = new ConnectionStringSettings();
+
+                if (ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"].ConnectionString.ToLower() != "file")
+                {
+                    connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+
+                    if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
+                        throw new Exception("ConnectionString not set");
+                }
+                else
+                { connectionStringSetting.ConnectionString = null; }
+
                 return connectionStringSetting.ConnectionString;
             }
         }
@@ -32,8 +42,10 @@ namespace ISTAT.WebClient.Controllers
             {
 
                 DashboardWidget qw = new DashboardWidget(ConnectionString);
-
-                return CS.ReturnForJQuery(qw.Load());
+                if (ConnectionString.ToLower() != "file")
+                    return CS.ReturnForJQuery(qw.Load());
+                else
+                    return null;
             }
             catch (Exception ex)
             {

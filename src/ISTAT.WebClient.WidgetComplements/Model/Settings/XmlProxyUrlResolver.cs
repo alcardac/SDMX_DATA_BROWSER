@@ -1,5 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="XmlProxyUrlResolver.cs" company="Eurostat">
+using ISTAT.WebClient.WidgetComplements.Model.JSObject;
 namespace ISTAT.WebClient.WidgetComplements.Model.Settings
 {
     using ISTAT.WebClient.WidgetComplements.Model.CallWS;

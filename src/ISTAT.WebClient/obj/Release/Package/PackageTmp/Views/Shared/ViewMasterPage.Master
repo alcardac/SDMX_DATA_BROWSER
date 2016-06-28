@@ -18,44 +18,44 @@
 
     <title><%= Messages.app_title %></title>
     
-    <link href="<%=Url.Content("~/Content/style/Master.css")%>" rel="stylesheet" type="text/css" />
-    <link href="<%=Url.Content("~/Content/style/colpick.css")%>" rel="stylesheet" type="text/css" />
-    <link href="<%=Url.Content("~/Content/fontello-16x16/css/all-icon-font-16x16.css")%>" rel="stylesheet" type="text/css" />
-    <link href="<%=Url.Content("~/Content/fontello-16x16/css/animation.css")%>" rel="stylesheet" type="text/css" />
+    <link href="<%=ResolveClientUrl("~/Content/style/Master.css")%>" rel="stylesheet" type="text/css" />
+    <link href="<%=ResolveClientUrl("~/Content/style/colpick.css")%>" rel="stylesheet" type="text/css" />
+    <link href="<%=ResolveClientUrl("~/Content/fontello-16x16/css/all-icon-font-16x16.css")%>" rel="stylesheet" type="text/css" />
+    <link href="<%=ResolveClientUrl("~/Content/fontello-16x16/css/animation.css")%>" rel="stylesheet" type="text/css" />
     
-    <link href="<%=Url.Content("~/Scripts/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css")%>" rel="stylesheet" />
-    <script type='text/javascript' src="<%=Url.Content("~/Scripts/jquery/jquery-1.11.2.min.js")%>"></script>
-    <script type='text/javascript' src="<%=Url.Content("~/Scripts/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js")%>"></script>
-    <script type='text/javascript' src="<%=Url.Content("~/Scripts/jquery/jquery.resize.js")%>"></script>
-    <script type='text/javascript' src="<%=Url.Content("~/Scripts/jquery/jquery.blockUI.js")%>"></script>
+    <link href="<%=ResolveClientUrl("~/Scripts/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css")%>" rel="stylesheet" />
+    <script type='text/javascript' src="<%=ResolveClientUrl("~/Scripts/jquery/jquery-1.11.2.min.js")%>"></script>
+    <script type='text/javascript' src="<%=ResolveClientUrl("~/Scripts/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js")%>"></script>
+    <script type='text/javascript' src="<%=ResolveClientUrl("~/Scripts/jquery/jquery.resize.js")%>"></script>
+    <script type='text/javascript' src="<%=ResolveClientUrl("~/Scripts/jquery/jquery.blockUI.js")%>"></script>
 
-    <link rel="stylesheet" media="screen" type="text/css" href="<%=Url.Content("~/Scripts/jquery/colorpicker/css/colorpicker.css")%>" />
-    <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery/colorpicker/js/colorpicker.js")%>"></script>
+    <link rel="stylesheet" media="screen" type="text/css" href="<%=ResolveClientUrl("~/Scripts/jquery/colorpicker/css/colorpicker.css")%>" />
+    <script type="text/javascript" src="<%=ResolveClientUrl("~/Scripts/jquery/colorpicker/js/colorpicker.js")%>"></script>
 
     <![if !IE]>
-    <script type='text/javascript' src="<%=Url.Content("~/Scripts/pages/split-toggler.js")%>"></script>
+    <script type='text/javascript' src="<%=ResolveClientUrl("~/Scripts/pages/split-toggler.js")%>"></script>
     <![endif]>
     
     <!--[if gte IE 10]>
-    <script type='text/javascript' src="<%=Url.Content("~/Scripts/pages/split-toggler.js")%>"></script>
+    <script type='text/javascript' src="<%=ResolveClientUrl("~/Scripts/pages/split-toggler.js")%>"></script>
     <![endif]-->
 
     <!--[if lt IE 10]>
-    <link href="<%=Url.Content("~/Content/style/MasterIE8.css")%>" rel="stylesheet" type="text/css" />
-    <script type='text/javascript' src="<%=Url.Content("~/Scripts/pages/split-togglerIE8.js")%>"></script>
-    <script type='text/javascript' src="<%=Url.Content("~/Scripts/jquery/jquery-ui-1.11.4.custom/jquery.xdomainrequest.min.js")%>"></script>
+    <link href="<%=ResolveClientUrl("~/Content/style/MasterIE8.css")%>" rel="stylesheet" type="text/css" />
+    <script type='text/javascript' src="<%=ResolveClientUrl("~/Scripts/pages/split-togglerIE8.js")%>"></script>
+    <script type='text/javascript' src="<%=ResolveClientUrl("~/Scripts/jquery/jquery-ui-1.11.4.custom/jquery.xdomainrequest.min.js")%>"></script>
     <![endif]-->
 
     
-    <script src="<%=Url.Content("~/Scripts/istat-widget-manager.js")%>"></script>
-    <script src="<%=Url.Content("~/Scripts/istat-widget-dataflows.js")%>"></script>
-    <script src="<%=Url.Content("~/Scripts/istat-widget-dataset.j")%>s"></script>
-    <script src="<%=Url.Content("~/Scripts/istat-widget-text.j")%>s"></script>
-    <script src="<%=Url.Content("~/Scripts/istat-widget-chart.js")%>"></script>
-    <script src="<%=Url.Content("~/Scripts/istat-widget-dashboard.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/istat-widget-manager.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/istat-widget-dataflows.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/istat-widget-dataset.j")%>s"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/istat-widget-text.j")%>s"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/istat-widget-chart.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/istat-widget-dashboard.js")%>"></script>
 
-    <script src="<%=Url.Content("~/Scripts/istat-client.js")%>"></script>
-    <script src="<%=Url.Content("~/Scripts/pages/masterPage.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/istat-client.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/pages/masterPage.js")%>"></script>
 
     <script type="text/javascript">
 
@@ -70,7 +70,8 @@
                     var _sett_obj = clientParseJsonToObject(jsonString);
                     /************************/
                     if (!_sett_obj.hasOwnProperty("error") && _sett_obj.hasOwnProperty('settings')){
-
+                        
+                        sessionStorage.setItem("view_login",_sett_obj.settings.view_login);
                         // if show button tree
                         if (_sett_obj.settings.view_tree_req == true) {
                             $('#menu-left').empty();
@@ -113,7 +114,7 @@
                         }
 
                         clientSetup(
-                            "<%=Url.Content("~/")%>",
+                            "<%=ResolveClientUrl("~/")%>",
                             '<%= System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName%>',
                             <%=ISTAT.WebClient.WidgetComplements.Model.Settings.WebClientSettings.Instance.MaxResultObs %>);
                         
@@ -122,7 +123,7 @@
                     }else{
 
                         clientSetup(
-                            "<%=Url.Content("~/")%>",
+                            "<%=ResolveClientUrl("~/")%>",
                             '<%= System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName%>',
                             <%=ISTAT.WebClient.WidgetComplements.Model.Settings.WebClientSettings.Instance.MaxResultObs %>);
                         
@@ -132,6 +133,7 @@
                 null, false);
 
         });
+
     </script>
 
     <asp:ContentPlaceHolder ID="ContentHeader" runat="server">
@@ -156,25 +158,25 @@
 
         <div class="Maincontainer">
             <div id="header-left">
-                <a href="<%=Url.Content("~/WebClient/Index")%>">
-                    <img id="img_logo" src="<%=Url.Content("~/Images/Logo/logo.png")%>" alt="<%= Messages.img_logo%>" tabindex="1" />
+                <a href="<%=ResolveClientUrl("~/WebClient/Index")%>">
+                    <img id="img_logo" src="<%=ResolveClientUrl("~/Images/Logo/logo.png")%>" alt="<%= Messages.img_logo%>" tabindex="1" />
                 </a>
             </div>
             <div id="header-right">
                 <div>
                     <span id="user_login">
-                        <a accesskey="g" href="<%=Url.Content("~/WebClient/Login")%>" tabindex="2" ><%= Messages.label_login%></a>
+                        <a accesskey="g" href="<%=ResolveClientUrl("~/WebClient/Login")%>" tabindex="2" ><%= Messages.label_login%></a>
                         <i class="icon-login"></i>
                     </span>
                     <span id="user_dashboard">
-                        <a accesskey="P" href='<%=Url.Content("~/WebClient/Profile")%>'><%= Messages.dashboard_Profile%></a>
+                        <a accesskey="P" href='<%=ResolveClientUrl("~/WebClient/Profile")%>'><%= Messages.dashboard_Profile%></a>
                         <i class="icon-cog"></i>
                     </span>
                 </div>
                 <div>
                     <span id="user_welcome"></span>
                     <span id="user_logout">
-                        <a accesskey="g" href="<%=Url.Content("~/WebClient/Index")%>" tabindex="2" ><%= Messages.label_logout%></a>
+                        <a accesskey="g" href="<%=ResolveClientUrl("~/WebClient/Index")%>" tabindex="2" ><%= Messages.label_logout%></a>
                         <i class="icon-logout"></i>
                     </span>
                 </div>
@@ -212,16 +214,16 @@
             <div id="menu-center">
                 <ul id="dashboard_menu">
                     <li>
-                        <i class='icon-home'></i><a href='<%=Url.Content("~/WebClient/Index")%>'><%= Messages.footer_home%></a>
+                        <i class='icon-home'></i><a href='<%=ResolveClientUrl("~/WebClient/Index")%>'><%= Messages.footer_home%></a>
                     </li>
                     <li>
-                        <i class='icon-doc-text-inv'></i><a href='<%=Url.Content("~/WebClient/Queries")%>'><%= Messages.dashboard_Queries%></a>
+                        <i class='icon-doc-text-inv'></i><a href='<%=ResolveClientUrl("~/WebClient/Queries")%>'><%= Messages.dashboard_Queries%></a>
                     </li>
                     <li class="admin_settings">
-                        <i class='icon-photo'></i><a href='<%=Url.Content("~/WebClient/Templates")%>'><%= Messages.dashboard_Themes%></a>
+                        <i class='icon-photo'></i><a href='<%=ResolveClientUrl("~/WebClient/Templates")%>'><%= Messages.dashboard_Themes%></a>
                     </li>
                     <li class="admin_settings">
-                        <i class='icon-wrench-2'></i><a href='<%=Url.Content("~/WebClient/Administration")%>'><%= Messages.dashboard_Profiles%></a>
+                        <i class='icon-wrench-2'></i><a href='<%=ResolveClientUrl("~/WebClient/Administration")%>'><%= Messages.dashboard_Profiles%></a>
                     </li>
                 </ul>
             </div>
@@ -234,7 +236,7 @@
                     </ul>
                 </div>
                 <div>
-                    <select name="select-locale" id="select-locale">
+                    <select name="select-locale" id="select-locale" >
 
                         <% foreach(CultureInfo c in Messages.AvailableLocales()){ %>
                         <option value= "<%=c.TwoLetterISOLanguageName%>" 
@@ -282,14 +284,15 @@
 
         <div class="Maincontainer">
             <ul>
-                <li><a href="<%=Url.Content("~/WebClient/Index")%>" tabindex="8" accesskey="H"><%= Messages.footer_home %></a></li>
-                <%--<li><a href="<%=Url.Content("~/WebClient/Copyright")%>" tabindex="9" accesskey="C"><%= Messages.footer_copyright %></a></li>--%>
-                <li><a href="<%=Url.Content("~/WebClient/Contacts")%>" tabindex="10" accesskey="o"><%= Messages.footer_contacts %></a></li>
-                <%--<li><a href="<%=Url.Content("~/WebClient/Help")%>" tabindex="11" accesskey="l"><%= Messages.footer_help %></a></li>--%>
-                <li><a href="<%=Url.Content("~/WebClient/UseLinks")%>" tabindex="12" accesskey="U"><%= Messages.footer_links %></a></li>
-                <%--<li><a href="<%=Url.Content("~/WebClient/W3Ccheck")%>" tabindex="13" accesskey="W"><%= Messages.footer_W3C %></a></li>
-                <li><a href="<%=Url.Content("~/WebClient/Manual")%>" tabindex="14" accesskey="M"><%= Messages.footer_manual %></a></li>
-                <li><a href="<%=Url.Content("~/WebClient/Sitemap")%>" tabindex="15" accesskey="S"><%= Messages.footer_sitemap %></a></li>
+                <li><a href="<%=ResolveClientUrl("~/WebClient/Index")%>" tabindex="8" accesskey="H"><%= Messages.footer_home %></a></li>
+                <%--<li><a href="<%=ResolveClientUrl("~/WebClient/Copyright")%>" tabindex="9" accesskey="C"><%= Messages.footer_copyright %></a></li>--%>
+                <li><a href="<%=ResolveClientUrl("~/WebClient/Contacts")%>" tabindex="10" accesskey="o"><%= Messages.footer_contacts %></a></li>
+                <%--<li><a href="<%=ResolveClientUrl("~/WebClient/Help")%>" tabindex="11" accesskey="l"><%= Messages.footer_help %></a></li>--%>
+                <li><a href="<%=ResolveClientUrl("~/WebClient/UseLinks")%>" tabindex="12" accesskey="U"><%= Messages.footer_links %></a></li>
+                <li><%= Messages.label_version %> <%= ConfigurationManager.AppSettings["webpages:Version"].ToString() %></li>
+                <%--<li><a href="<%=ResolveClientUrl("~/WebClient/W3Ccheck")%>" tabindex="13" accesskey="W"><%= Messages.footer_W3C %></a></li>
+                <li><a href="<%=ResolveClientUrl("~/WebClient/Manual")%>" tabindex="14" accesskey="M"><%= Messages.footer_manual %></a></li>
+                <li><a href="<%=ResolveClientUrl("~/WebClient/Sitemap")%>" tabindex="15" accesskey="S"><%= Messages.footer_sitemap %></a></li>
                 <li><a href="#" tabindex="16" accesskey="A"><%= Messages.label_vaccessible %></a></li>--%>
             </ul>
         </div>

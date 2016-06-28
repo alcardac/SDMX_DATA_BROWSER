@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ExceptionCannotLoadWsdlFormat2" xml:space="preserve">
+    <value>CONFIG ERROR:Cannot load the WSDL '{0}' for endpoint '{1}'</value>
+    <comment>
+      2 parameter: wsdl, endpoint
+    </comment>
+  </data>
+  <data name="ExceptionEndpointNotSet" xml:space="preserve">
+    <value>Endpoint is not set</value>
+  </data>
+  <data name="ExceptionServerResponseInvalidKeyFamily" xml:space="preserve">
+    <value>SERVER RESPONSE getStructure ERROR: The KeyFamily is not the same as the dataflow referenced keyfamily</value>
+  </data>
+  <data name="InfoGettingCodelistFormat1" xml:space="preserve">
+    <value>Getting codelist for {0}</value>
+    <comment>
+      1 parameter: component, dsd and dataflow info
+    </comment>
+  </data>
+  <data name="ExceptionInvalidNumberOfCodeListsFormat1" xml:space="preserve">
+    <value>Zero or more than one codelist returned by the server, for {0}</value>
+    <comment>
+      1 paramter : info for component, dsd and dataflow
+    </comment>
+  </data>
+  <data name="ExceptionZeroCodesFormat1" xml:space="preserve">
+    <value>Zero codes in codelist returned by the server, for {0}</value>
+    <comment>
+      1 paramter : info for component, dsd and dataflow
+    </comment>
+  </data>
+  <data name="ExceptionGetCodelistFormat2" xml:space="preserve">
+    <value>Error getting GetCodelist for {0}. Error : {1}</value>
+    <comment>
+      2 paramter : info for component, dsd and dataflow and exception mesage
+    </comment>
+  </data>
+  <data name="InfoGettingDataFlows" xml:space="preserve">
+    <value>Getting all dataflows</value>
+  </data>
+  <data name="InfoCreatingNsiClient" xml:space="preserve">
+    <value>Creating new  NSI Client</value>
+  </data>
+  <data name="InfoGetWSDL" xml:space="preserve">
+    <value>Retrieve/Load WSDL...</value>
+  </data>
+  <data name="ExceptionExecuteQuery" xml:space="preserve">
+    <value>Error while ExecuteQuery</value>
+  </data>
+  <data name="InfoSuccess" xml:space="preserve">
+    <value>|--Success</value>
+  </data>
+  <data name="ExceptionErrorGettingCategorySchemes" xml:space="preserve">
+    <value>Error getting GetCategorySchemes</value>
+  </data>
+  <data name="InfoPartialCodelistFormat3" xml:space="preserve">
+    <value>Dataflow {0}, Component : {1} , Codelist : {2}</value>
+    <comment>
+      3 parameter: dataflow, component, codelist
+    </comment>
+  </data>
+  <data name="InfoCountFormat2" xml:space="preserve">
+    <value>Dataflow {0}, Codelist : {1}</value>
+    <comment>
+      2 parameter dataflows, codelist
+    </comment>
+  </data>
+  <data name="ExceptionGettingDataflow" xml:space="preserve">
+    <value>Error getting GetDataflows</value>
+  </data>
+  <data name="InfoGettingStructureFormat3" xml:space="preserve">
+    <value>Getting structure for {0}+{1}+{2}</value>
+    <comment>
+      3 parameter : dataflow agency, id, version
+    </comment>
+  </data>
+  <data name="ExceptionGettingStructure" xml:space="preserve">
+    <value>Error getting GetStructure</value>
+  </data>
+  <data name="ExceptionMissingConceptSchemeFormat1" xml:space="preserve">
+    <value>SERVER RESPONSE getStructure ERROR: Missing referenced concept  scheme : {0}</value>
+    <comment>
+      1 parameter: ConceptScheme id
+    </comment>
+  </data>
+  <data name="ExceptionMissingResponse" xml:space="preserve">
+    <value>SERVER RESPONSE ERROR: Missing response</value>
+  </data>
+  <data name="ExceptionMissingStructure" xml:space="preserve">
+    <value>SERVER RESPONSE ERROR: Missing Structure from response</value>
+  </data>
+  <data name="WarningFromServer" xml:space="preserve">
+    <value>SERVER RESPONSE has warnings:</value>
+  </data>
+  <data name="FailureFromServer" xml:space="preserve">
+    <value>SERVER RESPONSE Failure</value>
+  </data>
+  <data name="ExceptionKeyFamilyCountNot1" xml:space="preserve">
+    <value>SERVER RESPONSE getStructure ERROR: The number of keyFamilies is not 1</value>
+  </data>
+  <data name="ExceptionServerResponse" xml:space="preserve">
+    <value>SERVER RESPONSE ERROR: </value>
+  </data>
+  <data name="ExceptionReceivedSoapFault" xml:space="preserve">
+    <value>Received a SOAP FAULT: </value>
+  </data>
+  <data name="InfoSoapResponse" xml:space="preserve">
+    <value>Soap RESPONSE :</value>
+  </data>
+  <data name="InfoGettingCategorySchemes" xml:space="preserve">
+    <value>Getting all category schemes</value>
+  </data>
+  <data name="InfoWSDLSuccess" xml:space="preserve">
+    <value>`-- WSDL loaded successfully!</value>
+  </data>
+  <data name="ExceptionParsingCountCodelistFormat0" xml:space="preserve">
+    <value>Error parsing the count codelist for {0}</value>
+    <comment>1 parameter: info</comment>
+  </data>
+  <data name="StatusMessageFormat2" xml:space="preserve">
+    <value>`-- {0}: {1}</value>
+    <comment>
+      2 parameter. Lang and Test
+    </comment>
+  </data>
+  <data name="ExceptionReadingConfiguration" xml:space="preserve">
+    <value>Could not read the NSIClient configuration .
+Reason :</value>
+  </data>
+  <data name="InfoWebConfigLocation" xml:space="preserve">
+    <value>{0}
+ Expected location of web.config : {1}</value>
+  </data>
+  <data name="DefaultHeaderId" xml:space="preserve">
+    <value>NSICLIENT_NET</value>
+  </data>
+  <data name="SdmxHeaderPreparedDateTimeFormat" xml:space="preserve">
+    <value>yyyy-MM-ddTHH:mm:ss</value>
+  </data>
+  <data name="defaultLanguage" xml:space="preserve">
+    <value>en</value>
+  </data>
+  <data name="LogMaintainableValidationErrors" xml:space="preserve">
+    <value>{0} has validation errors</value>
+  </data>
+  <data name="NoResultsFound" xml:space="preserve">
+    <value>No results found</value>
+  </data>
+  <data name="Unauthorized" xml:space="preserve">
+    <value>Unauthorized</value>
+  </data>
+  <data name="EnterMoreCriteria" xml:space="preserve">
+    <value>Enter more criteria to reduce the size of the dataset.</value>
+  </data>
+  <data name="MaxObservations" xml:space="preserve">
+    <value>Nsi WebService accepts less max_observations than NSI Client: {0}</value>
+  </data>
+  <data name="SdmxFooterMessage" xml:space="preserve">
+    <value>Footer Text: {0}, Code: {1}, Severity: {2}</value>
+  </data>
+</root>

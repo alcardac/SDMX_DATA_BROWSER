@@ -102,6 +102,9 @@ namespace ISTAT.WebClient.WidgetEngine.Model.DataReader
 
         #region Public Methods
 
+        public List<string> GetAllColumns()
+        { return null;}
+        
         /// <summary>
         /// Add (Append) to criteria the given key value pair 
         /// </summary>
@@ -287,6 +290,8 @@ namespace ISTAT.WebClient.WidgetEngine.Model.DataReader
             this._currentView.Sort = null;
         }
 
+
+
         /// <summary>
         /// Perform a select distinct on the specified key. 
         /// Criteria added either by <see cref="AddCriteria"/> or <see cref="SetCriteria"/> are considered
@@ -332,6 +337,11 @@ namespace ISTAT.WebClient.WidgetEngine.Model.DataReader
         /// </code>
         /// or empty map to reset all criteria
         /// </param>
+        /// 
+        public void SetCriteria(List<DataCriteria> Criterias)
+        { 
+        }
+
         public void SetCriteria(Dictionary<string, string> criteria)
         {
             if (criteria == null)
@@ -347,11 +357,12 @@ namespace ISTAT.WebClient.WidgetEngine.Model.DataReader
                 rowFilter.AppendFormat("{0}='{1}'", kv.Key, kv.Value);
                 lastClause = rowFilter.Length;
                 rowFilter.Append(" and ");
-            } 
+            }
 
             rowFilter.Length = lastClause;
             this._currentView.RowFilter = rowFilter.ToString();
         }
+
 
         /// <summary>
         /// Set sort order, i.e. order by, to the specified list. All entries will be added as ascenting and order of the list matters.

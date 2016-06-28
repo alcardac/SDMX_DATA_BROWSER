@@ -1,6 +1,7 @@
 ﻿using ISTAT.WebClient.WidgetComplements.Model.DataRender;
 using ISTAT.WebClient.WidgetComplements.Model.JSObject;
 using ISTAT.WebClient.WidgetEngine.Model.DataReader;
+using ISTAT.WebClient.WidgetEngine.WidgetBuild;
 using Org.Sdmxsource.Sdmx.Api.Model.Objects;
 using System;
 using System.Collections.Generic;
@@ -38,16 +39,55 @@ namespace ISTAT.WebClient.WidgetEngine.Model.DataRender
             this.cTo=cTo;
         }
 
-        internal void render(TextWriter writer)
+        internal void render(TextWriter writer,SessionQuery query)
         {
+
             IDataSetModel l = new DataSetModelStore(Structure, store);
 
-            l.Initialize();
-            l.UpdateAxis(layObj.axis_z, layObj.axis_x, layObj.axis_y);
+            /*
+            if (query._dataSetModel != null)
+            {
+                l = query._dataSetModel;
+                l.UpdateAxis(layObj.axis_z, layObj.axis_x, layObj.axis_y);
+                query._store.SetCriteria(this.Criterias);
+                query.DatasetModel = l;
+            }
+            else
+            {
+                l.Initialize(this.Criterias);
+                l.UpdateAxis(layObj.axis_z, layObj.axis_x, layObj.axis_y);
+                query.DatasetModel = l;
+            }
+            */
+
+            if (query.DatasetModel != null)
+            {
+
+                //query.DatasetModel.UpdateAxis(layObj.axis_z, layObj.axis_x, layObj.axis_y);
+                query.DatasetModel.UpdateAxis(layObj.axis_z, layObj.axis_x, layObj.axis_y, this.Criterias);
+                query._store.SetCriteria(this.Criterias);
+            }
+            else
+            {
+                query.DatasetModel = new DataSetModelStore(Structure, store);
+                query.DatasetModel.Initialize(this.Criterias);
+                //query.DatasetModel.UpdateAxis(layObj.axis_z, layObj.axis_x, layObj.axis_y);
+                query.DatasetModel.UpdateAxis(layObj.axis_z, layObj.axis_x, layObj.axis_y, this.Criterias);
+            }
 
             HtmlRenderer htmlRenderer = new HtmlRenderer(this.codemap, true, _useAttr, cFrom, cTo);
 
-            htmlRenderer.Render(l, writer);
+
+              //  { if (!DataStream.store.ExistsColumn(axisX)) DataStream.layObj.axis_x.Remove(axisX); });
+            //this.Criterias.ForEach(c => l.UpdateSliceKeyValue(c.component, c.values.FirstOrDefault()));
+            /*
+            for(int i=0; i<layObj.axis_z.Count; i++) {
+                string criterio=layObj.axis_z[i];
+                this.Criterias.ForEach(c => {if (c.component==criterio) {l.UpdateSliceKeyValue(c.component, c.values.FirstOrDefault());}});
+            }
+            */
+            //htmlRenderer.Render(l, writer);
+            htmlRenderer.Render(query._dataSetModel, writer);
                                       
             //new HtmlRenderer(query.GetComponentCodeDescriptionMap(), true).Render(
             //   query.DatasetModel,

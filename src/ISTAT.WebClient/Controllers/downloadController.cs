@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
@@ -10,12 +11,15 @@ using ISTAT.WebClient.WidgetComplements.Model;
 using ISTAT.WebClient.WidgetEngine.Model;
 using ISTAT.WebClient.WidgetEngine.Model.DataRender;
 using ISTAT.WebClient.WidgetEngine.WidgetBuild;
+using ISTAT.WebClient.Controllers;
 using Org.Sdmxsource.Sdmx.Api.Model.Objects.Base;
 using Org.Sdmxsource.Sdmx.Api.Model.Objects.DataStructure;
 using Org.Sdmxsource.Sdmx.SdmxObjects.Model.Header;
 using Org.Sdmxsource.Sdmx.SdmxObjects.Model;
 using Org.Sdmxsource.Sdmx.Api.Model.Objects;
 using Org.Sdmxsource.Sdmx.Api.Model.Format;
+using Org.Sdmxsource.Sdmx.Api.Factory;
+using Org.Sdmxsource.Sdmx.Api.Manager.Query;
 using ISTAT.WebClient.WidgetComplements.Model.Settings;
 using Org.Sdmxsource.Sdmx.Api.Manager.Output;
 using Org.Sdmxsource.Sdmx.Api.Constants;
@@ -23,6 +27,11 @@ using Org.Sdmxsource.Sdmx.Structureparser.Manager;
 using System.IO;
 using System.Text;
 using ISTAT.WebClient.WidgetComplements.Model.JSObject;
+using ISTAT.WebClient.WidgetComplements.Model.Enum;
+using System.Web.Script.Serialization;
+using ISTAT.WebClient.WidgetComplements.Model.CallWS;
+using Org.Sdmxsource.Sdmx.Api.Model.Data.Query;
+
 
 namespace ISTAT.WebClient.Controllers
 {
@@ -135,6 +144,20 @@ namespace ISTAT.WebClient.Controllers
             HttpContext.Response.End();
 
         }
+
+        private void SendAttachmentFile(string pathFileName )
+        {
+
+
+            HttpContext.Response.Clear();
+            HttpContext.Response.AddHeader(
+                "content-disposition", string.Format("attachment; filename={0}", pathFileName));
+            HttpContext.Response.ContentType = "application/force-download";
+
+            HttpContext.Response.WriteFile(pathFileName);
+            HttpContext.Response.End();
+        }
+
 
         #endregion
 
@@ -261,6 +284,56 @@ namespace ISTAT.WebClient.Controllers
 
         }
 
+
+        public void GetDataSet(IDataSetRenderer renderer, DataObjectForStreaming dataStream, TextWriter streamResponse, string endPointType)
+        {
+            EndpointSettings DataObjConfiguration = dataStream.Configuration;
+
+            IDataStructureObject kf = dataStream.structure.DataStructures.First();
+
+            //DataObjectForStreaming
+            SDMXWSFunction op = SDMXWSFunction.GetCompactData;
+            //DataObjConfiguration
+
+            bool cross = (DataObjConfiguration._TypeEndpoint == ISTAT.WebClient.WidgetComplements.Model.Enum.EndpointType.V21 || DataObjConfiguration._TypeEndpoint == ISTAT.WebClient.WidgetComplements.Model.Enum.EndpointType.REST)
+                          ? NsiClientHelper.DataflowDsdIsCrossSectional(kf) : !Utils.IsTimeSeries(kf);
+            if (cross)
+                op = SDMXWSFunction.GetCrossSectionalData;
+            var ser = new JavaScriptSerializer();
+            ser.MaxJsonLength = int.MaxValue;
+            try
+            {
+                IGetSDMX GetSDMXObject = WebServiceSelector.GetSdmxImplementation(DataObjConfiguration);
+                BaseDataObject BDO = new BaseDataObject(DataObjConfiguration, "tem.txt");
+
+                string fullPath = Utils.App_Data_Path + @"\Download\" + GetFileName(_iD, "xml");
+
+                IDataQuery query = BDO.CreateQueryBean(dataStream.structure.Dataflows.First(), kf, dataStream.Criterias);
+                GetSDMXObject.ExecuteQuery(query, op, fullPath);
+
+                //if (endPointType == "V21")
+                //{
+                //    SendAttachment(ConvertTo21(fullPath),GetFileName(_iD, "xml")) ;
+                //    return;
+                //}
+                SendAttachmentFile(fullPath);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            //throw new NotImplementedException();
+        }
+
+
+
+        private byte[] ConvertTo21(string fullPath)
+        {
+
+            throw new NotImplementedException();
+        }
+
         public StreamResponseAction ExportSDMXDataSet(string id, string sdmxVersion)
         {
             try
@@ -268,8 +341,7 @@ namespace ISTAT.WebClient.Controllers
                 _iD = id;
                 InitObject();
 
-
-                DataWidget.GetDataSetStream(_datasetRenderer, _dataStream, _textWriter);
+                GetDataSet(_datasetRenderer, _dataStream, _textWriter, sdmxVersion);
 
                 //var x = _dataStream.store;
 
@@ -278,6 +350,27 @@ namespace ISTAT.WebClient.Controllers
                 //SaveSDMXFile(_dataStream.structure, sdmxEnumType, GetFileName(_iD, "xml"));
 
                 return null;
+
+                /*
+                SessionQuery query = SessionQueryManager.GetSessionQuery(context.Session);
+                if (query.GetSdmxMLDataSet(false) == null)
+                {
+                    SessionExpired(context);
+                    return;
+                }
+
+                context.Response.ContentType = ContentType;
+                context.Response.ContentEncoding = Encoding.UTF8;
+
+                string contentDisposition = string.Format(
+                    CultureInfo.InvariantCulture,
+                    Constants.AttachmentFilenameFormat,
+                    GetFileName(query.Dataflow, "dataset.xml"));
+                context.Response.AddHeader(Constants.ContentDispositionHttpHeader, contentDisposition);
+
+                ////            StreamReader sdmx = new StreamReader(query.GetSDMX_MLDataSet(true), Encoding.UTF8);
+                Copy(query.GetSdmxMLDataSet(true), context.Response.Output);
+                */
 
             }
             catch (Exception ex)
@@ -355,41 +448,49 @@ namespace ISTAT.WebClient.Controllers
             throw new NotImplementedException();
         }
 
-        public StreamResponseAction ExportSDMXQuery(string id)
+        public StreamResponseAction ExportSDMXQuery()
         {
-            //SessionQuery query = SessionQueryManager.GetSessionQuery(context.Session);
-            //context.Response.ContentType = ContentType;
-            //context.Response.ContentEncoding = Encoding.UTF8;
-            //string contentDisposition = string.Format(
-            //    CultureInfo.InvariantCulture,
-            //    Constants.AttachmentFilenameFormat,
-            //    GetFileName(query.Dataflow, "query.xml"));
-            //context.Response.AddHeader(Constants.ContentDispositionHttpHeader, contentDisposition);
-            //var defaultHeader = new HeaderImpl("NSICLIENT", "NSICLIENT");
-            //Utils.PopulateHeaderFromSettings(defaultHeader);
-            //var queryBuilder = new QueryBuilder(query);
-            //IDataQuery sdmxQuery = queryBuilder.CreateQueryBean();
-            //var xdoc = new XDocument();
 
-            //if (query.EndPointType == Estat.Nsi.Client.EndpointType.V20 ||
-            //    (query.KeyFamily != null && NsiClientHelper.DataflowDsdIsCrossSectional(query.KeyFamily)))
-            //{
-            //    IDataQueryBuilderManager dataQueryBuilderManager = new DataQueryBuilderManager(new DataQueryFactory());
-            //    xdoc = dataQueryBuilderManager.BuildDataQuery(sdmxQuery, new QueryMessageV2Format());
-            //}
-            //else if (query.EndPointType == Estat.Nsi.Client.EndpointType.V21 ||
-            //    query.EndPointType == Estat.Nsi.Client.EndpointType.REST)
-            //{
-            //    IDataQueryFormat<XDocument> queryFormat = new StructSpecificDataFormatV21();
-            //    IBuilder<IComplexDataQuery, IDataQuery> transformer = new DataQuery2ComplexQueryBuilder(true);
-            //    IComplexDataQuery complexDataQuery = transformer.Build(sdmxQuery);
-            //    IComplexDataQueryBuilderManager complexDataQueryBuilderManager = new ComplexDataQueryBuilderManager(new ComplexDataQueryFactoryV21());
-            //    xdoc = complexDataQueryBuilderManager.BuildComplexDataQuery(complexDataQuery, queryFormat);
-            //}
+            SessionQuery query = SessionQueryManager.GetSessionQuery(Session);
 
-            //xdoc.Save(context.Response.Output);
-            //context.Response.Output.Flush();
+            //ControllerSupport CS = new ControllerSupport();
+            //GetCodemapObject PostDataArrived = CS.GetPostData<GetCodemapObject>(this.Request);
+            //PostDataArrived.Configuration.Locale = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+
+            string request = "";
+            var xdoc = new XmlDocument();
+
+            EndpointSettings DataObjConfiguration = new EndpointSettings();
+            DataObjConfiguration = query._endpointSettings;
+            
+
+            IGetSDMX GetSDMXObject = WebServiceSelector.GetSdmxImplementation(DataObjConfiguration);
+            BaseDataObject BDO = new BaseDataObject(DataObjConfiguration, "appo.xml");
+
+            ISdmxObjects structure = query.Structure;
+            IDataflowObject df = structure.Dataflows.First();
+            IDataStructureObject kf = structure.DataStructures.First();
+            IDataQuery sdmxQuery = BDO.CreateQueryBean(df, kf, query.GetCriteria());
+            GetSDMXObject.GetSdmxQuery(sdmxQuery, out request);
+
+            string filename = string.Format(CultureInfo.InvariantCulture, "{0}.{1}", query.Dataflow.Id, "xml");
+
+            this.HttpContext.Response.Clear();
+            this.HttpContext.Response.ContentType = "text/xml";
+            this.HttpContext.Response.ContentEncoding = Encoding.UTF8;
+            string contentDisposition = string.Format(
+                CultureInfo.InvariantCulture,
+                Constants.AttachmentFilenameFormat,
+                filename);
+            this.HttpContext.Response.AddHeader(Constants.ContentDispositionHttpHeader, contentDisposition);
+
+
+
+            this.HttpContext.Response.AddHeader("content-disposition", contentDisposition);
+            this.HttpContext.Response.Write(request);
+            this.HttpContext.Response.End();
             throw new NotImplementedException();
+            
         }
 
         #endregion

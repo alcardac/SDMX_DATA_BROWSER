@@ -21,7 +21,8 @@
             var _target = $(widget).data('widgetTarget');
             var _data = $(widget).data('widgetData');
             var _configuration = $(widget).data('widgetConfiguration');
-
+            //alert($(widget).data('widgetConfiguration'));
+            //alert(_template);
             if (q != undefined && q["#" + _idCSS] != undefined) {
                 if (_data == undefined)_data = {};
                 _data.query = q["#" + _idCSS];

@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Estat.Nsi.Client.HeaderSettings" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAEACCAAABEAAAIAAAAAIABgBAAVBAAIgAAhAAUiAgQ=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Estat.Nsi.Client.NSIClientDefaultImpl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEGAAAIAIAAFAACEAACQEABAAAAwEIAAAQAAIEAAAA=</HashCode>
+      <FileName>NSIClientDefaultImpl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Estat.Nsi.Client.NSIClientException" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NSIClientException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Estat.Nsi.Client.NSIClientSettings" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIIABAACAQAAAEUAACAAzAgIAAgICAAAAAEAgAAA=</HashCode>
+      <FileName>NSIClientSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Estat.Nsi.Client.Utils" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgIAAAABAKAIAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAE=</HashCode>
+      <FileName>Utils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Estat.Nsi.Client.Validator" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAACAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Validator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Estat.Nsi.Client.WSDLSettings" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAEAAABAAAAAAAAAEIAQAAEAIAAAAQAAA=</HashCode>
+      <FileName>WSDLSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Estat.Nsi.Client.XmlProxyUrlResolver" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAgAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>XmlProxyUrlResolver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Estat.Nsi.Client.INSIClient" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAABAAAAAAAAEAAAAAAQAAAAAQAAAAAAAA=</HashCode>
+      <FileName>INSIClient.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Estat.Nsi.Client.SDMXWSFunction" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>SDMXWSFunction.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

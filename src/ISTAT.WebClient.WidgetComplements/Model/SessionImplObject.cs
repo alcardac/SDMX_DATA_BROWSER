@@ -1,4 +1,5 @@
 ﻿using ISTAT.WebClient.WidgetComplements.Model.JSObject;
+using ISTAT.WebClient.WidgetComplements.Model.DataRender;
 using Org.Sdmxsource.Sdmx.Api.Model.Objects;
 using Org.Sdmxsource.Sdmx.Api.Model.Objects.Codelist;
 using System;
@@ -14,9 +15,10 @@ namespace ISTAT.WebClient.WidgetComplements.Model
         public ISdmxObjects SdmxObject { get; set; }
 
         public Dictionary<string, Dictionary<string, ICodelistObject>> CodelistConstrained { get; set; }
+
         public Dictionary<string, List<DataChacheObject>> DataCache { get; set; }
         public Dictionary<string, LayoutObj> DafaultLayout { get; set; }
-
+        public ComponentCodeDescriptionDictionary codemap { get; set; }
         public string SavedTree { get; set; }
         public string SavedDefaultLayout { get; set; }
         public string SavedCodemap { get; set; }
@@ -31,6 +33,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model
             if (ret.CodelistConstrained != null) this.CodelistConstrained = ret.CodelistConstrained;
             if (ret.DafaultLayout != null) this.DafaultLayout = ret.DafaultLayout;
             if (ret.DataCache != null) this.DataCache = ret.DataCache;
+
 
             if (string.IsNullOrEmpty(ret.SavedTree))
                 this.SavedTree = ret.SavedTree;
@@ -60,6 +63,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model
             this.SdmxObject = null;
             this.CodelistConstrained = null;
             this.DafaultLayout = null;
+            
         }
     }
 
@@ -69,4 +73,5 @@ namespace ISTAT.WebClient.WidgetComplements.Model
         public string DBFileName { get; set; }
 
     }
+
 }

@@ -148,6 +148,14 @@ DIV.ContWS:nth-child(odd) {
   background: #EAEAEA;
 }
 
+li.ContWS:nth-child(even) {
+  background: #ccc;
+}
+li.ContWS:nth-child(odd) {
+  background: #EAEAEA;
+}
+
+
 .RemoveWS:hover {
   border-bottom: 2px solid;
 }

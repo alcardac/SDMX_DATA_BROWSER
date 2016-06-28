@@ -54,7 +54,18 @@
 
         // if array of 1
         if (settings.widget.configuration.hasOwnProperty('length')) {
-            configuration = { configuration: settings.widget.configuration[0] };
+            if (sessionStorage.getItem("select-ws") == undefined || sessionStorage.getItem("select-ws") == null)
+            {
+                configuration = { configuration: settings.widget.configuration[0] };
+            }
+            else
+            {
+                for (var i = 0, len = settings.widget.configuration.length; i < len; i++) {
+                    if (settings.widget.configuration[i].Title == sessionStorage.getItem("select-ws"))
+                        configuration = { configuration: settings.widget.configuration[i] };
+                }
+                //alert(configuration);
+            }
         } else {
             // if no array
             configuration = { configuration: settings.widget.configuration };
@@ -71,7 +82,8 @@
                 DrawHTML_Ws(
                     menu,
                     settings.widget.configuration,
-                    selectedItem,
+                    //selectedItem,
+                    sessionStorage.getItem("select-ws"), 
                     function (config) {
                         var configuration = { configuration: config };
                         _widget.Bind(configuration);
@@ -79,14 +91,13 @@
                     settings.widget.target);
             }
         }
-
         _widget.Bind(configuration);
 
         return;
 
     };
 
-    this.Bind = function (data) {
+    this.Bind = function (data) {        
         var dest = settings.$items.container.$getItem();
 
         var conf = {
@@ -184,14 +195,18 @@ function DrawHTML_Ws(dest, configurations, selectedItem, callBack,target) {
     $(menuSelect).attr('name', 'select-ws');
     $(menuSelect).attr('id', 'select-ws');
 
+//    alert(selectedItem);
+
+    
     $.each(configurations, function (idx, config) {
         var attrSelect = '';
-        if (selectedItem == config.Title) attrSelect = 'selected="selected"';
-
+        if (selectedItem == config.Title) { attrSelect = 'selected="selected"'; }
         var _value = clientParseObjectToJson(config);
         $(menuSelect).append("<option value='" + _value + "' " + attrSelect + ">" + config.Title + "</option>");
     });
     $(menuSelect).on("selectmenuchange", function (event, ui) {
+
+        sessionStorage.setItem("select-ws", $("#select-ws option:selected").text());
 
         $("#main-dashboard").empty();
 
@@ -207,7 +222,8 @@ function DrawHTML_Ws(dest, configurations, selectedItem, callBack,target) {
 
 // Private method
 function ExpandAll(container) {
-    var jstree_container = $(container).children(".jstree");
+
+    jstree_container = $(container).children(".jstree");
     jstree_container.jstree('open_all');
 
 }
@@ -246,11 +262,16 @@ function ExpandFirstCategories(jstree_container) {
         }
     );
 
+    //if selector is defined open default on change language
+    if (sessionStorage.getItem("select-jstree") != null && sessionStorage.getItem("select-jstree") != undefined)
+    { $(jstree_container).jstree('select_node', sessionStorage.getItem("select-jstree")); }
+
 }
 
 function LoadJsTree(dest, url, data, query, target, callBack) {
 
     dest.empty();
+    
 
     var conf = {
         configuration: {
@@ -349,13 +370,12 @@ function SetupJsTree(dest, data, query, target, callBack) {
     $(jstree_container)
     .on('activate_node.jstree', function (e, data) {
         data.instance.toggle_node(data.node);
-        event.preventDefault();
-        event.stopImmediatePropagation();
+        e.preventDefault();
+        e.stopImmediatePropagation();
     })
     .on('loaded.jstree', function (e, data) {
 
         //$(jstree_container).children("li > i.jstree-icon.jstree-ocl").remove();
-
         //-------Query select df
         if (query != undefined) {
 
@@ -370,6 +390,8 @@ function SetupJsTree(dest, data, query, target, callBack) {
     })
     .on("changed.jstree", function (e, data) {
         if (data.selected.length) {
+            //session storage id selector to need open
+            sessionStorage.setItem("select-jstree", data.node.id);
 
             OnTreeNodeSelected(
                 jstree_container,
@@ -383,7 +405,6 @@ function SetupJsTree(dest, data, query, target, callBack) {
         ExpandFirstCategories(jstree_container);
     })
     .jstree(options);
-
     $(jstree_container).appendTo(dest);
 }
 
@@ -495,7 +516,10 @@ function ShowInfoExtraDF(sender) {
 
     var urls = clientParseJsonToObject($(sender).parent().find('a').attr('DataflowUrls'));
     $.each(urls, function (idx, el) {
-        $(div).append('<p style="float:left; margin-bottom:10px;">' + el.Title + '<a style="float:right" href="' + el.URL + '">link</a></p>');
+        //$(div).append('<p style="float:left; margin-bottom:10px;">' + el.Title + '</br> <a style="float:left" href="' + el.URL + '"  target="_blank">link</a></p>');
+        //fabio 4/11/2015
+        $(div).append('<p style="float:left; margin-bottom:10px;"><a href="' + el.URL + '" target="_blank">' + el.Title + '</a></p>');
+        //fine fabio 4/11/2015
     });
 
     $('#panel_info_extra').css('display','block');

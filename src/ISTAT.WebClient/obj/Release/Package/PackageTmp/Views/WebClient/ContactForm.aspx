@@ -88,5 +88,5 @@
 
 </asp:Content>
 <asp:Content ID="Footercontainer" ContentPlaceHolderID="ContentFooter" runat="server">
-    <script src="<%=Url.Content("~/Scripts/pages/contacts.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/pages/contacts.js")%>"></script>
 </asp:Content>

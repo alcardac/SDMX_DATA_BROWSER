@@ -56,6 +56,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EstatSdmxSourceExtension, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>G:\NSI_CLIENT\NSIClient_.NET_v3.5.0_2015.06.30-ultimate-capi-sdmx21\lib\EstatSdmxSourceExtension.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -68,6 +72,10 @@
     <Reference Include="SdmxObjects, Version=0.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Istat.WebClient.Libraries\SdmxObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="SdmxSourceUtil, Version=0.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>G:\NSI_CLIENT\NSIClient_.NET_v3.5.0_2015.06.30-ultimate-capi-sdmx21\lib\SdmxSourceUtil.dll</HintPath>
     </Reference>
     <Reference Include="SdmxStructureParser, Version=0.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -496,6 +504,10 @@
       <Project>{72621094-f32d-496f-80aa-df3e24532a87}</Project>
       <Name>ISTAT.WebClient.WidgetEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NSIClient\NSIClient.csproj">
+      <Project>{ad5b39ca-b7c3-46e1-8f14-5ba4467f079f}</Project>
+      <Name>NSIClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -512,7 +524,6 @@
     <Content Include="Content\fontello-16x16\font\all-icon-font-16x16.woff" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\Release.pubxml" />
     <Content Include="Scripts\jquery\jstree-master\.gitignore" />
     <Content Include="Scripts\jquery\jstree-master\bower.json" />
     <Content Include="Scripts\jquery\jstree-master\component.json" />
@@ -550,7 +561,16 @@
     <Content Include="Scripts\jquery\jstree-master\src\themes\responsive.less" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Download\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EndPoints.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Properties\PublishProfiles\RELEASE.pubxml" />
+    <Content Include="Views\Web_DBLocale.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

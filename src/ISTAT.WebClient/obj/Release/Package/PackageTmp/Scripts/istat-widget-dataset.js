@@ -2,8 +2,9 @@
 
 var criteriCostraint = false;
 var criteriLimit = false;
-
+var count_glob = 0;
 function WidgetDataset(options) {
+
 
     var dataTableID = null;
 
@@ -18,7 +19,7 @@ function WidgetDataset(options) {
 
     var settings = {
         widget: {
-            id:options.idCSS,
+            id: options.idCSS,
             manager: options.managerWidgets,
             classCSS: options.classCSS,
             template: options.template,
@@ -39,9 +40,12 @@ function WidgetDataset(options) {
         baseURL: "/",
         url: {
             GetResults: "Main/GetData",
+            GetResultsLayout: "Main/GetDataLayout",//NEW
             GetResultTable: "Main/GetDataTable",
             GetFilters: "Main/GetCodemap",
             GetFiltersCostraint: "Main/GetSpecificCodemap",
+            GetCodemapCostraintNoLimit: "Main/GetCodemapCostraintNoLimit",//NEW
+            GetCodemapLayout: "Main/GetCodemapLayout",//NEW
             GetLayout: "Main/GetDefaultLayout",
             SaveQuery: "Query/Add",
             SaveTemplate: "Template/Add",
@@ -66,8 +70,8 @@ function WidgetDataset(options) {
             btn_tool_bar: "data-option",
 
             table: "tb_data",// Table data
-            tr: "tr_data",          
-            td: "td_data",          
+            tr: "tr_data",
+            td: "td_data",
             th_fixed: "th_fixed",
             th_code: "th_code",
 
@@ -82,7 +86,7 @@ function WidgetDataset(options) {
             tab_div: "tab_div_criteria",
             coded_title: "h3_title_criteria",
             coded_btn_tree: "btn_tree_criteria",
-            
+
             td_slice_code: "td_slice_code", // criteria tabs
             td_slice_concept: "td_slice_concept", // criteria tabs
             tr_slice: "tr_slice", // criteria tabs
@@ -91,7 +95,7 @@ function WidgetDataset(options) {
             pagination_link: "data-option",
             pagination_link_selected: "data-option-sel",
 
-            
+
         },
         dataKey: {
             sdmxKey: "sdmxKey",
@@ -108,7 +112,7 @@ function WidgetDataset(options) {
             $("<h3><i class='waitInLinee icon-spin6 animate-spin'></i>" + client.main.messages.text_wait + "</h3>").appendTo(settings.$items.container.$getItem());
 
             if (settings.widget.data != undefined
-                && settings.widget.data.query != undefined){
+                && settings.widget.data.query != undefined) {
 
                 // if manual query is set 
                 var data = {
@@ -128,7 +132,6 @@ function WidgetDataset(options) {
                     criteria: settings.widget.data.query.criteria
                 }
 
-
                 //criteriCostraint = false;
                 needCriteria = false;
 
@@ -140,18 +143,18 @@ function WidgetDataset(options) {
 
                 if (settings.widget.configuration != undefined) {
 
-                        // Try to get a start parameter
+                    // Try to get a start parameter
 
-                        settings.widget.configuration.criteria = clientParseJsonToObject(settings.widget.configuration.criteria);
-                        settings.widget.configuration.layout = clientParseJsonToObject(settings.widget.configuration.layout);
+                    settings.widget.configuration.criteria = clientParseJsonToObject(settings.widget.configuration.criteria);
+                    settings.widget.configuration.layout = clientParseJsonToObject(settings.widget.configuration.layout);
 
-                        stub = (settings.widget.data != undefined) ?
-                            (settings.widget.data.hasOwnProperty('automation')) ?
-                            settings.widget.data.automation : false : false;
+                    stub = (settings.widget.data != undefined) ?
+                        (settings.widget.data.hasOwnProperty('automation')) ?
+                        settings.widget.data.automation : false : false;
 
-                        needCriteria = false;
+                    needCriteria = false;
 
-                        this.Bind(settings.widget.configuration);
+                    this.Bind(settings.widget.configuration);
                 }
             }
         } catch (e) {
@@ -170,15 +173,16 @@ function WidgetDataset(options) {
         } else if (criteriaMode == "costraint_no_limit") {
             criteriCostraint = true;
             criteriLimit = false;
+            //criteriLimit = true;
         }
         /*
         if (settings.widget.data != undefined
             && settings.widget.data.query != undefined)
             criteriCostraint = false;
         */
-        if(!stub)clientShowWaitDialog();
+        if (!stub) clientShowWaitDialog();
 
-        if(!isValidDataInput_Configuration(data)) {
+        if (!isValidDataInput_Configuration(data)) {
 
             clientCloseWaitDialog();
 
@@ -217,6 +221,7 @@ function WidgetDataset(options) {
                 settings.url.CheckCacheDataset,
                 clientParseObjectToJson(_dataCheck),
                 function (jsonString) {
+
                     var result = clientParseJsonToObject(jsonString);
                     if (result.hasOwnProperty('success')) {
 
@@ -247,12 +252,12 @@ function WidgetDataset(options) {
         }
     }
 
-    function Process_Type_RI(data){
+    function Process_Type_RI(data) {
 
         /*****************************************************************************
         Process request for filter
         *****************************************************************************/
-        
+
         if (!stub)
             clientShowWaitDialog(settings.widget.messages.dataset_request_filters);
 
@@ -262,7 +267,7 @@ function WidgetDataset(options) {
             settings.url.GetFiltersCostraint,
             clientParseObjectToJson(data),
             function (jsonString) {
-
+                //alert(jsonString);
                 var result = clientParseJsonToObject(jsonString);
 
                 if (!isValidDataOutput_Filter(result)) {
@@ -284,7 +289,9 @@ function WidgetDataset(options) {
                 }
 
                 if (settings.widget.store.dataflow.name == undefined)
-                    settings.widget.store.dataflow.name = result.dataflow.name;
+                    //fabio 4/11/2015
+                    settings.widget.store.dataflow.name = result.dataflow.name.replace("'", "&#39;");
+                //fine fabio 4/11/2015
                 if (settings.widget.store.dataflow.desc == undefined)
                     settings.widget.store.dataflow.desc = result.dataflow.desc;
 
@@ -307,7 +314,7 @@ function WidgetDataset(options) {
 
                 } else {
 
-                    settings.widget.store.enabledCri =true;
+                    settings.widget.store.enabledCri = true;
                     if (result.hasOwnProperty('enabledCri') && result.enabledCri != null)
                         settings.widget.store.enabledCri = result.enabledCri;
                     settings.widget.store.enabledVar = true;
@@ -326,8 +333,28 @@ function WidgetDataset(options) {
                     if (result.hasOwnProperty('codelist_target') && result.codelist_target != null)
                         settings.widget.store.codelist_target = result.codelist_target;
                     else settings.widget.store.codelist_target = undefined;
+                    /*nuovo fabio*/
+                    settings.widget.store.conceptnew = {};
+                    if (result.hasOwnProperty('concept') && result.concept != null)
+                        settings.widget.store.conceptnew = result.concept;
+                    else settings.widget.store.conceptnew = undefined;
 
-                    
+                    /*nuovo fabio 07/01/2016*/
+                    settings.widget.store.SliceKeyValidValues = {};
+                    if (result.hasOwnProperty('SliceKeyValidValues') && result.SliceKeyValidValues != null)
+                        settings.widget.store.SliceKeyValidValues = result.SliceKeyValidValues;
+                    else settings.widget.store.SliceKeyValidValues = undefined;
+
+                    settings.widget.store.SliceKeyValues = {};
+                    if (result.hasOwnProperty('SliceKeyValues') && result.SliceKeyValues != null)
+                        settings.widget.store.SliceKeyValues = result.SliceKeyValues;
+                    else settings.widget.store.SliceKeyValues = undefined;
+
+                    settings.widget.store.SliceKeys = {};
+                    if (result.hasOwnProperty('SliceKeys') && result.SliceKeys != null)
+                        settings.widget.store.SliceKeys = result.SliceKeys;
+                    else settings.widget.store.SliceKeys = undefined;
+
                     /*****************************************************************************/
                     /* Process request for layout
                     *****************************************************************************/
@@ -454,7 +481,155 @@ function WidgetDataset(options) {
     function Process_Type_ESTAT(data) {
 
     }
-    
+
+    function Process_Type_RI_CNL(data) {
+        clientPostJSON(
+            settings.url.GetCodemapCostraintNoLimit,
+            clientParseObjectToJson(data),
+            function (jsonString) {
+                //alert(jsonString);
+                var result = clientParseJsonToObject(jsonString);
+
+                if (result != null) {
+                    settings.widget.store.dimension = result.codemap;
+
+                    /*nuovo fabio 07/01/2016*/
+                    settings.widget.store.SliceKeyValidValues = {};
+                    if (result.hasOwnProperty('SliceKeyValidValues') && result.SliceKeyValidValues != null)
+                        settings.widget.store.SliceKeyValidValues = result.SliceKeyValidValues;
+                    else settings.widget.store.SliceKeyValidValues = undefined;
+
+                    settings.widget.store.SliceKeyValues = {};
+                    if (result.hasOwnProperty('SliceKeyValues') && result.SliceKeyValues != null)
+                        settings.widget.store.SliceKeyValues = result.SliceKeyValues;
+                    else settings.widget.store.SliceKeyValues = undefined;
+
+                    settings.widget.store.SliceKeys = {};
+                    if (result.hasOwnProperty('SliceKeys') && result.SliceKeys != null)
+                        settings.widget.store.SliceKeys = result.SliceKeys;
+                    else settings.widget.store.SliceKeys = undefined;
+                }
+
+                UpdateControl();
+                Process_RequestData();
+            },
+            function (event, status, errorThrown) {
+                clientCloseWaitDialog();
+                clientShowErrorDialog(settings.widget.messages.label_error_dataParsing);
+                //clientAjaxError(event, status);
+                return;
+            },
+            false);
+
+
+    }
+
+
+    function Process_Layout(data) {
+        clientPostJSON(
+            settings.url.GetCodemapLayout,
+            clientParseObjectToJson(data),
+            function (jsonString) {
+                //alert(jsonString);
+                var result = clientParseJsonToObject(jsonString);
+
+
+                settings.widget.store.dimension = result.codemap;
+
+                /*nuovo fabio 07/01/2016*/
+                settings.widget.store.SliceKeyValidValues = {};
+                if (result.hasOwnProperty('SliceKeyValidValues') && result.SliceKeyValidValues != null)
+                    settings.widget.store.SliceKeyValidValues = result.SliceKeyValidValues;
+                else settings.widget.store.SliceKeyValidValues = undefined;
+
+                settings.widget.store.SliceKeyValues = {};
+                if (result.hasOwnProperty('SliceKeyValues') && result.SliceKeyValues != null)
+                    settings.widget.store.SliceKeyValues = result.SliceKeyValues;
+                else settings.widget.store.SliceKeyValues = undefined;
+
+                settings.widget.store.SliceKeys = {};
+                if (result.hasOwnProperty('SliceKeys') && result.SliceKeys != null)
+                    settings.widget.store.SliceKeys = result.SliceKeys;
+                else settings.widget.store.SliceKeys = undefined;
+
+                UpdateControl();
+                Process_RequestData();
+            },
+            function (event, status, errorThrown) {
+                clientCloseWaitDialog();
+                clientShowErrorDialog(settings.widget.messages.label_error_dataParsing);
+                //clientAjaxError(event, status);
+                return;
+            },
+            false);
+
+
+    }
+
+    function Process_Slice(data) {
+        clientPostJSON(
+            settings.url.GetCodemapLayout,
+            clientParseObjectToJson(data),
+            function (jsonString) {
+                //alert(jsonString);
+                var result = clientParseJsonToObject(jsonString);
+
+                /*da fare
+                settings.widget.store.filters=
+
+
+                settings.widget.store.criteria[concept][1] == key)
+                */
+                //settings.widget.store.dimension = result.codemap;
+                //settings.widget.store.filter = result.criteria;
+                //settings.widget.store.criteria=
+
+                /*nuovo fabio 07/01/2016*/
+                settings.widget.store.SliceKeyValidValues = {};
+                if (result != null) {
+                    if (result.hasOwnProperty('model') && result.model.SliceKeyValidValues != null)
+                        settings.widget.store.SliceKeyValidValues = result.model.SliceKeyValidValues;
+                    else settings.widget.store.SliceKeyValidValues = undefined;
+
+                    settings.widget.store.SliceKeyValues = {};
+                    if (result.hasOwnProperty('model') && result.model.SliceKeyValues != null)
+                    {
+                        settings.widget.store.SliceKeyValues = result.model.SliceKeyValues;
+                        var SliceKeyValues = $.map(result.model.SliceKeyValues, function (value, index) {
+                            return [value];
+                        });
+
+                        $.each(result.model.SliceKeyValues, function (idx, data)
+                            { settings.widget.store.filters[idx] = jQuery.makeArray(data); }
+                        );
+
+                        $.each(result.model.SliceKeyValidValues, function (idx, data)
+                            { settings.widget.store.criteria[idx] = jQuery.makeArray(data); }
+                        );
+
+
+                    }
+                    else settings.widget.store.SliceKeyValues = undefined;
+
+                    settings.widget.store.SliceKeys = {};
+                    if (result.hasOwnProperty('model') && result.model.SliceKeys != null)
+                        settings.widget.store.SliceKeys = result.model.SliceKeys;
+                    else settings.widget.store.SliceKeys = undefined;
+                }
+                UpdateControlSlice();
+                Process_RequestData();
+            },
+            function (event, status, errorThrown) {
+                clientCloseWaitDialog();
+                clientShowErrorDialog(settings.widget.messages.label_error_dataParsing);
+                //clientAjaxError(event, status);
+                return;
+            },
+            false);
+
+
+    }
+
     /*********************************************************************************************************
     Private method
     **********************************************************************************************************/
@@ -495,7 +670,7 @@ function WidgetDataset(options) {
 
     function Process_RequestData() {
         $(settings.$items.data_container).empty();
-        
+
         try {
             if (!stub) clientShowWaitDialog(settings.widget.messages.dataset_request_data);
 
@@ -511,7 +686,7 @@ function WidgetDataset(options) {
                 configuration: settings.widget.store.configuration,
                 criteria: settings.widget.store.filters,
                 layout: settings.widget.store.layout,
-                WidgetId: (settings.widget.data!=undefined)?
+                WidgetId: (settings.widget.data != undefined) ?
                     (settings.widget.data.widgetId == undefined) ?
                     -1 : settings.widget.data.widgetId : -1
             };
@@ -541,7 +716,110 @@ function WidgetDataset(options) {
                         Concurrent.Thread.create(LoadTableData,
                             settings.$items.data_container,
                             client.main.config.baseURL + settings.url.GetResultTable + "/" + result.code,
-                            function (){
+                            function () {
+
+                                if (settings.widget.data != undefined
+                                    && settings.widget.data.showObsValue != undefined)
+
+                                    $(settings.$items.data_container).find(".measure").each(function (index) {
+                                        $(this).text($(this).data(settings.widget.data.showObsValue));
+                                    });
+
+                                if (!stub) clientCloseWaitDialog();
+                                else {
+
+
+
+                                    $(settings.$items.header_bar).find('.waitInLinee').remove();
+
+                                }
+                            }
+                            );
+
+                    } else {
+                        $(settings.$items.data_container).empty();
+                        clientCloseWaitDialog();
+
+                        // Log error if admin loged in show complex message
+                        if (sessionStorage.user_role != undefined) {
+                            var usRole = JSON.parse(sessionStorage.user_role);
+                            if (usRole.RoleId == 1) {
+                                $(settings.$items.data_container).html(jsonString);
+                            } else {
+                                $(settings.$items.data_container).html(settings.widget.messages.label_error_dataParsing);
+                            }
+                        } else {
+                            //new fabio return max numero record superati
+                            $(settings.$items.data_container).html(jsonString);
+                            //$(settings.$items.data_container).html(settings.widget.messages.label_error_dataParsing);
+                        }
+
+                        $(settings.$items.header_bar).find('.waitInLinee').remove();
+                    }
+                },
+                function (event, status, errorThrown) {
+                    clientCloseWaitDialog();
+                    clientShowErrorDialog(settings.widget.messages.label_error_dataParsing);
+                    //clientAjaxError(event, status);
+                    return;
+                },
+                false);
+
+        } catch (e) {
+            clientCloseWaitDialog();
+            return null;
+        }
+    }
+
+    function Process_RequestDataLayout() {
+        $(settings.$items.data_container).empty();
+
+        try {
+            if (!stub) clientShowWaitDialog(settings.widget.messages.dataset_request_data);
+
+            if (settings.widget.data != undefined)
+                settings.widget.data.query = undefined;
+
+            /*****************************************************************************/
+            /* Process request for data
+            *****************************************************************************/
+
+            var _data = {
+                dataflow: settings.widget.store.dataflow,
+                configuration: settings.widget.store.configuration,
+                criteria: settings.widget.store.filters,
+                layout: settings.widget.store.layout,
+                WidgetId: (settings.widget.data != undefined) ?
+                    (settings.widget.data.widgetId == undefined) ?
+                    -1 : settings.widget.data.widgetId : -1
+            };
+
+            //sessionStorage.setItem(settings.widget.id, clientParseObjectToJson(settings.widget.store));
+
+            var LoadTableData = function (dest, url, callBack) {
+
+                $(dest).hide();
+                $(dest).load(url, callBack);
+                $(dest).show();
+
+            };
+
+            clientPostJSON(
+                settings.url.GetResultsLayout,
+                clientParseObjectToJson(_data),
+                function (jsonString) {
+
+                    var result = clientParseJsonToObject(jsonString);
+
+                    if (result != null
+                        && result.hasOwnProperty('code')) {
+
+                        dataTableID = result.code;
+
+                        Concurrent.Thread.create(LoadTableData,
+                            settings.$items.data_container,
+                            client.main.config.baseURL + settings.url.GetResultTable + "/" + result.code,
+                            function () {
 
                                 if (settings.widget.data != undefined
                                     && settings.widget.data.showObsValue != undefined)
@@ -579,7 +857,6 @@ function WidgetDataset(options) {
 
                         $(settings.$items.header_bar).find('.waitInLinee').remove();
                     }
-
                 },
                 function (event, status, errorThrown) {
                     clientCloseWaitDialog();
@@ -594,7 +871,9 @@ function WidgetDataset(options) {
             return null;
         }
     }
-    function Process_Chart(dest, dataflow, configuration, filters, chart_type, obs_type, dim_axe, customConcept,custom) {
+
+
+    function Process_Chart(dest, dataflow, configuration, filters, chart_type, obs_type, dim_axe, customConcept, custom) {
 
         $(dest).empty();
         try {
@@ -607,7 +886,7 @@ function WidgetDataset(options) {
 
                     var codes = Object.keys(filters);
 
-                    if (inArray(i, codes) >= 0){
+                    if (inArray(i, codes) >= 0) {
                         if (filters[i].length == 1) {
                             var code = filters[i][0];
                             chart_title_str += sep + settings.widget.store.dimension[i].codes[code].name;
@@ -687,7 +966,7 @@ function WidgetDataset(options) {
         settings.$items.data_container = document.createElement('div');
         settings.$items.chart_container = document.createElement('div');
         settings.$items.meta_container = document.createElement('div');
-        
+
         $(settings.$items.header_bar).addClass(settings.cssClass.header_bar);
         $(settings.$items.button_bar).addClass(settings.cssClass.button_bar);
         $(settings.$items.viewmode_bar).addClass(settings.cssClass.viewmode_bar);
@@ -705,8 +984,10 @@ function WidgetDataset(options) {
         $(settings.$items.meta_container).appendTo(dest);
 
 
-        var local_title = (settings.widget.data)?GetLocalisedText(settings.widget.data.text, settings.widget.locale):undefined;
-        var title = (local_title != undefined) ? local_title : settings.widget.store.dataflow.name;
+        var local_title = (settings.widget.data) ? GetLocalisedText(settings.widget.data.text, settings.widget.locale) : undefined;
+        //fabio 4/11/2015
+        var title = (local_title != undefined) ? local_title : settings.widget.store.dataflow.name.replace("'", "&#39;")
+        //fine fabio 4/11/2015
 
         var h3_name = document.createElement('h3');
         if (stub) $(h3_name).append('<i class="waitInLinee icon-spin6 animate-spin"></i> ');
@@ -714,8 +995,8 @@ function WidgetDataset(options) {
         $(h3_name).appendTo(settings.$items.header_bar);
 
 
-        if (!stub){
-            
+        if (!stub) {
+
             if (settings.widget.store.enabledCri == true) {
                 DrawHTML_Filter(settings.$items.button_bar, settings.widget.store.dimension, settings.widget.store.hideDimension);
                 DrawHTML_layout(settings.$items.button_bar, settings.widget.store.layout, settings.widget.store.hideDimension);
@@ -735,9 +1016,9 @@ function WidgetDataset(options) {
             DrawHTML_ChartModeSwitch(settings.$items.viewmode_bar, settings.widget.store.hideDimension);
             DrawHTML_MetadataModeSwitch(settings.$items.viewmode_bar, settings.widget.store.hideDimension);
 
-            
+
         }
-        
+
         DrawClearBox(settings.$items.button_bar);
 
         if (!stub) clientCloseWaitDialog();
@@ -757,7 +1038,6 @@ function WidgetDataset(options) {
 
                         UpdateControl();
                         Process_RequestData();
-
                     },
                     settings.cssClass,
                     settings.widget.messages,
@@ -773,9 +1053,14 @@ function WidgetDataset(options) {
                     settings.widget.store.criteria,
                     function (args) {
 
-                        UpdateControl();
-                        Process_RequestData();
+                        var _data = {
+                            dataflow: settings.widget.store.dataflow,
+                            configuration: settings.widget.store.configuration
+                        }
 
+                        Process_Type_RI_CNL(_data);
+                        //UpdateControl();
+                        //Process_RequestData();
                     },
                     settings.cssClass,
                     settings.widget.messages,
@@ -853,7 +1138,7 @@ function WidgetDataset(options) {
         $(btn_save_template).addClass(settings.cssClass.btn_tool_bar);
         $(btn_save_template).html("<i class='icon-download-alt'></i>" + settings.widget.messages.label_save_template);
         $(btn_save_template).click(function (event) {
-            
+
             // popup
             var div_popup = document.createElement("div");
             var labmes = document.createElement("label");
@@ -868,11 +1153,11 @@ function WidgetDataset(options) {
 
             var div_attribute = document.createElement("div");
             $(div_attribute).addClass("list_attr");
-            
+
             //block
             var div_block = document.createElement("div");
             $(div_block).addClass("block");
-            $("<label class='labelBlockInt'>" + settings.widget.messages.labelBlock+ "</label><label class='labelBlock'>x</label><input id='check_x' type='checkbox' value='x'><label class='labelBlock'>y</label><input id='check_y' type='checkbox' value='y'><label class='labelBlock'>z</label><input id='check_z' type='checkbox' value='z'>").appendTo(div_block);
+            $("<label class='labelBlockInt'>" + settings.widget.messages.labelBlock + "</label><label class='labelBlock'>x</label><input id='check_x' type='checkbox' value='x'><label class='labelBlock'>y</label><input id='check_y' type='checkbox' value='y'><label class='labelBlock'>z</label><input id='check_z' type='checkbox' value='z'>").appendTo(div_block);
             $(div_block).appendTo(div_popup);
 
             //lista attributi
@@ -895,18 +1180,18 @@ function WidgetDataset(options) {
                     if (idx == time_dimension_key)
                         singleCode = false;
 
-                    if(singleCode){
+                    if (singleCode) {
                         $("<div class='attribute'><input class='check_attribute' type='checkbox' " + checked + " name='" + idx + "'value='" + idx + "'><label class='label_attribute'>[" + idx + "] " + dim.title + " </label></div>").appendTo(div_attribute);
                         attr.push(dim);
                     }
                 }
             });
-            
+
             $("<div class='titleList'>" + settings.widget.messages.labelDimension + "</div>").appendTo(div_popup);
             $(div_attribute).appendTo(div_popup);
 
             var div_option = document.createElement("div");
-            
+
             $("<div class='attribute'><input class='check_attribute' type='checkbox' " + checked + " name='chk_opt_var' id='chk_opt_var'><label class='label_attribute'>" + settings.widget.messages.labelOptionVar + "</label></div>").appendTo(div_option);
             //$("<div class='attribute'><input class='check_attribute' type='checkbox' " + checked + " name='chk_opt_dec' id='chk_opt_dec' ><label class='label_attribute'>" + settings.widget.messages.labelOptionDec + "</label></div>").appendTo(div_option);
             $("<div class='attribute'><input class='check_attribute' type='checkbox' " + checked + " name='chk_opt_cri' id='chk_opt_cri' ><label class='label_attribute'>" + settings.widget.messages.labelOptionCri + "</label></div>").appendTo(div_option);
@@ -926,33 +1211,34 @@ function WidgetDataset(options) {
                         text: settings.widget.messages.label_ok,
                         click: function () {
                             var check = $(inputmes).val().trim();
-                            if ((check != "") && (!(checkLetter(check))) ){
+                            if ((check != "") && (!(checkLetter(check)))) {
                                 var cbox_sel = new Array();
                                 $(".check_attribute").each(function () {
                                     if (this.checked) {
                                         cbox_sel.push(this.value);
                                     }
                                 });
-                                
+
                                 var block_sel = [];
                                 if ($("#check_x").prop("checked")) {
                                     block_sel.push($("#check_x").val());
                                 }
-                                if($("#check_y").prop( "checked")){
+                                if ($("#check_y").prop("checked")) {
                                     block_sel.push($("#check_y").val());
                                 }
                                 if ($("#check_z").prop("checked")) {
                                     block_sel.push($("#check_z").val());
                                 }
-                                
+
                                 SaveTemplate(sessionStorage.user_code,
                                     $(inputmes).val(),// title
                                     cbox_sel,
                                     block_sel,// dimension selezionate
                                     $("#chk_opt_var").prop('checked'),
-                                    $("#chk_opt_dec").prop('checked'),
+                                    //$("#chk_opt_dec").prop('checked'),
+                                    false,
                                     $("#chk_opt_cri").prop('checked'),
-                                    settings.widget.store.dataflow, 
+                                    settings.widget.store.dataflow,
                                     settings.widget.store.criteria,
                                     settings.widget.store.layout,
                                     settings.widget.store.configuration);
@@ -970,7 +1256,7 @@ function WidgetDataset(options) {
             });
             $(div_popup).dialog("open");
 
-            });
+        });
         $(btn_save_template).appendTo(dest);
 
     }
@@ -1005,7 +1291,7 @@ function WidgetDataset(options) {
                                 settings.widget.store.configuration);
                             $(this).dialog('destroy').remove();
                         }
-                        
+
                     },
                     {
                         text: settings.widget.messages.label_cancel,
@@ -1037,7 +1323,7 @@ function WidgetDataset(options) {
 
             var char_sep = document.createElement("input");
             $(char_sep).attr('type', 'text');
-            $(char_sep).attr('maxlength', '1'); 
+            $(char_sep).attr('maxlength', '1');
             $(char_sep).css('width', '10px');
             $(char_sep).css('float', 'right');
             $(char_sep).appendTo(p_char_sep);
@@ -1098,7 +1384,7 @@ function WidgetDataset(options) {
                 if (dataTableID == null) return;
                 var separator = $(char_sep).val();
 
-                if (separator.length != 1){
+                if (separator.length != 1) {
                     clientShowErrorDialog(settings.widget.messages.label_separator_outlimit);
                 } else {
                     location.href = client.main.config.baseURL + "Download/ExportCsvModel?id=" + dataTableID + "&separator=" + separator;
@@ -1136,8 +1422,8 @@ function WidgetDataset(options) {
             $(btn_dwn).click(function (event) {
                 if (dataTableID == null) return;
                 var separator = $(select_char).val();
-                
-                
+
+
                 location.href = client.main.config.baseURL + "Download/ExportXLS?id=" + dataTableID + "&separator=" + separator;
 
             });
@@ -1270,8 +1556,10 @@ function WidgetDataset(options) {
             $(btn_dwn).click(function (event) {
                 if (dataTableID == null) return;
 
-                var sdmxVersion = $(cmb_version).val();
-                location.href = client.main.config.baseURL + "Download/ExportSDMXStructure?id=" + dataTableID + "&sdmxVersion=" + sdmxVersion;
+                //var sdmxVersion = $(cmb_version).val();
+                //location.href = client.main.config.baseURL + "Download/ExportSDMXStructure?id=" + dataTableID + "&sdmxVersion=" + sdmxVersion;
+                //location.href = client.main.config.baseURL + "Download/ExportSDMXStructure?id=" + dataTableID + "&sdmxVersion=" + sdmxVersion;
+                location.href = client.main.config.baseURL + "Download/ExportSDMXStructure?id=" + dataTableID ;
             });
             return div;
         };
@@ -1283,6 +1571,7 @@ function WidgetDataset(options) {
             $(p).text(settings.widget.messages.label_desc_save_sdmx_query);
             $(p).css('width', '100%');
             $(p).appendTo(div);
+            /*
             var p_version = document.createElement("p");
             $(p_version).text("Version");//(settings.widget.messages.label_version);
             $(p_version).css('width', '100%');
@@ -1293,7 +1582,7 @@ function WidgetDataset(options) {
             $(cmb_version).append('<option value="V20">V 2.0</option>');
             $(cmb_version).append('<option value="V21">V 2.1</option>');
             $(cmb_version).appendTo(p_version);
-
+            */
             var btn_dwn = document.createElement("a");
             $(btn_dwn).addClass('data-option');
             $(btn_dwn).html("<i class='icon-floppy-1'></i>Download");
@@ -1302,8 +1591,9 @@ function WidgetDataset(options) {
             $(btn_dwn).click(function (event) {
                 if (dataTableID == null) return;
 
-                var sdmxVersion = $(cmb_version).val();
-                location.href = client.main.config.baseURL + "Download/ExportSDMXStructure?id=" + dataTableID + "&sdmxVersion=" + sdmxVersion;
+                //var sdmxVersion = $(cmb_version).val();
+                //location.href = client.main.config.baseURL + "Download/ExportSDMXQuery?id=" + dataTableID + "&sdmxVersion=" + sdmxVersion;
+                location.href = client.main.config.baseURL + "Download/ExportSDMXQuery?id=" + dataTableID ;
             });
             return div;
         };
@@ -1339,25 +1629,25 @@ function WidgetDataset(options) {
             });
             return div;
         };
-        
+
         var cmb = document.createElement('select');
         $(cmb).addClass('data-option');
-        $(cmb).append('<option value="null">' + settings.widget.messages.label_select_download+ '</option>');
+        $(cmb).append('<option value="null">' + settings.widget.messages.label_select_download + '</option>');
         $(cmb).append('<option value="csv_modular">' + settings.widget.messages.label_save_csv_tabular + '</option>');
         $(cmb).append('<option value="csv_not_formatted">' + settings.widget.messages.label_save_csv_not_formatted + '</option>');
         $(cmb).append('<option value="xls">' + settings.widget.messages.label_save_xls + '</option>');
         $(cmb).append('<option value="html">' + settings.widget.messages.label_save_html + '</option>');
         $(cmb).append('<option value="pdf">' + settings.widget.messages.label_save_pdf + '</option>');
         $(cmb).append('<option value="sdmxml_structure">' + settings.widget.messages.label_save_sdmx_structure + '</option>');
-        //$(cmb).append('<option value="sdmxml_query">' + settings.widget.messages.label_save_sdmx_query + '</option>');
-        //$(cmb).append('<option value="sdmxml_data">' + settings.widget.messages.label_save_sdmx_data + '</option>');
+        $(cmb).append('<option value="sdmxml_query">' + settings.widget.messages.label_save_sdmx_query + '</option>');
+        $(cmb).append('<option value="sdmxml_data">' + settings.widget.messages.label_save_sdmx_data + '</option>');
         $(cmb).change(function () {
             if (type_dow == "null") return;
 
             var div_container = document.createElement('div');
 
             var type_dow = $(this).val();
-            switch (type_dow){
+            switch (type_dow) {
                 case 'csv_modular': $(div_container).append(GetHTML_Download_csv_tabular()); break;
                 case 'csv_not_formatted': $(div_container).append(GetHTML_Download_csv_formated()); break;
                 case 'xls': $(div_container).append(GetHTML_Download_xls()); break;
@@ -1377,11 +1667,11 @@ function WidgetDataset(options) {
                 position: { my: "center", at: "center", of: window },
                 autoOpen: false,
                 buttons: [{
-                        text: "Cancel",
-                        click: function () {
-                            $(this).dialog("close");
-                        }
+                    text: "Cancel",
+                    click: function () {
+                        $(this).dialog("close");
                     }
+                }
                 ]
             });
             $(div_container).dialog("open");
@@ -1426,7 +1716,7 @@ function WidgetDataset(options) {
     }
 
     function DrawHTML_Filter(dest, codemap, hideDimension) {
-        
+
         // btn open pop up 
         var btn_open_criteria = document.createElement("a");
         $(btn_open_criteria).addClass(settings.cssClass.btn_tool_bar);
@@ -1440,8 +1730,14 @@ function WidgetDataset(options) {
                     settings.widget.store.criteria,
                     function (args) {
 
-                        UpdateControl();
-                        Process_RequestData();
+                        var _data = {
+                            dataflow: settings.widget.store.dataflow,
+                            configuration: settings.widget.store.configuration
+                        }
+
+                        Process_Layout(_data);
+                        //UpdateControl();
+                        //Process_RequestData();
 
                     },
                     settings.cssClass,
@@ -1485,12 +1781,13 @@ function WidgetDataset(options) {
                 settings.widget.store.layout,
                 function (args) {
 
-                settings.widget.store.layout = args;
+                    settings.widget.store.layout = args;
 
-                UpdateControl();
-                Process_RequestData();
+                    UpdateControl();
+                    Process_RequestDataLayout();
+                    //UpdateControl();
 
-            },
+                },
             settings.cssClass,
             settings.widget.messages,
             settings.dataKey,
@@ -1500,7 +1797,157 @@ function WidgetDataset(options) {
         $(btn_open_layout).appendTo(dest);
 
     }
-    function DrawHTML_Slice(dest, slice, codemap,hideDimension) {
+    function DrawHTML_SliceNew(dest, slice, codemap, hideDimension) {
+
+        var tb = document.createElement('table');
+        $(tb).addClass(settings.cssClass.table_slice);
+        var slice = settings.widget.store.SliceKeys;
+
+
+        for (var i = 0; i < slice.length; i++) {
+
+            var showDimension = true;
+            if (hideDimension != undefined)
+                if (inArray(slice[i], hideDimension) >= 0)
+                    showDimension = false;
+
+            if (showDimension) {
+
+                var concept = slice[i];
+                var tr = document.createElement('tr');
+                $(tr).addClass(settings.cssClass.tr_slice);
+
+                var td = document.createElement('td');
+                $(td).addClass(settings.cssClass.td_slice_concept);
+                $(td).text((concept != time_dimension_key) ? ((codemap[slice[i]] != null) ? codemap[slice[i]].title : concept) : time_dimension_name);
+                $(td).appendTo(tr);
+                delete td;
+
+                var td = document.createElement('td');
+                $(td).addClass(settings.cssClass.td_slice_code);
+
+                var isSingleCode = true;
+                isSingleCode = (settings.widget.store.SliceKeyValidValues[concept].length == 1);
+
+                var code = undefined;
+
+                if (!isSingleCode) {
+                    // draw combo
+                    var select = document.createElement('select');
+                    var lastKey = undefined;
+                    var lastOption = undefined;
+
+                    var time_code_range = false;
+
+                    $.each(settings.widget.store.SliceKeyValidValues[concept], function (key, value) {
+
+                        var isCodeForChoise = false;
+                        var currentValue = settings.widget.store.SliceKeyValues[key];
+
+                        if (settings.widget.store.SliceKeyValidValues[concept].length > 1)
+                        { isCodeForChoise = true; }
+
+                        if (isCodeForChoise) {
+
+                            var option = document.createElement('option');
+                            var label = settings.widget.store.dimension[concept].codes[value];
+
+                            $(option).text((concept != time_dimension_key) ? "[" + value + "] " + label.name : label.name);
+                            $(option).val(concept + "+" + value);
+
+                            if (settings.widget.store.SliceKeyValues[concept] == value) {
+                                $(option).attr('selected', 'selected');
+                                code = key;
+                            }
+
+                            $(option).appendTo(select);
+
+                        }
+
+
+                        if (concept == time_dimension_key
+                            && settings.widget.store.criteria[concept][1] == key) time_code_range = false;
+
+                    });
+
+                    if (code === undefined) {
+                        $(lastOption).attr('selected', 'selected');
+                        code = lastKey;
+                    }
+
+                    $(select).change(function () {
+                        var code_key = $(this).val().split('+');
+
+                        settings.widget.store.filters[code_key[0]] = [];
+
+                        if (inArray(code_key[1], settings.widget.store.filters[code_key[0]]) == -1)
+                            settings.widget.store.filters[code_key[0]].push(code_key[1]);
+
+
+                        //Process_RequestData();//old
+                        //nuovo fabio                        
+                        var _data = {
+                            dataflow: settings.widget.store.dataflow,
+                            configuration: settings.widget.store.configuration,
+                            selectionkey: code_key[0],
+                            selectionVal: code_key[1]
+                        }
+                        Process_Slice(_data);
+                        //fine nuovo fabio
+
+
+                    });
+                    $(select).appendTo(td);
+                    $(td).appendTo(tr);
+                } else {//single code
+                    if (settings.widget.store.criteria.hasOwnProperty(concept)) {
+
+                        code = settings.widget.store.criteria[concept][0];
+                        var name = codemap[concept].codes[code].name;
+
+                        var p = document.createElement('p');
+                        $(p).text("[" + code + "] " + name);
+                        $(p).appendTo(td);
+                    } else {
+                        // draw label
+                        //commentato da fabio 07/12/2015
+                        //if (settings.widget.store.criteria.hasOwnProperty(codemap[concept])) {
+                        if (settings.widget.store.dimension.hasOwnProperty(concept)) {
+                            var p_code = $.map(codemap[concept].codes, function (value, key) {
+                                var p = document.createElement('p');
+                                $(p).text((concept != time_dimension_key) ? "[" + key + "] " + value.name : value.name);
+                                code = key;
+                                return p;
+                            });
+                        }
+                        else {
+                            var p_code = document.createElement('p');
+                            $(p).text(concept);
+                        }
+                        $(p_code).appendTo(td);
+                    }
+                }
+
+                /*  settings.widget.store.filters[concept] = [];
+                  if (inArray(code, settings.widget.store.filters[concept]) == -1)
+                      settings.widget.store.filters[concept].push(code);
+                      */
+
+                $(td).appendTo(tr);
+                delete td;
+
+                $(tr).appendTo(tb);
+                delete tr;
+
+            }
+        }
+        $(tb).appendTo(dest);
+
+        delete tb;
+
+    }
+
+    function DrawHTML_Slice(dest, slice, codemap, hideDimension) {
 
         var tb = document.createElement('table');
         $(tb).addClass(settings.cssClass.table_slice);
@@ -1521,7 +1968,8 @@ function WidgetDataset(options) {
 
                 var td = document.createElement('td');
                 $(td).addClass(settings.cssClass.td_slice_concept);
-                $(td).text((concept != time_dimension_key) ? codemap[slice[i]].title : time_dimension_name);
+                $(td).text((concept != time_dimension_key) ? ((codemap[slice[i]] != null) ? codemap[slice[i]].title : concept) : time_dimension_name);
+                //$(td).text((concept != time_dimension_key) ? conceptnew[slice[i]].title : time_dimension_name);
                 $(td).appendTo(tr);
                 delete td;
 
@@ -1531,7 +1979,42 @@ function WidgetDataset(options) {
                 var isSingleCode = true;
 
                 if (concept == time_dimension_key) {
-
+                    //da sistemare baco quando non seleziono time_period
+                    /* questa Ã¨ la modifica da testare */
+                    if (settings.widget.store.criteria.hasOwnProperty(concept)) {
+                        if (settings.widget.store.criteria[concept].length == 1) {
+                            isSingleCode = false;
+                            var codes = $.map(codemap[concept].codes, function (key, el) { return el; });
+                            settings.widget.store.criteria[concept] = [];
+                            for (kj = 0; kj < codes.length; kj++) {
+                                var idx = (codes.length - 1) - kj;
+                                if (idx < 0) break;
+                                settings.widget.store.criteria[concept].push(codes[idx]);
+                            }
+                        } else if (settings.widget.store.criteria[concept][0] == settings.widget.store.criteria[concept][1]) {
+                            isSingleCode = true;
+                        } else {
+                            isSingleCode = false;
+                        }
+                    }
+                    else {
+                        if (settings.widget.store.dimension[concept]) {
+                            isSingleCode = false;
+                            var codes = $.map(codemap[concept].codes, function (key, el) { return el; });
+                            settings.widget.store.criteria[concept] = [];
+                            for (kj = 0; kj < codes.length; kj++) {
+                                var idx = (codes.length - 1) - kj;
+                                if (idx < 0) break;
+                                settings.widget.store.criteria[concept].push(codes[idx]);
+                            }
+                        }
+                        if (settings.widget.store.criteria[concept][0] == settings.widget.store.criteria[concept][1]) {
+                            isSingleCode = true;
+                        } else {
+                            isSingleCode = false;
+                        }
+                    }
+                    /*
                     if (settings.widget.store.criteria[concept].length == 1) {
                         isSingleCode = false;
                         var codes = $.map(codemap[concept].codes, function (key, el) { return el; });
@@ -1545,13 +2028,21 @@ function WidgetDataset(options) {
                         isSingleCode = true;
                     } else {
                         isSingleCode = false;
-                    }
+                    }*/
                 } else {
                     if (settings.widget.store.criteria.hasOwnProperty(concept)) {
                         isSingleCode = (settings.widget.store.criteria[concept].length == 1);
                     } else {
-                        var codes = $.map(codemap[concept].codes, function (key, el) { return el; });
-                        isSingleCode = (codes.length == 1);
+                        //var codes = $.map(codemap[concept].codes, function (key, el) { return el; });
+                        //if (settings.widget.store.criteria.hasOwnProperty(codemap[concept])) {
+                        //modifica  07/12/2015
+                        if (settings.widget.store.dimension.hasOwnProperty(concept)) {
+                            var codes = $.map(codemap[concept].codes, function (key, el) { return el; });
+                            //isSingleCode = (codes.length == 1);
+                            isSingleCode = (codes != undefined ? (codes.length == 1) : true);
+                        }
+                            //else { isSingleCode = (settings.widget.store.criteria[concept].length == 1); }
+                        else { isSingleCode = true; }
                     }
                 }
 
@@ -1562,9 +2053,12 @@ function WidgetDataset(options) {
                     var select = document.createElement('select');
                     var lastKey = undefined;
                     var lastOption = undefined;
+                    var firstKey = undefined;
+                    var firstOption = undefined;
 
                     var time_code_range = false;
 
+                    //$.each(codemap[concept].codes, function (key, value) {
                     $.each(codemap[concept].codes, function (key, value) {
 
                         var isCodeForChoise = false;
@@ -1587,12 +2081,25 @@ function WidgetDataset(options) {
 
                             $(option).text((concept != time_dimension_key) ? "[" + key + "] " + value.name : value.name);
                             $(option).val(concept + "+" + key);
-                            $(option).attr('selected', 'selected');
-                            code = key;
+                            //$(option).attr('selected', 'selected'); 19/05/2016
+                            //code = key; 19/05/2016
+                            if (settings.widget.store.SliceKeyValues != undefined) {
+                                if (settings.widget.store.SliceKeyValues[concept] == key) {
+                                    $(option).attr('selected', 'selected');
+                                    code = key;
+                                }
+                            }
+                            //else { code = key;}
+
                             $(option).appendTo(select);
 
                             lastKey = key;
                             lastOption = option;
+                            if (firstOption == undefined)
+                            {
+                                firstKey = key;
+                                firstOption = option;
+                            }
                         }
 
 
@@ -1602,8 +2109,11 @@ function WidgetDataset(options) {
                     });
 
                     if (code === undefined) {
-                        $(lastOption).attr('selected', 'selected');
-                        code = lastKey;
+                        //$(lastOption).attr('selected', 'selected');
+                        //code = lastKey;
+                        $(firstOption).attr('selected', 'selected');
+                        code = firstKey;
+
                     }
 
                     $(select).change(function () {
@@ -1614,7 +2124,18 @@ function WidgetDataset(options) {
                         if (inArray(code_key[1], settings.widget.store.filters[code_key[0]]) == -1)
                             settings.widget.store.filters[code_key[0]].push(code_key[1]);
 
-                        Process_RequestData();
+
+                        //Process_RequestData();//old
+                        //nuovo fabio                        
+                        var _data = {
+                            dataflow: settings.widget.store.dataflow,
+                            configuration: settings.widget.store.configuration,
+                            selectionkey: code_key[0],
+                            selectionVal: code_key[1]
+                        }
+                        Process_Slice(_data);
+                        //fine nuovo fabio
+
 
                     });
                     $(select).appendTo(td);
@@ -1632,19 +2153,35 @@ function WidgetDataset(options) {
                     } else {
 
                         // draw label
-                        var p_code = $.map(codemap[concept].codes, function (value, key) {
-                            var p = document.createElement('p');
-                            $(p).text((concept != time_dimension_key) ? "[" + key + "] " + value.name : value.name);
-                            code = key;
-                            return p;
-                        });
+                        //commentato da fabio 07/12/2015
+                        //if (settings.widget.store.criteria.hasOwnProperty(codemap[concept])) {
+                        if (settings.widget.store.dimension.hasOwnProperty(concept)) {
+                            var p_code = $.map(codemap[concept].codes, function (value, key) {
+                                var p = document.createElement('p');
+                                $(p).text((concept != time_dimension_key) ? "[" + key + "] " + value.name : value.name);
+                                code = key;
+                                return p;
+                            });
+                        }
+                        else {
+                            var p_code = document.createElement('p');
+                            $(p).text(concept);
+                        }
                         $(p_code).appendTo(td);
                     }
                 }
 
                 settings.widget.store.filters[concept] = [];
-                if (inArray(code, settings.widget.store.filters[concept]) == -1)
-                    settings.widget.store.filters[concept].push(code);
+//                if (inArray(code, settings.widget.store.filters[concept]) == -1)
+//                    settings.widget.store.filters[concept].push(code);
+
+                    if (inArray(code, settings.widget.store.filters[concept]) == -1) {
+                        if (settings.widget.store.SliceKeyValues!=undefined)                        
+                            settings.widget.store.filters[concept].push(settings.widget.store.SliceKeyValues[concept]);
+                        else
+                            settings.widget.store.filters[concept].push(code);
+                    }
+
 
                 $(td).appendTo(tr);
                 delete td;
@@ -1752,7 +2289,7 @@ function WidgetDataset(options) {
             $.each(settings.widget.store.layout.axis_y, function (idx, concept) {
                 if (concept != time_dimension_key) {
                     var codes = $.map(settings.widget.store.dimension[concept].codes, function (el) { return el; });
-                    if(codes.length == 1){
+                    if (codes.length == 1) {
                         delete settings.widget.store.layout.axis_y[idx];
                         settings.widget.store.layout.axis_z.push(concept);
                     }
@@ -1780,13 +2317,13 @@ function WidgetDataset(options) {
             });
         }
         // remove empty array 
-        $.each(settings.widget.store.filters,function (idx, data){
+        $.each(settings.widget.store.filters, function (idx, data) {
             if (settings.widget.store.filters[idx].length == 0)
                 delete settings.widget.store.filters[idx];
         });
 
         $(settings.$items.slice_container).empty();
-        
+
         if (!stub) {
             DrawHTML_Slice(settings.$items.slice_container,
                             settings.widget.store.layout.axis_z,
@@ -1799,6 +2336,79 @@ function WidgetDataset(options) {
         $(settings.$items.chart_container).hide();
 
     }
+
+    function UpdateControlSlice() {
+
+        if (!stub) {
+
+            // move single codede layout x to z
+            $.each(settings.widget.store.layout.axis_x, function (idx, concept) {
+                if (concept != time_dimension_key) {
+                    if (settings.widget.store.dimension[concept] != null) {
+                        var codes = $.map(settings.widget.store.dimension[concept].codes, function (el) { return el; });
+                        if (codes.length == 1) {
+                            delete settings.widget.store.layout.axis_x[idx];
+                            settings.widget.store.layout.axis_z.push(concept);
+                        }
+                    }
+                }
+
+            });
+            settings.widget.store.layout.axis_x =
+                $.map(settings.widget.store.layout.axis_x, function (el) { return el; });
+
+            // move single codede layout y to z
+            $.each(settings.widget.store.layout.axis_y, function (idx, concept) {
+                if (concept != time_dimension_key) {
+                    var codes = $.map(settings.widget.store.dimension[concept].codes, function (el) { return el; });
+                    if (codes.length == 1) {
+                        delete settings.widget.store.layout.axis_y[idx];
+                        settings.widget.store.layout.axis_z.push(concept);
+                    }
+                }
+
+            });
+            settings.widget.store.layout.axis_y =
+                $.map(settings.widget.store.layout.axis_y, function (el) { return el; });
+
+        }
+
+        if (settings.widget.store.filters == undefined)
+            settings.widget.store.filters = {};
+
+        /*if (settings.widget.store.dimension != undefined) {
+            $.each(settings.widget.store.dimension, function (idx, data) {
+                if (settings.widget.store.criteria.hasOwnProperty(idx)) {
+                    settings.widget.store.filters[idx] = settings.widget.store.criteria[idx];
+                } else if (settings.widget.store.dimension[idx] != null) {
+                    settings.widget.store.filters[idx] =
+                        $.map(settings.widget.store.dimension[idx].codes, function (key, el) {
+                            return el;
+                        });
+                }
+            });
+        }*/
+        // remove empty array 
+        $.each(settings.widget.store.filters, function (idx, data) {
+            if (settings.widget.store.filters[idx].length == 0)
+                delete settings.widget.store.filters[idx];
+        });
+
+        $(settings.$items.slice_container).empty();
+
+        if (!stub) {
+            DrawHTML_Slice(settings.$items.slice_container,
+                            settings.widget.store.layout.axis_z,
+                            settings.widget.store.dimension,
+                            settings.widget.store.hideDimension);
+        }
+
+        viewMode = 0;
+        $(settings.$items.data_container).show();
+        $(settings.$items.chart_container).hide();
+
+    }
+
 
     function SaveQuery(cod, title, dataflow, filters, layout, configuration) {
 
@@ -1823,7 +2433,7 @@ function WidgetDataset(options) {
 
             if (jsonString != null) {
                 //alert(jsonString.indexOf("QueryId"));
-                
+
                 //Per verificare il salvataggio della query controllare la presenza della sottostringa "QueryId"
                 var ind = jsonString.indexOf("QueryId");
 
@@ -1845,7 +2455,7 @@ function WidgetDataset(options) {
                     height: 120,
                     modal: true,
                     buttons: [{
-                        text:settings.widget.messages.label_ok,
+                        text: settings.widget.messages.label_ok,
                         click: function () {
                             $(this).dialog("close");
                         }
@@ -1861,8 +2471,8 @@ function WidgetDataset(options) {
             return;
         },
         false);
-    }; 
-    function SaveTemplate (cod, title, cbox_sel, block_sel,isVar,isDec,isCri,dataflow, filters, layout, configuration) {
+    };
+    function SaveTemplate(cod, title, cbox_sel, block_sel, isVar, isDec, isCri, dataflow, filters, layout, configuration) {
 
         clientShowWaitDialog();
 
@@ -1876,8 +2486,8 @@ function WidgetDataset(options) {
                 Criteria: filters,
                 Configuration: configuration,
                 HideDimension: cbox_sel,
-                BlockXAxe: (inArray('x', block_sel) < 0)?false:true,
-                BlockYAxe: (inArray('y', block_sel) < 0)?false:true,
+                BlockXAxe: (inArray('x', block_sel) < 0) ? false : true,
+                BlockYAxe: (inArray('y', block_sel) < 0) ? false : true,
                 BlockZAxe: (inArray('z', block_sel) < 0) ? false : true,
                 EnableCriteria: isCri,
                 EnableDecimal: isDec,
@@ -1909,8 +2519,8 @@ function WidgetDataset(options) {
                     width: 240,
                     height: 120,
                     modal: true,
-                    buttons:[ {
-                        text:settings.widget.messages.label_ok,
+                    buttons: [{
+                        text: settings.widget.messages.label_ok,
                         click: function () {
                             $(this).dialog("close");
                         }
@@ -1927,13 +2537,13 @@ function WidgetDataset(options) {
         },
         false);
     }
-    function DeleteTemplate(cod, dataflow,configuration) {
+    function DeleteTemplate(cod, dataflow, configuration) {
 
         clientShowWaitDialog();
 
         var data = {
             UserCode: cod,
-            TemplateId:0,
+            TemplateId: 0,
             Template: {
                 Title: title,
                 DataFlow: dataflow,
@@ -1995,22 +2605,29 @@ function WidgetDataset(options) {
         $(dest).empty();
         settings.widget.store.chartCustom = {};
         settings.widget.store.chartFilters = {};
+        var setDefaultTypeChartSpline = 'selected="selected"';
+        var setDefaultTypeChartColumn = '';
 
         for (i in settings.widget.store.dimension) {
 
             settings.widget.store.chartFilters[i] = [];
 
-            if (i == time_dimension_key)
+            if (i == time_dimension_key) {
                 settings.widget.store.chartFilters[i] = settings.widget.store.filters[i];
-            else{
+                if (settings.widget.store.filters[i][0] == settings.widget.store.filters[i][1]) {
+                    setDefaultTypeChartSpline = '';
+                    setDefaultTypeChartColumn = 'selected="selected"';
+                }
+            }
+            else {
                 var codes = (settings.widget.store.filters != undefined) ? Object.keys(settings.widget.store.filters) : null;
                 if ((inArray(i, codes) >= 0) && (codes != null))
                     settings.widget.store.chartFilters[i].push(settings.widget.store.filters[i][0]);
                 else {
-                    if(settings.widget.store.criteria.hasOwnProperty(i)){
+                    if (settings.widget.store.criteria.hasOwnProperty(i)) {
                         settings.widget.store.chartFilters[i].push(settings.widget.store.criteria[i][0]);
-                    }else if (settings.widget.store.dimension[i]!=null)
-                        for(code in settings.widget.store.dimension[i].codes) {
+                    } else if (settings.widget.store.dimension[i] != null)
+                        for (code in settings.widget.store.dimension[i].codes) {
                             settings.widget.store.chartFilters[i].push(code);
                             break;
                         }
@@ -2033,9 +2650,9 @@ function WidgetDataset(options) {
         $(criteria_sel).css('width', '350px');
         $(criteria_sel).appendTo(td_criteria);
 
-        var numDim=0;
+        var numDim = 0;
         $.each(settings.widget.store.dimension, function (idx, codes) {
-            if (inArray(idx, hideDimension)<0){
+            if (inArray(idx, hideDimension) < 0) {
                 if (settings.widget.store.dimension[idx] != null) {
                     var keys = Object.keys(settings.widget.store.dimension[idx].codes);
                     if (keys.length > 1) {
@@ -2075,16 +2692,17 @@ function WidgetDataset(options) {
         $(chart_type).append('<p class="title">' + settings.widget.messages.label_chart_type_desc + '</p>');
         var select_chart_type = document.createElement("select");
         $(select_chart_type).append(
-            '<option value="spline" selected="selected" >Spline</option>' +
+            //'<option value="spline" selected="selected" >Spline</option>' +
+            '<option value="spline" ' + setDefaultTypeChartSpline + ' >Spline</option>' +
             '<option value="line">Line</option>' +
-            '<option value="area">Area</option>'+
-            '<option value="column">Column</option>' +
+            '<option value="area">Area</option>' +
+            '<option value="column" ' + setDefaultTypeChartColumn + ' >Column</option>' +
             '<option value="stackedColumn">Stacked Column</option>' +
             '<option value="pie">Pie</option>' +
             '<option value="scatter">Scatter</option>');
-            //'<option value="bar">Bar</option>' +
-            //'<option value="stackedBar">Stacked Bar</option>' +
-            //'<option value="bubble">Bubble</option>' +
+        //'<option value="bar">Bar</option>' +
+        //'<option value="stackedBar">Stacked Bar</option>' +
+        //'<option value="bubble">Bubble</option>' +
         $(select_chart_type).appendTo(chart_type);
         $(chart_type).appendTo(body);
 
@@ -2092,7 +2710,7 @@ function WidgetDataset(options) {
         $(dimension_axe).addClass('div_option');
         $(dimension_axe).append('<p class="title">' + settings.widget.messages.label_dimension_axe + '</p>');
         var select_dimension_axe = document.createElement("select");
-        $(select_dimension_axe).append("<option value='"+time_dimension_key+"'>" + settings.widget.messages.label_TIME_PERIOD + "</option>");
+        $(select_dimension_axe).append("<option value='" + time_dimension_key + "'>" + settings.widget.messages.label_TIME_PERIOD + "</option>");
         $(select_dimension_axe).appendTo(dimension_axe);
         $(dimension_axe).appendTo(body);
 
@@ -2127,7 +2745,7 @@ function WidgetDataset(options) {
             $.each(settings.widget.store.dimension, function (idx, filter) {
 
                 if (idx != undefined && idx != time_dimension_key) {
-                    if (!settings.widget.store.chartFilters.hasOwnProperty(idx)){
+                    if (!settings.widget.store.chartFilters.hasOwnProperty(idx)) {
                         if (settings.widget.store.filters.hasOwnProperty(idx))
                             settings.widget.store.chartFilters[idx] = settings.widget.store.filters[idx];
                         else
@@ -2157,11 +2775,11 @@ function WidgetDataset(options) {
         };
 
         var btn_chart = document.createElement("span");
-        $(btn_chart).css('float','right');
+        $(btn_chart).css('float', 'right');
         $(btn_chart).text(settings.widget.messages.label_apply);
         $(btn_chart).appendTo(body);
         $(btn_chart).button().click(requestChart);
-        
+
         var GetCustomSerie = function () {
             var concept;
             var codes;
@@ -2188,7 +2806,7 @@ function WidgetDataset(options) {
         };
 
         var btn_label = document.createElement("span");
-        $(btn_label).css('float','left');
+        $(btn_label).css('float', 'left');
         $(btn_label).html('<i class="icon-edit"></i>' + settings.widget.messages.label_serie_label);
         $(btn_label).appendTo(body);
         $(btn_label).button().click(GetCustomSerie);
@@ -2219,12 +2837,12 @@ function WidgetDataset(options) {
 
                             var c = 0;
                             if (settings.widget.store.chartFilters[concept].length == 2)
-                                c = 1 + parseInt(settings.widget.store.chartFilters[concept][1])- parseInt(settings.widget.store.chartFilters[concept][0]);
+                                c = 1 + parseInt(settings.widget.store.chartFilters[concept][1]) - parseInt(settings.widget.store.chartFilters[concept][0]);
                             else c = parseInt(settings.widget.store.chartFilters[concept][0]);
 
-                            if (c == 1){
+                            if (c == 1) {
                                 $(ui.newHeader).css('color', '#000000');
-                                $(select_dimension_axe).find("option[value='"+time_dimension_key+"']").remove();
+                                $(select_dimension_axe).find("option[value='" + time_dimension_key + "']").remove();
 
                             } else {
                                 $(ui.newHeader).css('color', '#FF0000');
@@ -2241,12 +2859,12 @@ function WidgetDataset(options) {
                     if (settings.widget.store.filters != undefined
                         && settings.widget.store.filters.hasOwnProperty(concept)) {
                         var constraint = settings.widget.store.filters[concept];
-                        if(constraint != undefined){
+                        if (constraint != undefined) {
                             $.each(constraint, function (idx, code) {
-                                codes[code]=settings.widget.store.dimension[concept].codes[code];
+                                codes[code] = settings.widget.store.dimension[concept].codes[code];
                             });
                         }
-                    }else codes = settings.widget.store.dimension[concept].codes;
+                    } else codes = settings.widget.store.dimension[concept].codes;
 
                     AppendFiltersCoded(
                         dest,
@@ -2256,7 +2874,7 @@ function WidgetDataset(options) {
                         settings.widget.messages,
                         settings.widget.store.dimension,
                         function (count, sender) {
-                            if (settings.widget.store.chartFilters.hasOwnProperty(concept) 
+                            if (settings.widget.store.chartFilters.hasOwnProperty(concept)
                                 && settings.widget.store.chartFilters[concept].length == 1) {
                                 $(ui.newHeader).css('color', '#000000');
                                 $(select_dimension_axe).find("option[value='" + concept + "']").remove();
@@ -2282,7 +2900,7 @@ function WidgetDataset(options) {
         var _data = {
             Artefact: settings.widget.store.dataflow,
             Configuration: settings.widget.store.configuration,
-            ArtefactType:"*"
+            ArtefactType: "*"
         };
         clientPostJSON(
                 settings.url.GetMetadata,
@@ -2320,9 +2938,9 @@ function WidgetDataset(options) {
                         $(div_dsd).append('<p class="field_desc">Data Structure Definition</p>');
 
                         var a_dsd = document.createElement('p');
-                        $(a_dsd).attr('title',result.Dsd.Id + '+' + result.Dsd.Agency + '+' + result.Dsd.Version);
+                        $(a_dsd).attr('title', result.Dsd.Id + '+' + result.Dsd.Agency + '+' + result.Dsd.Version);
                         $(a_dsd).text(result.Dsd.Name);
-                        $(a_dsd).click(function () { DrawHTML_DettailArtefact($(settings.$items.meta_container).find(".dettailPanel"), 'DSD', result.Dsd.Id, result.Dsd.Agency, result.Dsd.Version, settings.widget.store.configuration,settings.url.GetMetadata); });
+                        $(a_dsd).click(function () { DrawHTML_DettailArtefact($(settings.$items.meta_container).find(".dettailPanel"), 'DSD', result.Dsd.Id, result.Dsd.Agency, result.Dsd.Version, settings.widget.store.configuration, settings.url.GetMetadata); });
                         $(a_dsd).appendTo(div_dsd);
 
                         $(div_concept).append('<p class="field_desc">Concept</p>');
@@ -2342,7 +2960,7 @@ function WidgetDataset(options) {
                             $(a_codelist).click(function () { DrawHTML_DettailArtefact($(settings.$items.meta_container).find(".dettailPanel"), 'CODELIST', codelist.Id, codelist.Agency, codelist.Version, settings.widget.store.configuration, settings.url.GetMetadata); });
                             $(a_codelist).appendTo(div_codelist);
                         });
-                        
+
                     }
 
                 },
@@ -3010,24 +3628,24 @@ function DrawHTML_DettailArtefact(dest, typeArtefact, _id, _agency, _version, co
             false);
 }
 
-function CustomChartRender(concept,codes,codemap,outCustom) {
+function CustomChartRender(concept, codes, codemap, outCustom) {
 
     var div_custom_serie_chart = document.createElement("div");
 
     var p_title = document.createElement("p");
     $(p_title).css("width", "100%");
-    $(p_title).text(concept+" - "+codemap[concept].title);
+    $(p_title).text(concept + " - " + codemap[concept].title);
     $(p_title).appendTo(div_custom_serie_chart);
 
     $.each(codes, function (idx, code) {
 
         var findCode = (outCustom.hasOwnProperty("concept") && outCustom.concept == concept);
         var title = codemap[concept].codes[code].name;
-        var enable=false;
+        var enable = false;
         var chartType = "spline";
 
         if (findCode) {
-            for (i = 0; i < outCustom.codes.length;i++){
+            for (i = 0; i < outCustom.codes.length; i++) {
                 if (outCustom.codes[i].code == code) {
                     enable = true;
                     title = outCustom.codes[i].title;
@@ -3056,7 +3674,7 @@ function CustomChartRender(concept,codes,codemap,outCustom) {
         $(select).append(
                 '<option value="spline" ' + ((chartType == "spline") ? 'selected="selected"' : '') + ' >Spline</option>' +
                 '<option value="line"' + ((chartType == "line") ? 'selected="selected"' : '') + '>Line</option>' +
-                '<option value="area"' + ((chartType == "area") ? 'selected="selected"' : '') + '>Area</option>'+
+                '<option value="area"' + ((chartType == "area") ? 'selected="selected"' : '') + '>Area</option>' +
                 '<option value="column"' + ((chartType == "column") ? 'selected="selected"' : '') + '>Column</option>' +
                 '<option value="stackedColumn"' + ((chartType == "stackedColumn") ? 'selected="selected"' : '') + '>Stacked Column</option>');
         $(select).appendTo(p_select);
@@ -3074,7 +3692,7 @@ function CustomChartRender(concept,codes,codemap,outCustom) {
     $(div_custom_serie_chart).dialog({
         title: client.main.messages.label_serie_label,
         width: 600,
-        heigth:400,
+        heigth: 400,
         modal: true,
         resizable: false,
         closeOnEscape: false,
@@ -3106,7 +3724,7 @@ function CustomChartRender(concept,codes,codemap,outCustom) {
                             });
                         }
                     });
-                    
+
                     $(this).dialog("close");
                 }
             },
@@ -3161,7 +3779,7 @@ function OnKeyTitleClick(sender) {
             $(this).attr('display_mode', mode);
         }
     });
-    mode = (mode == 2) ? 0 :(mode+1);
+    mode = (mode == 2) ? 0 : (mode + 1);
     $(sender).attr('display_mode', mode);
 
 }
@@ -3174,7 +3792,7 @@ function OnKeyValueClick(sender) {
         $(sender).text($(sender).attr('sdmx_text'));
         $(sender).attr('display_mode', 2);
     } else if ($(sender).attr('display_mode') == 2) {
-        $(sender).text("["+$(sender).attr('sdmx_value')+"] "+$(sender).attr('sdmx_text'));
+        $(sender).text("[" + $(sender).attr('sdmx_value') + "] " + $(sender).attr('sdmx_text'));
         $(sender).attr('display_mode', 0);
     }
 }
@@ -3193,16 +3811,16 @@ function AppendFiltersCodedCostraint(
     callBack,
     count_max,
     h3) {
-    
+
     $(dest).empty();
 
     var codelist = $.map(codes, function (node, code) {
 
-        var par = (node.parent != null) ? codes.hasOwnProperty(node.parent)?node.parent:"#":"#";
+        var par = (node.parent != null) ? codes.hasOwnProperty(node.parent) ? node.parent : "#" : "#";
         var code_id = code;
 
         var isSingleCode = false;
-        for (var i=0;i<codes.length;i++)
+        for (var i = 0; i < codes.length; i++)
             if (i > 1) {
                 isSingleCode = true;
                 break;
@@ -3228,7 +3846,7 @@ function AppendFiltersCodedCostraint(
         .on("check_node.jstree", function (event, data) {
             var currConcept = data.instance.settings.sdmxConcept;
             var currCode = data.node.original.sdmxCode.toString();
-            
+
             if (!outCriteria.hasOwnProperty(currConcept))
                 outCriteria[currConcept] = [];
 
@@ -3256,10 +3874,10 @@ function AppendFiltersCodedCostraint(
                 idx_tab++;
             });
 
-            if(criteriLimit){
-                if(outCriteria[currConcept].length > 0){
-                    
-                }else{
+            if (criteriLimit) {
+                if (outCriteria[currConcept].length > 0) {
+
+                } else {
 
                 }
             }
@@ -3271,10 +3889,12 @@ function AppendFiltersCodedCostraint(
                 outCriteria,
                 codemap,
                 function (count) {
+                    count_glob = count;
                     if (count > 0) {
                         $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - " + count + " / " + count_max);
                     } else {
-                        $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                        //$(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                        $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria );
                     }
                 });
 
@@ -3295,7 +3915,7 @@ function AppendFiltersCodedCostraint(
             var fix_currCode = currCode.substring(5);
 
             if (!outCriteria.hasOwnProperty(currConcept)) delete outCriteria[currConcept];
-            outCriteria[currConcept].splice(inArray(fix_currCode, outCriteria[currConcept]),1);
+            outCriteria[currConcept].splice(inArray(fix_currCode, outCriteria[currConcept]), 1);
 
             var clearNext = false;
             $.each(codemap, function (concept) {
@@ -3316,10 +3936,12 @@ function AppendFiltersCodedCostraint(
                 outCriteria,
                 codemap,
                 function (count) {
+                    count_glob = count;
                     if (count > 0) {
                         $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - " + count + " / " + count_max);
                     } else {
-                        $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                        //$(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                        $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria );
                     }
                 });
 
@@ -3332,7 +3954,7 @@ function AppendFiltersCodedCostraint(
             return;
         })
         .on("check_all.jstree", function (event, data) {
-        
+
             var currConcept = data.instance.settings.sdmxConcept;
 
             $.each(data.instance._model.data, function (idCode) {
@@ -3357,10 +3979,12 @@ function AppendFiltersCodedCostraint(
                 outCriteria,
                 codemap,
                 function (count) {
+                    count_glob = count;
                     if (count > 0) {
                         $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - " + count + " / " + count_max);
                     } else {
-                        $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                        //$(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                        $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria );
                     }
                 });
 
@@ -3390,10 +4014,12 @@ function AppendFiltersCodedCostraint(
                 outCriteria,
                 codemap,
                 function (count) {
+                    count_glob = count;
                     if (count > 0) {
                         $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - " + count + " / " + count_max);
                     } else {
-                        $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                        //$(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                        $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria );
                     }
                 });
 
@@ -3494,8 +4120,8 @@ function AppendFiltersTimeCostraint(
     var idx_start = 0;
     var idx_end = times.length - 1;
 
-    var time_min = (outCriteria[concept][0] == undefined) ? outCriteria[concept][0]=times[idx_start] : outCriteria[concept][0];
-    var time_max = (outCriteria[concept][1] == undefined) ? (!isLastPeriod) ? outCriteria[concept][1] = times[idx_end] : times[idx_end] :outCriteria[concept][1];
+    var time_min = (outCriteria[concept][0] == undefined) ? outCriteria[concept][0] = times[idx_start] : outCriteria[concept][0];
+    var time_max = (outCriteria[concept][1] == undefined) ? (!isLastPeriod) ? outCriteria[concept][1] = times[idx_end] : times[idx_end] : outCriteria[concept][1];
 
     if (!codes.hasOwnProperty(time_max))
         time_max = time_min;
@@ -3536,10 +4162,12 @@ function AppendFiltersTimeCostraint(
                 outCriteria,
                 codemap,
                 function (count) {
+                    count_glob = count;
                     if (count > 0) {
                         $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - " + count + " / " + count_max);
                     } else {
-                        $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                        //$(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                        $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria );
                     }
                 });
 
@@ -3561,10 +4189,12 @@ function AppendFiltersTimeCostraint(
                 outCriteria,
                 codemap,
                 function (count) {
+                    count_glob = count;
                     if (count > 0) {
                         $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - " + count + " / " + count_max);
                     } else {
-                        $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                        //$(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                        $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria );
                     }
                 });
         }
@@ -3582,7 +4212,7 @@ function AppendFiltersTimeCostraint(
 
     $(tr_time_min).appendTo(tb_time);
     $(tr_time_max).appendTo(tb_time);
-    if (sessionStorage.user_code != null){
+    if (sessionStorage.user_code != null) {
 
         var usRole = JSON.parse(sessionStorage.user_role);
         if (usRole.RoleId == 1) {
@@ -3597,11 +4227,32 @@ function AppendFiltersTimeCostraint(
             $(year_plus_txt).attr('name', 'year_plus_txt');
             if (isLastPeriod) $(year_plus_txt).val(time_min);
 
+            $(year_plus_txt).keyup(function () {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+
             $(year_plus_txt).change(function () {
                 if (isLastPeriod) {
                     outCriteria[concept] = [];
                     outCriteria[concept][0] = $(this).val();
                     //if (count_max > 0) callBack(CountMaxResults(codemap, outCriteria));
+
+                    SetCodeCostraint(
+                        dataflow,
+                        configuration,
+                        concept,
+                        outCriteria,
+                        codemap,
+                        function (count) {
+                            count_glob = count;
+                            if (count > 0) {
+                                $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - " + count + " / " + count_max);
+                            } else {
+                                //$(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                                $(dest).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria );
+                            }
+                        });
+
                 }
             });
             var year_plus_chk = document.createElement("input");
@@ -3672,7 +4323,7 @@ function OpenPopUpFiltersCostraint(
     var idxConcept = 0;
     var targetConcept = -1;
     $.each(codemap, function (concept) {
-        
+
         if (target == concept)
             targetConcept = idxConcept;
         idxConcept++;
@@ -3693,6 +4344,7 @@ function OpenPopUpFiltersCostraint(
             $(ancor_filter).addClass(cssClass.tab_header);
             $(ancor_filter).text(concept);
             //$(ancor_filter).attr('title', (target==concept)? codemap[concept].title:"???");
+            $(ancor_filter).attr('title', (codemap[concept]!=null && codemap[concept].title!=undefined)?codemap[concept].title:"");
             $(ancor_filter).attr('href', '#tab-' + concept);
             $(ancor_filter).appendTo(li);
 
@@ -3705,7 +4357,7 @@ function OpenPopUpFiltersCostraint(
         }
     });
 
-    AppendCodes = function (destination,title_h3) {
+    AppendCodes = function (destination, title_h3) {
         $(destination).empty();
 
         var concept = $(destination).attr('id').toString().substring(4);// remove #tabs_
@@ -3730,7 +4382,7 @@ function OpenPopUpFiltersCostraint(
                     clientCloseWaitDialog();
 
                     // sovrascrivo i codici se non ha criteri
-                    if (!outCriteria.hasOwnProperty(concept) || codemap[concept]==null)
+                    if (!outCriteria.hasOwnProperty(concept) || codemap[concept] == null)
                         codemap[concept] = result.codemap[concept];
 
                     // Title concept - h3
@@ -3756,10 +4408,12 @@ function OpenPopUpFiltersCostraint(
                         outCriteria,
                         codemap,
                         function (count) {
+                            count_glob = count;
                             if (count > 0) {
                                 $(destination).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - " + count + " / " + MaxResults);
                             } else {
-                                $(destination).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                                //$(destination).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria + " - NaN");
+                                $(destination).parents('#criteria_popup').dialog("option", "title", messages.label_dialog_criteria );
                             }
                         });
                     }
@@ -3811,7 +4465,7 @@ function OpenPopUpFiltersCostraint(
 
             var destination = ui.panel;
             AppendCodes(destination, ui.tab);
-            
+
         },
         beforeActivate: function (event, ui) {
 
@@ -3837,71 +4491,78 @@ function OpenPopUpFiltersCostraint(
             {
                 text: messages.label_ok,
                 click: function () {
-                    
-                    if(!criteriLimit) {
-                        $(this).dialog("close");
-                        callBack(outCriteria);
-                    } else {
-                        var allCriteriaSet = true;
+                    //alert(criteriLimit);
+                    //alert(MaxResults);
+                    //alert(count_glob);
+                    /*fabio modifica 18/11/2015*/
+                    clientShowWaitDialog();
+                    if (count_glob < MaxResults) {
+                        if (!criteriLimit) {
+                            $(this).dialog("close");
+                            callBack(outCriteria);
+                        } else {
+                            var allCriteriaSet = true;
 
-                        var str_concept = "";
-                        var str_sep = "";
-                        $.each(codemap, function (key, concept) {
-                            if (inArray(key, hideDimension) < 0) {
-                                if (outCriteria.hasOwnProperty(key)) {
-                                    if (outCriteria[key].length < 1) {
+                            var str_concept = "";
+                            var str_sep = "";
+                            $.each(codemap, function (key, concept) {
+                                if (inArray(key, hideDimension) < 0) {
+                                    if (outCriteria.hasOwnProperty(key)) {
+                                        if (outCriteria[key].length < 1) {
+                                            allCriteriaSet = false;
+                                            str_concept += str_sep + key;
+                                            str_sep = ", ";
+                                        }
+                                    } else {
                                         allCriteriaSet = false;
                                         str_concept += str_sep + key;
                                         str_sep = ", ";
                                     }
-                                } else {
-                                    allCriteriaSet = false;
-                                    str_concept += str_sep + key;
-                                    str_sep = ", ";
                                 }
-                            }
-                        });
-
-                        if (!allCriteriaSet) {
-
-                            var div_alert = document.createElement('div');
-                            //$(div_alert).html("Please choise a selection for tab: " + str_concept);
-                            $(div_alert).html("Please choise a selection for tab: " + str_concept);
-                            $(div_alert).dialog({
-                                title: messages.label_dialog_criteria,
-                                modal: true,
-                                resizable: true,
-                                closeOnEscape: false,
-                                draggable: true,
-                                position: { my: "center", at: "center", of: window },
-                                autoOpen: false,
-                                buttons: [
-                                    {
-                                        text: messages.label_ok,
-                                        click: function () { $(this).dialog("close"); }
-                                    }
-                                ]
                             });
-                            $(div_alert).dialog("open");
-                        } else {
 
-                            if (CountMaxResults(codemap, outCriteria, hideDimension) < MaxResults) {
-                                $(this).dialog("close");
-                                callBack(outCriteria);
+                            if (!allCriteriaSet) {
+
+                                var div_alert = document.createElement('div');
+                                //$(div_alert).html("Please choise a selection for tab: " + str_concept);
+                                $(div_alert).html("Please choise a selection for tab: " + str_concept);
+                                $(div_alert).dialog({
+                                    title: messages.label_dialog_criteria,
+                                    modal: true,
+                                    resizable: true,
+                                    closeOnEscape: false,
+                                    draggable: true,
+                                    position: { my: "center", at: "center", of: window },
+                                    autoOpen: false,
+                                    buttons: [
+                                        {
+                                            text: messages.label_ok,
+                                            click: function () { $(this).dialog("close"); }
+                                        }
+                                    ]
+                                });
+                                $(div_alert).dialog("open");
                             } else {
 
+                                if (CountMaxResults(codemap, outCriteria, hideDimension) < MaxResults) {
+                                    $(this).dialog("close");
+                                    callBack(outCriteria);
+                                } else {
+                                    alert(CountMaxResults(codemap, outCriteria, hideDimension));
+                                }
+
                             }
-
                         }
-                    }
 
+                    }//end if globale
+                    else { alert('sono stati superati il numero di record max visualizzabili'); }
 
                 }
             },
             {
                 text: messages.label_cancel,
-                click: function (){
-                    
+                click: function () {
+
                     $(this).dialog("close");
                     outCriteria = [];
                 }
@@ -3914,11 +4575,11 @@ function OpenPopUpFiltersCostraint(
     $(div_popup).dialog("open");
 }
 
-function SetCodeCostraint(dataflow,configuration, concept, criteria, codemap,callBack) {
+function SetCodeCostraint(dataflow, configuration, concept, criteria, codemap, callBack) {
 
     var _data = {
         Dataflow: dataflow,
-        Configuration:configuration,
+        Configuration: configuration,
         Codelist: concept,
         PreviusCostraint: criteria
     }
@@ -3963,7 +4624,7 @@ function OpenPopUpFilters(
 
     // popup
     var div_popup = document.createElement("div");
-    
+
     // tabs container
     var div_tabs = document.createElement("div");
     $(div_tabs).addClass(cssClass.tabs_div);
@@ -3976,36 +4637,37 @@ function OpenPopUpFilters(
     $.each(codemap, function (concept) {
         countCodemap++;
         var showDimension = true;
-        
+
         if (hideDimension != undefined)
-            if (inArray(concept, hideDimension)>=0)
+            if (inArray(concept, hideDimension) >= 0)
                 showDimension = false;
 
-        if (showDimension){
+        if (showDimension) {
 
-                // Header Tabs
-                var li = document.createElement("li");
-                $(li).appendTo(ul);
-                
-                var ancor_filter = document.createElement("a");
-                $(ancor_filter).addClass(cssClass.tab_header);
-                $(ancor_filter).text(concept);
-                $(ancor_filter).attr('title', codemap[concept].title);
-                $(ancor_filter).attr('href', '#tab-' + concept);
-                $(ancor_filter).appendTo(li);
+            // Header Tabs
+            var li = document.createElement("li");
+            $(li).appendTo(ul);
 
-                // TAB - div
-                var div_tab = document.createElement("div");
-                $(div_tab).addClass(cssClass.tab_div);
-                $(div_tab).attr('id', 'tab-' + concept);
+            var ancor_filter = document.createElement("a");
+            $(ancor_filter).addClass(cssClass.tab_header);
+            $(ancor_filter).text(concept);
+            $(ancor_filter).attr('title', codemap[concept].title);
+            $(ancor_filter).attr('href', '#tab-' + concept);
+            $(ancor_filter).appendTo(li);
 
-                $(div_tab).appendTo(div_tabs);
-            }
+            // TAB - div
+            var div_tab = document.createElement("div");
+            $(div_tab).addClass(cssClass.tab_div);
+            $(div_tab).attr('id', 'tab-' + concept);
+
+
+            $(div_tab).appendTo(div_tabs);
+        }
     });
 
     //setup tabs
     $(div_tabs).tabs({
-        active:countCodemap,
+        active: countCodemap,
         create: function (event, ui) {
             var destination = ui.panel;
             $(destination).empty();
@@ -4076,7 +4738,7 @@ function OpenPopUpFilters(
                      MaxResults);
             }
             else {
-                
+
                 AppendFiltersCoded(
                     div_codes,
                     concept,
@@ -4093,9 +4755,11 @@ function OpenPopUpFilters(
     });
 
     $(div_tabs).appendTo(div_popup);
-    
+
     $(div_popup).dialog({
-        title: messages.label_dialog_criteria + " - " + CountMaxResults(codemap, outCriteria) + " / " + MaxResults,
+        //commentata perchè la count non và più visualizzata nella barra
+        //title: messages.label_dialog_criteria + " - " + CountMaxResults(codemap, outCriteria) + " / " + MaxResults,
+        title: messages.label_dialog_criteria ,
         width: 900,
         height: 550,
         modal: true,
@@ -4399,8 +5063,10 @@ function AppendFiltersTime(
             $(year_plus_txt).prop('disabled', !isLastPeriod);
             $(year_plus_txt).attr('name', 'year_plus_txt');
             if (isLastPeriod) $(year_plus_txt).val(time_min);
-
             $(year_plus_txt).change(function () {
+//                alert($(year_plus_txt).val());              
+//                this.value = this.value.replace(/[^0-9\.]/g, '');
+//                alert($(year_plus_txt).val());
                 if (isLastPeriod) {
                     outCriteria[concept] = [];
                     outCriteria[concept][0] = $(this).val();
@@ -4453,10 +5119,10 @@ function AppendFiltersTime(
 
 
 function OpenPopUpLayout(
-    layout, 
-    callBack, 
-    cssClass, 
-    messages, 
+    layout,
+    callBack,
+    cssClass,
+    messages,
     dataKey,
     hideDimension) {
 
@@ -4517,11 +5183,10 @@ function OpenPopUpLayout(
 
     // Fill list sortable
     $.each(layout.axis_z, function (idx, item) {
-        var showDim=true;
-        if (hideDimension != undefined 
-            && inArray(item, hideDimension) >= 0)showDim=false;
-        if(showDim)
-        {
+        var showDim = true;
+        if (hideDimension != undefined
+            && inArray(item, hideDimension) >= 0) showDim = false;
+        if (showDim) {
             var li = document.createElement("li");
             $(li).addClass(cssClass.list_item_layout);
             $(li).html(item);
@@ -4530,11 +5195,10 @@ function OpenPopUpLayout(
         }
     });
     $.each(layout.axis_x, function (idx, item) {
-        var showDim=true;
-        if (hideDimension != undefined 
-            && inArray(item, hideDimension) >= 0)showDim=false;
-        if(showDim)
-        {
+        var showDim = true;
+        if (hideDimension != undefined
+            && inArray(item, hideDimension) >= 0) showDim = false;
+        if (showDim) {
             var li = document.createElement("li");
             $(li).addClass(cssClass.list_item_layout);
             $(li).html(item);
@@ -4543,11 +5207,10 @@ function OpenPopUpLayout(
         }
     });
     $.each(layout.axis_y, function (idx, item) {
-        var showDim=true;
-        if (hideDimension != undefined 
-            && inArray(item, hideDimension) >= 0)showDim=false;
-        if(showDim)
-        {
+        var showDim = true;
+        if (hideDimension != undefined
+            && inArray(item, hideDimension) >= 0) showDim = false;
+        if (showDim) {
             var li = document.createElement("li");
             $(li).addClass(cssClass.list_item_layout);
             $(li).html(item);
@@ -4560,7 +5223,7 @@ function OpenPopUpLayout(
     $(lst_z).sortable({
         cursor: "move",
         forcePlaceholderSize: true,
-        connectWith: (layout.block_axis_z)?".none":"."+cssClass.list_layout_connected
+        connectWith: (layout.block_axis_z) ? ".none" : "." + cssClass.list_layout_connected
     }).disableSelection();
     $(lst_x).sortable({
         cursor: "move",
@@ -4597,12 +5260,12 @@ function OpenPopUpLayout(
                         axis_y: $(lst_y).children().map(function (i) { return $(this).data(dataKey.sdmxKey); }).get(),
                         axis_z: $(lst_z).children().map(function (i) { return $(this).data(dataKey.sdmxKey); }).get()
                     };
-                    
+
                     if (_axis.axis_x.length < 1) {
                         clientShowErrorDialog(messages.label_layout_x_missing);
                         return;
                     }
-                    if (_axis.axis_y.length < 1){
+                    if (_axis.axis_y.length < 1) {
                         clientShowErrorDialog(messages.label_layout_y_missing);
                         return;
                     }
@@ -4633,22 +5296,22 @@ function CountMaxResults(codemap, criteria, hideDimension) {
         if (idx == "TIME_PERIOD") {
 
 
-                var codes = $.map(codemap[idx].codes, function (el) { return el.name; });
+            var codes = $.map(codemap[idx].codes, function (el) { return el.name; });
 
-                if (!criteria.hasOwnProperty(idx)) {
-                    criteria[idx] = [];
-                    criteria[idx].push(codes[0]);
-                    criteria[idx].push(codes[codes.length - 1]);
-                }
+            if (!criteria.hasOwnProperty(idx)) {
+                criteria[idx] = [];
+                criteria[idx].push(codes[0]);
+                criteria[idx].push(codes[codes.length - 1]);
+            }
 
-                if (criteria[idx].length == 1)
-                    c = criteria[idx][0];
-                else c = (inArray(criteria[idx][1], codes) - inArray(criteria[idx][0], codes)) + 1;
-            
+            if (criteria[idx].length == 1)
+                c = criteria[idx][0];
+            else c = (inArray(criteria[idx][1], codes) - inArray(criteria[idx][0], codes)) + 1;
+
             if (c < 1) c = 1;
 
         } else if (criteria[idx] == undefined || criteria[idx].length == 0) {
-            
+
             if (hideDimension != undefined && inArray(idx, hideDimension) > 0)
                 c = 1;
             else {
@@ -4659,13 +5322,14 @@ function CountMaxResults(codemap, criteria, hideDimension) {
                     c = 1;
                 }
             }
-            
-        }else if (criteria[idx].length > 0)
-            c=criteria[idx].length;
+
+        } else if (criteria[idx].length > 0)
+            c = criteria[idx].length;
 
         count *= c;
 
     });
+
     return count;
 
 };

@@ -79,6 +79,12 @@ function clientRetrieveMessages() {
         true);
 }
 
+function clientRetrieveMessagesChangeLocale(Locale, jsonString) {
+
+            client.main.messages = clientParseJsonToObject(jsonString);
+            client.main.config.locale = Locale;
+}
+
 function clientShowWaitDialog(msg) {
     $.unblockUI({ fadeOut: 0 });
     $.blockUI({
@@ -152,29 +158,31 @@ function clientPostJSON(url, data, callback, errorCallback,useWait) {
     if (!errorCallback) {
         errorCallback = clientAjaxError;
     }
+    if (url != null) {
+        $.ajax({
+            type: "POST",
+            url: client.main.config.baseURL + url,
+            async: true,
+            timeout: 400000,
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (jsonString) {
 
-    $.ajax({
-        type: "POST",
-        url: client.main.config.baseURL + url,
-        async: true,
-        timeout: 400000,
-        data: data,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (jsonString) {
+                var res = clientParseJsonToObject(jsonString);
 
-            var res = clientParseJsonToObject(jsonString);
+                if (res != null && res.hasOwnProperty('Msg')) {
 
-            if (res != null && res.hasOwnProperty('Msg')) {
+                    clientShowErrorDialog(res.Msg);
 
-                clientShowErrorDialog(res.Msg);
+                } else if (callback) callback(jsonString);
 
-            } else if (callback) callback(jsonString);
-
-            if (useWait) client.main.events.ajaxStop();
-        },
-        error: errorCallback
-    });
+                if (useWait) client.main.events.ajaxStop();
+            },
+            error: errorCallback
+        });
+    }
+    else { client.main.events.ajaxStop(); }
 }
 
 function clientAjaxError(event, req, options, error) {

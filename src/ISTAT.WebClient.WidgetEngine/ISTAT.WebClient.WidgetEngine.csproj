@@ -51,7 +51,7 @@
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ISTAT.WebClient.Libraries\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+      <HintPath>bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
       <HintPath>..\ISTAT.WebClient.Libraries\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
@@ -114,7 +114,9 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -159,6 +161,12 @@
     <Compile Include="WidgetBuild\ChartWidget.cs" />
     <Compile Include="WidgetBuild\DashboardWidget.cs" />
     <Compile Include="WidgetBuild\DOTSTAT_Widget.cs" />
+    <Compile Include="WidgetBuild\SessionQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WidgetBuild\SessionQueryManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="WidgetBuild\TemplateWidget.cs" />
     <Compile Include="WidgetBuild\DataWidget.cs" />
     <Compile Include="WidgetBuild\LayoutWidget.cs" />

@@ -4,6 +4,7 @@ using ISTAT.WebClient.WidgetComplements.Model;
 using ISTAT.WebClient.WidgetComplements.Model.App_GlobalResources;
 using ISTAT.WebClient.WidgetComplements.Model.CallWS;
 using ISTAT.WebClient.WidgetComplements.Model.DataRender;
+
 using ISTAT.WebClient.WidgetComplements.Model.Enum;
 using ISTAT.WebClient.WidgetComplements.Model.JSObject;
 using ISTAT.WebClient.WidgetComplements.Model.Properties;
@@ -40,6 +41,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Web.Script.Serialization;
+using ISTAT.WebClient.WidgetComplements.Model.JSObject;
 
 namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
 {
@@ -51,12 +53,16 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
         private static readonly ILog Logger = LogManager.GetLogger(typeof(TreeWidget));
         private const string ErrorOccured = "{\"error\" : true }";
 
+
         private IGetSDMX GetSDMXObject = null;
         private CodemapWidget codemapWidget = null;
 
         private BaseDataObject BDO { get; set; }
 
         private bool _useAttr { get; set; }
+
+        private IDataSetStore _store { get; set; }
+
 
         public DataWidget(GetDataObject dataObj, SessionImplObject sessionObj, bool useAttr)
         {
@@ -68,7 +74,7 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
             this._useAttr = useAttr;
         }
 
-        public SessionImplObject GetData(out object DataStream)
+        public SessionImplObject GetData(out object DataStream,SessionQuery query)
         {
             try
             {
@@ -89,7 +95,8 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
                     Dataflow = this.DataObj.Dataflow,
                     PreviusCostraint=this.DataObj.Criteria },
                     this.SessionObj);
-                ISdmxObjects structure = codemapWidget.GetDsd();
+                //ISdmxObjects structure = codemapWidget.GetDsd();
+                ISdmxObjects structure = query.Structure;
                 IDataflowObject df = structure.Dataflows.FirstOrDefault();
                 IDataStructureObject kf = structure.DataStructures.First();
                 if (df == null) throw new InvalidOperationException("Dataflow is not set");
@@ -97,7 +104,8 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
                 /****************/
                 // Get all codelist
                 /****************/
-                Dictionary<string, ICodelistObject> ConceptCodelists = codemapWidget.GetCodelistMap(df, kf, true);
+                //Dictionary<string, ICodelistObject> ConceptCodelists = codemapWidget.GetCodelistMap(df, kf, true);
+                Dictionary<string, ICodelistObject> ConceptCodelists = codemapWidget.GetCodelistMap(query, false);
                 ComponentCodeDescriptionDictionary codemap = new ComponentCodeDescriptionDictionary();
                 foreach (string ConceptId in ConceptCodelists.Keys)
                 {
@@ -108,6 +116,7 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
                     codemap.Add(ConceptId, codes);
                 }
                 /****************/
+                //codemapWidget.GetCodeListCostraint(df,kf,component)
 
                 this.SessionObj.MergeObject(codemapWidget.SessionObj);
 
@@ -140,13 +149,49 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
 
                 LayoutObj layObj = InitLayout(df, kf);
                 List<DataCriteria> Criterias = BDO.InitCriteria(kf, this.DataObj.Criteria);
+                //query.GetCriteria();
 
                 Dictionary<string, List<DataChacheObject>> DataCache = SessionObj.DataCache;
-                // try get from cache 
-                //IDataSetStore store = BDO.FindDataCache(df, kf, Criterias, ref DataCache);
-                //if (store == null) store = BDO.GetDataset(df, kf, Criterias, ref DataCache);
+                List <string> ret = null;
+                List<DataCriteria> QueryCriterias=new List<DataCriteria>();
 
-                IDataSetStore store = BDO.GetDataset(df, kf, Criterias, ref DataCache, _useAttr);
+                if (query.Criteria != null)//criteri nulli se proviene da un template
+                {
+                    if (query._store != null) //.Count == 1)
+                    { query.SetCriteriaTime(this.DataObj.Criteria[kf.TimeDimension.Id]); }
+
+                    if (query.Criteria.TryGetValue(kf.TimeDimension.Id, out ret))
+                    {
+                        if (ret.Count == 1)
+                        { query.SetCriteriaTime(this.DataObj.Criteria[kf.TimeDimension.Id]); }
+                    }
+                    
+
+                    QueryCriterias = query.GetCriteria();
+                    /*if (query._store == null) //.Count == 1)
+                    { QueryCriterias = Criterias; }
+                    else
+                    { QueryCriterias = query.GetCriteria(); }*/
+
+
+                }
+                else
+                {
+                    QueryCriterias = Criterias;
+                }
+                
+                
+                //aggiunta da fabio               
+                IDataSetStore store;
+                if (query._store != null)
+                { store = query._store; }
+                else
+                {
+                    //store = BDO.GetDataset(df, kf, Criterias, ref DataCache, _useAttr);
+                    store = BDO.GetDataset(df, kf, QueryCriterias, ref DataCache, _useAttr);
+                    query._store = store;
+                }
+                //fine nuovo
 
                 SessionObj.DataCache = DataCache;
 
@@ -171,7 +216,7 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
 
         }
 
-        public static void StreamDataTable(object DataObjectsForStreaming, TextWriter streamResponse, bool useAttr,CultureInfo cFrom,CultureInfo cTo)
+        public static void StreamDataTable(object DataObjectsForStreaming, TextWriter streamResponse, bool useAttr, CultureInfo cFrom, CultureInfo cTo, SessionQuery query)
         {
             if (DataObjectsForStreaming == null || !(DataObjectsForStreaming is DataObjectForStreaming))
                 throw new Exception("Data not found");
@@ -192,7 +237,10 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
                 DataStream.codemap,
                 useAttr, 
                 cFrom,cTo);
-            rea.render(streamResponse);
+
+
+
+            rea.render(streamResponse,query);
 
             //DataStream.store.Dispose();
         }
@@ -204,20 +252,40 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
             return this.DataObj.Layout;
         }
 
+        private bool DictionaryEqual(IDictionary<string, List<string>> first, IDictionary<string, List<string>> second)
+        {
+            if (first == second) return true;
+            if ((first == null) || (second == null)) return false;
+            if (first.Count != second.Count) return false;
+
+
+            foreach (var kvp in first)
+            {
+                List<string> secondValue;
+                if (!second.TryGetValue(kvp.Key, out secondValue)) return false;
+                if (kvp.Value.Count != secondValue.Count) return false;
+                if (!kvp.Value.All(p => secondValue.Contains(p))) return false;
+
+            }
+            return true;
+        }
+
+
+
         #region Download
 
-        private static void GetModel(IDataSetRenderer renderer, IDataSetModel datasetModel, TextWriter streamResponse)
+        private static void GetModel(IDataSetRenderer renderer, ISTAT.WebClient.WidgetEngine.Model.DataRender.IDataSetModel datasetModel, TextWriter streamResponse)
         {
             renderer.RenderAllTables(datasetModel, streamResponse);
         }
-        private static void GetModel(IDataSetRenderer renderer, IDataSetModel datasetModel, MemoryStream memoryStream)
+        private static void GetModel(IDataSetRenderer renderer, ISTAT.WebClient.WidgetEngine.Model.DataRender.IDataSetModel datasetModel, MemoryStream memoryStream)
         {
             renderer.RenderAllTables(datasetModel, memoryStream);
         }
 
-        private static IDataSetModel GetDataSetModel(DataObjectForStreaming dataStream)
+        private static ISTAT.WebClient.WidgetEngine.Model.DataRender.IDataSetModel GetDataSetModel(DataObjectForStreaming dataStream)
         {
-            IDataSetModel dataSetModel;
+            ISTAT.WebClient.WidgetEngine.Model.DataRender.IDataSetModel dataSetModel;
 
             dataStream.layObj.axis_x.ForEach(axisX => { if (!dataStream.store.ExistsColumn(axisX)) dataStream.layObj.axis_x.Remove(axisX); });
             dataStream.layObj.axis_y.ForEach(axisY => { if (!dataStream.store.ExistsColumn(axisY)) dataStream.layObj.axis_y.Remove(axisY); });
@@ -242,31 +310,35 @@ namespace ISTAT.WebClient.WidgetEngine.WidgetBuild
 
         public static void GetDataSetStream(IDataSetRenderer renderer, DataObjectForStreaming dataStream, TextWriter streamResponse)
         {
-            //EndpointSettings DataObjConfiguration = dataStream.Configuration;
+            EndpointSettings DataObjConfiguration = dataStream.Configuration;
 
-            //IDataStructureObject kf = dataStream.structure.DataStructures.First();
+            IDataStructureObject kf = dataStream.structure.DataStructures.First();
+            
+            //DataObjectForStreaming
+            SDMXWSFunction op = SDMXWSFunction.GetCompactData;
+            //DataObjConfiguration
 
-            ////DataObjectForStreaming
-            //SDMXWSFunction op = SDMXWSFunction.GetCompactData;
-            ////DataObjConfiguration
+            bool cross = (DataObjConfiguration._TypeEndpoint == EndpointType.V21 || DataObjConfiguration._TypeEndpoint == EndpointType.REST)
+                          ? NsiClientHelper.DataflowDsdIsCrossSectional(kf) : !Utils.IsTimeSeries(kf);
+            if (cross)
+                op = SDMXWSFunction.GetCrossSectionalData;
+            var ser = new JavaScriptSerializer();
+            ser.MaxJsonLength = int.MaxValue;
+            try
+            {
+                IGetSDMX GetSDMXObject = WebServiceSelector.GetSdmxImplementation(DataObjConfiguration);
+                BaseDataObject BDO = new BaseDataObject(DataObjConfiguration,@"c:\pippo.txt");
 
-            //bool cross = (DataObjConfiguration._TypeEndpoint == EndpointType.V21 || DataObjConfiguration._TypeEndpoint == EndpointType.REST)
-            //              ? NsiClientHelper.DataflowDsdIsCrossSectional(kf) : !Utils.IsTimeSeries(kf);
-            //if (cross)
-            //    op = SDMXWSFunction.GetCrossSectionalData;
-            //var ser = new JavaScriptSerializer();
-            //ser.MaxJsonLength = int.MaxValue;
-            //try
-            //{
-            //    IGetSDMX GetSDMXObject = WebServiceSelector.GetSdmxImplementation(DataObjConfiguration);
-            //    GetSDMXObject.ExecuteQuery(CreateQueryBean(df, kf, Criterias), op, FileTmpData);
 
-            //}
-            //catch (Exception ex)
-            //{
+                //GetSDMXObject.ExecuteQuery(BDO.CreateQueryBean(_  df, kf, Criterias), op, FileTmpData);
+                //GetSDMXObject.ExecuteQuery(BDO.CreateQueryBean(, kf, Criterias), op, FileTmpData);
 
-            //}
-            throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            //throw new NotImplementedException();
         }
 
         #endregion

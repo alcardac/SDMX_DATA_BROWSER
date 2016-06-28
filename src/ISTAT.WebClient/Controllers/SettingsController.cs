@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using ISTAT.WebClient.WidgetComplements.Model.JSObject;
+using ISTAT.WebClient.WidgetComplements.Model.Settings;
 using System.Configuration;
 
 namespace ISTAT.WebClient.Controllers
@@ -18,6 +19,11 @@ namespace ISTAT.WebClient.Controllers
     public class SettingsController : Controller
     {
         private ControllerSupport CS = new ControllerSupport();
+
+        private ConnectionStringSettings connectionStringSetting=ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+        
+          
+
         public ActionResult SetLocale()
         {
             dynamic PostDataArrived = CS.GetPostData(this.Request);
@@ -32,6 +38,8 @@ namespace ISTAT.WebClient.Controllers
                 Thread.CurrentThread.CurrentCulture = c;
 
                 LocaleResolver.SendCookie(c,HttpContext.ApplicationInstance.Context);
+                SessionQuery query = SessionQueryManager.GetSessionQuery(Session);
+                query.CurrentCulture = c;
                 
                 return CS.ReturnForJQuery(new JavaScriptSerializer().Serialize(string.Empty));
             }
@@ -60,16 +68,18 @@ namespace ISTAT.WebClient.Controllers
             }
         }
         
+
         public ActionResult GetSettings()
         {
             try
             {
-                ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+
                 if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
                     throw new Exception("ConnectionString not set");
 
                 SettingsWidget qw = new SettingsWidget(connectionStringSetting.ConnectionString);
-                return CS.ReturnForJQuery(qw.Load());
+
+               return CS.ReturnForJQuery(qw.Load());
             }
             catch (Exception ex)
             {
@@ -77,12 +87,13 @@ namespace ISTAT.WebClient.Controllers
                 return CS.ReturnForJQuery(JSONConst.Error);
             }
         }
+
         public ActionResult SetSettings()
         {
             try
             {
                 GetEndpointSettings PostDataArrived = CS.GetPostData<GetEndpointSettings>(this.Request);
-                ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+
                 if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
                     throw new Exception("ConnectionString not set");
 
@@ -100,28 +111,27 @@ namespace ISTAT.WebClient.Controllers
         {
             try
             {
-                ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
+
                 if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
                     throw new Exception("ConnectionString not set");
 
                 GetUserSettingObject PostDataArrived = CS.GetPostData<GetUserSettingObject>(this.Request);
-
                 SettingsWidget qw = new SettingsWidget(connectionStringSetting.ConnectionString);
+                
                 return CS.ReturnForJQuery(qw.LoadUserSetting(PostDataArrived.userCode));
             }
             catch (Exception ex)
             {
-
                 return CS.ReturnForJQuery(JSONConst.Error);
             }
         }
+  
         public ActionResult SetUserSettings()
         {
             try
             {
                 GetUserSettingObject PostDataArrived = CS.GetPostData<GetUserSettingObject>(this.Request);
 
-                ConnectionStringSettings connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
                 if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
                     throw new Exception("ConnectionString not set");
 

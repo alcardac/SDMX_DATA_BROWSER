@@ -20,6 +20,7 @@ using System.Text;
 using System.Threading;
 using System.Web.Script.Serialization;
 using System.Xml;
+using ISTAT.WebClient.WidgetComplements.Model.JSObject;
 
 namespace ISTAT.WebClient.WidgetComplements.Model
 {

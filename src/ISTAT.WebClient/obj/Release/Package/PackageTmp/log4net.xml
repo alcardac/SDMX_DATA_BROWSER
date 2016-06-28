@@ -19,7 +19,7 @@
 
   <root>
     <!-- Options are "ALL", "DEBUG", "INFO", "WARN", "ERROR", "FATAL" and "OFF". -->
-    <level value="INFO"></level>
+    <level value="ERROR"></level>
 
     <appender-ref ref="RollingLogFileAppender"/>
     <!--<appender-ref ref="RollingLogFileAppender"></appender-ref>-->

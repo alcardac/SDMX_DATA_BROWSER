@@ -37,7 +37,8 @@ namespace ISTAT.WebClient.CacheManager.Manager
         internal void Start()
         {
             connectionStringSetting = ConfigurationManager.ConnectionStrings["ISTATWebClientConnection"];
-            if (connectionStringSetting == null || string.IsNullOrEmpty(connectionStringSetting.ConnectionString))
+            if (connectionStringSetting == null  || string.IsNullOrEmpty(connectionStringSetting.ConnectionString)
+                || connectionStringSetting.ConnectionString.ToString().ToLower()=="file")
                 return;
             Sqlconn = new SqlConnection(connectionStringSetting.ConnectionString);
 

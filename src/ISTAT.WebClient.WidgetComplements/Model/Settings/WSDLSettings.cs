@@ -9,7 +9,7 @@
 //   This class will parse and expose various WSDL settings
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
+using ISTAT.WebClient.WidgetComplements.Model.JSObject;
 namespace ISTAT.WebClient.WidgetComplements.Model.Settings
 {
     using ISTAT.WebClient.WidgetComplements.Model.CallWS;

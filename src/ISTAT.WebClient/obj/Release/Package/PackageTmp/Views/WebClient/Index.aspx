@@ -5,12 +5,12 @@
 
 <asp:Content ID="ContentHeader" ContentPlaceHolderID="ContentHeader" runat="server">
 
-    <script src="<%=Url.Content("~/Scripts/jquery/Concurrent.Thread-full-20090713.js")%>"></script>
-    <link href="<%=Url.Content("~/Scripts/jquery/jstree-master/dist/themes/default/style.min.css")%>" rel="stylesheet" />
-    <script src="<%=Url.Content("~/Scripts/jquery/jstree-master/dist/jstree.js")%>"></script>
-    <script src="<%=Url.Content("~/Scripts/jquery/canvasjs-1.6.2/jquery.canvasjs.min.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/jquery/Concurrent.Thread-full-20090713.js")%>"></script>
+    <link href="<%=ResolveClientUrl("~/Scripts/jquery/jstree-master/dist/themes/default/style.min.css")%>" rel="stylesheet" />
+    <script src="<%=ResolveClientUrl("~/Scripts/jquery/jstree-master/dist/jstree.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/jquery/canvasjs-1.6.2/jquery.canvasjs.min.js")%>"></script>
 
-    <script src="<%=Url.Content("~/Scripts/pages/index.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/pages/index.js")%>"></script>
 
     <% if (ViewBag.query != null) {%>
     <script type="text/javascript">

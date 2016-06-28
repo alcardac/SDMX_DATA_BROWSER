@@ -1,0 +1,81 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Estat.Nsi.Client" GeneratedClassName="HeaderSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="id" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">NSICLIENT</Value>
+    </Setting>
+    <Setting Name="test" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">false</Value>
+    </Setting>
+    <Setting Name="name" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="senderid" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">NSICLIENT</Value>
+    </Setting>
+    <Setting Name="sendername" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="sendercontactname" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="sendercontactdepartment" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="sendercontactrole" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="sendercontacttelephone" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="sendercontactfax" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="sendercontactx400" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="sendercontacturi" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="sendercontactemail" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="receiverid" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">NSIWS</Value>
+    </Setting>
+    <Setting Name="receivername" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="receivercontactname" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="receivercontactdepartment" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="receivercontactrole" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="receivercontacttelephone" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="receivercontactfax" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="receivercontactx400" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="receivercontacturi" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="receivercontactemail" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="source" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="lang" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">en</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

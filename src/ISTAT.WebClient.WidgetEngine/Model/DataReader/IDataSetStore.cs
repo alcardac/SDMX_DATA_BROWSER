@@ -193,6 +193,6 @@ namespace ISTAT.WebClient.WidgetEngine.Model.DataReader
 
 
 
-       
+
     }
 }

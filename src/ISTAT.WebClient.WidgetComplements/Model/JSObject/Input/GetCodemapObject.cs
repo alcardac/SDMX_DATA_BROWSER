@@ -11,6 +11,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model.JSObject
         public MaintenableObj Dataflow { get; set; }
         public string Codelist { get; set; }
         public Dictionary<string,List<string>> PreviusCostraint { get; set; }
-        
+        public string Selectionkey { get; set; }
+        public string Selectionval { get; set; }
     }
 }

@@ -46,7 +46,7 @@
         /// <summary>
         /// Holds database info instance
         /// </summary>
-        private readonly DBInfo _dbInfo;
+        public readonly DBInfo _dbInfo;
 
         /// <summary>
         /// The ordered list of keys that will be used in order by
@@ -674,11 +674,11 @@
             {
                 if (kv.values == null || kv.values.Count == 0)
                     continue;
-                if (kv.component == kf.TimeDimension.Id)
+                /*if (kv.component == kf.TimeDimension.Id)
                 {
                     TimeWhere = GetTimeWhere(kv);
                     continue;
-                }
+                }*/
                 if (kv.values.Count == 1)
                 {
                     string paramName = this._dbInfo.Database.BuildParameterName(kv.component);
@@ -688,12 +688,35 @@
                     param.Value = kv.values[0];
                     dbCommand.Parameters.Add(param);
                 }
+                else if (kv.component == kf.TimeDimension.Id && kv.values.Count == 2)
+                {
+                    List<string> parametersOR = new List<string>();
+                    String UseFrom = kv.values[0];
+                    String UseTo = kv.values[kv.values.Count-1];
+
+                        string paramName = this._dbInfo.Database.BuildParameterName(kv.component + UseFrom.Replace("-", ""));
+                        parametersOR.Add(string.Format(" {0} >= {1} ", kv.component, paramName));
+                        DbParameter param = dbCommand.CreateParameter();
+                        param.ParameterName = paramName;
+                        param.Value = UseFrom;
+                        dbCommand.Parameters.Add(param);
+
+                        paramName = this._dbInfo.Database.BuildParameterName(kv.component + UseTo.Replace("-", ""));
+                        parametersOR.Add(string.Format(" {0} <= {1} ", kv.component, paramName));
+                        param = dbCommand.CreateParameter();
+                        param.ParameterName = paramName;
+                        param.Value = UseTo;
+                        dbCommand.Parameters.Add(param);
+
+                    parameters.Add(string.Format(" ({0}) ", string.Join(" or ", parametersOR)));
+                
+                }
                 else
                 {
                     List<string> parametersOR = new List<string>();
                     foreach (string val in kv.values)
                     {
-                        string paramName = this._dbInfo.Database.BuildParameterName(kv.component + val);
+                        string paramName = this._dbInfo.Database.BuildParameterName(kv.component + val.Replace("-",""));
                         parametersOR.Add(string.Format(" {0} = {1} ", kv.component, paramName));
                         DbParameter param = dbCommand.CreateParameter();
                         param.ParameterName = paramName;
@@ -711,6 +734,8 @@
                 return string.Format(" where {0} {1}", string.Join(" and ", parameters), TimeWhere);
         }
 
+
+
         private string GetTimeWhere(DataCriteria kv)
         {
 
@@ -720,7 +745,7 @@
             DateTime from;
             DateTime to = DateTime.Now;
             bool UseFrom = DateTime.TryParseExact(kv.values[0], "yyyy-MM", CultureInfo.CurrentCulture, DateTimeStyles.None, out from);
-            bool UseTo =kv.values.Count>1? DateTime.TryParseExact(kv.values[1], "yyyy-MM", CultureInfo.CurrentCulture, DateTimeStyles.None, out to):false;
+            bool UseTo = kv.values.Count > 1 ? DateTime.TryParseExact(kv.values[1], "yyyy-MM", CultureInfo.CurrentCulture, DateTimeStyles.None, out to) : false;
 
             if (!UseFrom && !UseTo)
                 return string.Empty;

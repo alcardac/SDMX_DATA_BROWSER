@@ -2,7 +2,7 @@
 <%@ Import Namespace="ISTAT.WebClient.WidgetComplements.Model.App_GlobalResources" %>
 
 <asp:Content ID="Headcontainer" ContentPlaceHolderID="ContentHeader" runat="server">
-    <script src="<%=Url.Content("~/Scripts/pages/help.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/pages/help.js")%>"></script>
 </asp:Content>
 
 <asp:Content ID="Maincontainer" ContentPlaceHolderID="MainContainer" runat="server">
@@ -46,5 +46,5 @@
 </asp:Content>
 
 <asp:Content ID="Footercontainer" ContentPlaceHolderID="ContentFooter" runat="server">
-    <script src="<%=Url.Content("~/Scripts/pages/help.js")%>"></script>
+    <script src="<%=ResolveClientUrl("~/Scripts/pages/help.js")%>"></script>
 </asp:Content>

@@ -139,6 +139,9 @@
     <Compile Include="Model\CallWS\IGetSDMX.cs" />
     <Compile Include="Model\CallWS\NsiClientValidation.cs" />
     <Compile Include="Model\CallWS\SoapConstants.cs" />
+    <Compile Include="Model\Settings\IRConfiguration.cs" />
+    <Compile Include="Model\Settings\WCSettings.cs" />
+    <Compile Include="Model\Settings\WCEndpointSettings.cs" />
     <Compile Include="Model\Constants.cs" />
     <Compile Include="Model\DataRender\ComponentCodeDescriptionDictionary.cs" />
     <Compile Include="Model\DataRender\HtmlClasses.cs" />
@@ -184,8 +187,21 @@
     <Compile Include="Model\JSObject\Output\DefaultLayoutResponseObject.cs" />
     <Compile Include="Model\JSObject\QueryObject.cs" />
     <Compile Include="Model\JSObject\TemplateObj.cs" />
+    <Compile Include="Model\LimitSettings.cs" />
     <Compile Include="Model\Log\LogError.cs" />
     <Compile Include="Model\Log\LogErrorEventArgs.cs" />
+    <Compile Include="Model\NSIWC\ComponentArtefactCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\NSIWC\Constants.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\NSIWC\DataCriteria.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\NSIWC\QueryComponents.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\SessionImplObject.cs" />
     <Compile Include="Model\Settings\HeaderSettings.cs" />
     <Compile Include="Model\Settings\NsiClientHelper.cs" />
@@ -194,6 +210,24 @@
     <Compile Include="Model\Settings\WSDLSettings.cs" />
     <Compile Include="Model\Settings\XmlProxyUrlResolver.cs" />
     <Compile Include="Model\TextTypeHelper.cs" />
+    <Compile Include="Model\Tree\CodeTreeBuilder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Tree\DataflowTreeBuilder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Tree\JSTreeBuilder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Tree\JSTreeConstants.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Tree\JSTreeMetadata.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Tree\JsTreeNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\Utils.cs" />
     <Compile Include="Model\Validator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -207,6 +241,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NSIClient\NSIClient.csproj">
+      <Project>{ad5b39ca-b7c3-46e1-8f14-5ba4467f079f}</Project>
+      <Name>NSIClient</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

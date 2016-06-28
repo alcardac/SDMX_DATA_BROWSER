@@ -5,11 +5,11 @@ using System.Text;
 using System.Web.Mvc;
 
 namespace ISTAT.WebClient.Models
-{
+{   
     public class StreamResponseAction : ActionResult
     {
         public string RetResp { get; set; }
-
+        
         public StreamResponseAction()
         {
             this.RetResp = null;

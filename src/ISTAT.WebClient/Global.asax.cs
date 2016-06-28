@@ -16,6 +16,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using ISTAT.WebClient.WidgetComplements.Model.Properties;
 using ISTAT.WebClient.WidgetComplements.Model;
+using ISTAT.WebClient.WidgetEngine.WidgetBuild;
+using ISTAT.WebClient.Controllers;
 
 namespace ISTAT.WebClient
 {
@@ -209,6 +211,20 @@ namespace ISTAT.WebClient
                 CultureInfo culture = LocaleResolver.GetCookie(this.Context);
                 Thread.CurrentThread.CurrentUICulture = culture;
                 Logger.Info("starting session success");
+
+
+                var query = new SessionQuery { CurrentCulture = culture };
+
+                Utils.App_Data_Path = this.Context.Server.MapPath("~/App_Data/");
+                string cacheFolder = this.GetCacheFolder();
+
+                query.SetCacheFolder(cacheFolder);
+                SessionQueryManager.SaveSessionQuery(this.Context.Session, query);
+                Thread.CurrentThread.CurrentUICulture = culture;
+                Logger.Info("starting session success");
+
+
+
             }
             catch (HttpException ex)
             {
@@ -290,6 +306,25 @@ namespace ISTAT.WebClient
         {
             Logger.Error(e.Message);
         }
+
+
+        /// <summary>
+        /// Get the cache folder path under App_Data
+        /// </summary>
+        /// <returns>
+        /// A string with the cache folder path
+        /// </returns>
+        private string GetCacheFolder()
+        {
+            return Utils.GetAppPath();
+
+            // string app_data = Path.Combine(Context.Server.MapPath("~/"), "App_Data");
+            // string cacheFolder = Path.Combine(app_data, "cache");
+            // return cacheFolder;
+        }
+
+        
+
 
     }
 }

@@ -102,7 +102,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model.Settings
             }
         }
 
-        [ConfigurationProperty("MaxResultObs", DefaultValue = 10000)]
+        [ConfigurationProperty("MaxResultObs", DefaultValue = 100000)]
         public int MaxResultObs
         {
             get
@@ -129,6 +129,23 @@ namespace ISTAT.WebClient.WidgetComplements.Model.Settings
                 this["UseWidgetCache"] = value;
             }
         }
+
+       [ConfigurationProperty("CachedTree", DefaultValue = false)]
+        public bool CachedTree
+        {
+            get
+            {
+                return (bool)this["CachedTree"];
+            }
+
+            set
+            {
+                this["CachedTree"] = value;
+            }
+        }
+
+
+
 
         #endregion
     }

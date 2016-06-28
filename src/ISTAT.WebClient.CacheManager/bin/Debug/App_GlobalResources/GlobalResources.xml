@@ -1521,24 +1521,24 @@
     <Name LocaleIsoCode="it"><![CDATA[SDMX-ML Query.]]></Name>
   </Resource>
   <Resource key="label_save_sdmx_structure">
-    <Name LocaleIsoCode="en"><![CDATA[Download XML Sdmx-ML Dataset.]]></Name>
-    <Name LocaleIsoCode="it"><![CDATA[Scarica XML Sdmx-ML Dataset.]]></Name>
+    <Name LocaleIsoCode="en"><![CDATA[Sdmx-ML Structure.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Sdmx-ML Struttura.]]></Name>
   </Resource>
   <Resource key="label_desc_save_csv_tabular">
     <Name LocaleIsoCode="en"><![CDATA[Download a tabular CSV.]]></Name>
     <Name LocaleIsoCode="it"><![CDATA[Scarica un file csv di tipo tabellare.]]></Name>
   </Resource>
   <Resource key="label_desc_save_csv_not_formatted">
-    <Name LocaleIsoCode="en"><![CDATA[Download a not formatted CSV.]]></Name>
-    <Name LocaleIsoCode="it"><![CDATA[Scarica un file csv di tipo listato.]]></Name>
+    <Name LocaleIsoCode="en"><![CDATA[Not formatted CSV.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[csv di tipo listato.]]></Name>
   </Resource>
   <Resource key="label_desc_save_xls">
-    <Name LocaleIsoCode="en"><![CDATA[Download a XLS file.]]></Name>
-    <Name LocaleIsoCode="it"><![CDATA[Scarica un XLS file.]]></Name>
+    <Name LocaleIsoCode="en"><![CDATA[XLS file.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[XLS file.]]></Name>
   </Resource>
   <Resource key="label_desc_save_pdf">
-    <Name LocaleIsoCode="en"><![CDATA[Download a PDF file.]]></Name>
-    <Name LocaleIsoCode="it"><![CDATA[Scarica un file PDF.]]></Name>
+    <Name LocaleIsoCode="en"><![CDATA[PDF file.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[file PDF.]]></Name>
   </Resource>
   <Resource key="label_desc_save_html">
     <Name LocaleIsoCode="en"><![CDATA[Download in HTML table format.]]></Name>
@@ -1553,8 +1553,8 @@
     <Name LocaleIsoCode="it"><![CDATA[Scarica XML Sdmx-ML Query.]]></Name>
   </Resource>
   <Resource key="label_desc_save_sdmx_structure">
-    <Name LocaleIsoCode="en"><![CDATA[Download XML Sdmx-ML Dataset.]]></Name>
-    <Name LocaleIsoCode="it"><![CDATA[Scarica XML Sdmx-ML Dataset.]]></Name>
+    <Name LocaleIsoCode="en"><![CDATA[Sdmx-ML Structure.]]></Name>
+    <Name LocaleIsoCode="it"><![CDATA[Sdmx-ML Struttura.]]></Name>
   </Resource>
 
   

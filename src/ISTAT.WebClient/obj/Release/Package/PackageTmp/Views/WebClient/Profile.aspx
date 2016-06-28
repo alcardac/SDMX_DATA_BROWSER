@@ -2,12 +2,12 @@
 <%@ Import Namespace="ISTAT.WebClient.WidgetComplements.Model.App_GlobalResources" %>
 
 <asp:Content ID="Headcontainer" ContentPlaceHolderID="ContentHeader" runat="server">
-    <script src="<%=Url.Content("~/Scripts/pages/dashboardElements.js")%>"></script>
-    <link href="<%=Url.Content("~/Content/style/widgets/Login.css")%>" rel="stylesheet" />
+    <script src="<%=ResolveClientUrl("~/Scripts/pages/dashboardElements.js")%>"></script>
+    <link href="<%=ResolveClientUrl("~/Content/style/widgets/Login.css")%>" rel="stylesheet" />
     <script type="text/javascript">
         // redirect to login page if access denied
         if (sessionStorage.user_code == null) {
-            window.location.href = "<%=Url.Content("~/")%>WebClient/Login";
+            window.location.href = "<%=ResolveClientUrl("~/")%>WebClient/Login";
         };
     </script>
 </asp:Content>

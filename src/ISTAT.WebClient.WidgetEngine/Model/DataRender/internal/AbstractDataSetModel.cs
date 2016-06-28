@@ -69,6 +69,8 @@
         /// </summary>
         private readonly OrderedDictionary _sliceKeys = new OrderedDictionary(StringComparer.Ordinal);
 
+        //private readonly StringDictionary _sliceKeys = new StringDictionary();
+
         /// <summary>
         /// The IDataSetStore that will be used to by implementations that use IDataSetStore
         /// </summary>
@@ -206,6 +208,20 @@
             }
         }
 
+
+        /// <summary>
+        /// Gets the slice keys
+        /// </summary>
+        /*
+        public StringDictionary SliceKeyValues
+        {
+            get
+            {
+                return this._sliceKeys;
+            }
+        }
+        */
+
         /// <summary>
         /// Gets the slice keys
         /// </summary>
@@ -304,7 +320,6 @@
 
             // populate all valid keys
             this.ReloadValidKeys();
-
             this.ApplyDefaultSettings(slice);
             this.SetupCurrentView(slice, this._horizontalKeys, this._verticalKeys);
             this.SetupSliceKeys(slice);
@@ -315,6 +330,46 @@
                 this._infoKeys.AddRange(sliceAttribute);
 
         }
+
+        /// <summary>
+        /// Initialize the <see cref="AbstractDataSetModel"/> instance
+        /// </summary>
+        public void Initialize(List<DataCriteria> Criterias)
+        {
+            // populate the concept.id to concept.name map and the list of slice keys
+            Utils.PopulateConceptMap(this._structure, this._conceptMap);
+
+            var slice = new List<string>(this._keyFamily.DimensionList.Dimensions.Count + 1);
+            foreach (IDimension dimension in this._keyFamily.DimensionList.Dimensions)
+            {
+                slice.Add(dimension.Id);
+            }
+            List<string> sliceAttribute = null;
+            if (this._keyFamily.AttributeList != null)
+            {
+                sliceAttribute = new List<string>(this._keyFamily.AttributeList.Attributes.Count + 1);
+                foreach (IAttributeObject attribute in this._keyFamily.AttributeList.Attributes)
+                {
+                    sliceAttribute.Add(attribute.Id);
+                }
+            }
+
+
+            // populate all valid keys
+            this.ReloadValidKeys();
+            this.ApplyDefaultSettings(slice);
+            this.SetupCurrentView(slice, this._horizontalKeys, this._verticalKeys);
+
+            //this.SetupSliceKeys(slice);
+            this.SetupSliceKeys(slice, Criterias);
+            this.SetupKeyXyCount();
+
+            this._infoKeys.Clear();
+            if (sliceAttribute != null)
+                this._infoKeys.AddRange(sliceAttribute);
+
+        }
+
 
         /// <summary>
         /// Reload the <see cref="AllValidKeys"/> in order to get the current localized description
@@ -413,6 +468,33 @@
             this.SetupKeyXyCount();
         }
 
+
+        /// <summary>
+        /// Updates the axis for all keys.
+        /// </summary>
+        /// <param name="slice">
+        /// the slice keys
+        /// </param>
+        /// <param name="horizontal">
+        /// the horizontal keys
+        /// </param>
+        /// <param name="vertical">
+        /// the vertical keys
+        /// </param>
+        public void UpdateAxis(List<string> slice, List<string> horizontal, List<string> vertical, List<DataCriteria> Criterias)
+        {
+            this.SetupCurrentView(slice, horizontal, vertical);
+
+            this._horizontalKeys.Clear();
+            this._horizontalKeys.AddRange(horizontal);
+
+            this._verticalKeys.Clear();
+            this._verticalKeys.AddRange(vertical);
+
+            this.SetupSliceKeys(slice,Criterias);
+            this.SetupKeyXyCount();
+        }
+
         /// <summary>
         /// Updates the value for a slice key.
         /// </summary>
@@ -425,10 +507,11 @@
         public void UpdateSliceKeyValue(string key, string value)
         {
             if (!this._sliceKeys.Contains(key))
+            //if (!this._sliceKeys.ContainsKey(key))
             {
                 throw new Exception("Unable to find slice key '" + key + "'");
             }
-
+            
             this._sliceKeys[key] = value;
             this.SetupSliceKeys(new ArrayList(this._sliceKeys.Keys));
             this.SetupKeyXyCount();
@@ -651,6 +734,74 @@
                 }
             }
         }
+
+
+        /// <summary>
+        /// Setup the slice key maps with the current slice values and the valid values
+        /// </summary>
+        /// <param name="keys">
+        /// The list of keys to setup as slice keys
+        /// </param>
+        protected void SetupSliceKeys(ICollection keys, List<DataCriteria> Criterias)
+        {
+            Dictionary<string, List<string>> Criteri = new Dictionary<string, List<string>>();
+            Criterias.ForEach(c => Criteri.Add(c.component, c.values));
+
+            var oldSliceKeys = new OrderedDictionary();
+            foreach (DictionaryEntry e in this._sliceKeys)
+            {
+                oldSliceKeys.Add(e.Key, e.Value);
+            }
+
+            this._sliceKeys.Clear();
+
+            this._sliceKeyValidValues.Clear();
+            this.ClearFilter();
+
+            // TODO move (part?) of the following to ApplyFilter for SRA-142
+            foreach (string key in keys)
+            {
+                IDictionary<string, object> values = this.GetDistinctValues(key);
+                if (values.Count == 0)
+                {
+                    throw new Exception(ISTAT.WebClient.WidgetComplements.Model.App_GlobalResources.Messages.no_result_found);
+                }
+
+                var value = oldSliceKeys[key] as string;
+                if (value == null || !values.ContainsKey(value))
+                {
+                    IEnumerator<string> lookup = values.Keys.GetEnumerator();
+                    if (lookup.MoveNext())
+                    {
+                        value = lookup.Current;
+                    }
+
+                    lookup.Dispose();
+                }
+
+                this._sliceKeyValidValues.Add(key, new List<string>(values.Keys));
+                this._sliceKeys.Add(key, value);
+                if (values.Count > 1)
+                {
+                    if (Criteri.ContainsKey(key))//check se sono nei criteri
+                    {
+                        List<string> list = Criteri[key];
+                        string liststr = string.Join(",", list.ToArray());
+
+                        if (Criteri[key].Count() == 1 && Criteri[key].FirstOrDefault()!=null
+                            && values.ContainsKey(Criteri[key].FirstOrDefault()))//se il criterio ha un valore ed è nello slice
+                        {
+                            this.AppendFilter(key, liststr);
+                        }
+                        else
+                        { this.AppendFilter(key, value); }
+                    }
+                    else
+                    { this.AppendFilter(key, value); }
+                }
+            }
+        }
+
 
         /// <summary>
         /// Validates a set of keys against the dimension set

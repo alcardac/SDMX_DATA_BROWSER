@@ -48,6 +48,19 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
         /// </returns>
         void ExecuteQuery(IDataQuery query, SDMXWSFunction operationName, int observationLimit, string tempFileName);
 
+
+        /// <summary>
+        /// Get the SDMX Query Request
+        /// </summary>
+        /// <param name="query">
+        /// The query
+        /// </param>
+        /// <param name="request">
+        /// The output request
+        /// </param>
+        void GetSdmxQuery(IDataQuery query, out string request);
+
+
         /// <summary>
         /// Retrieves all available categorisations.
         /// </summary>
@@ -77,7 +90,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
         /// A <c>CodeListBean</c> with the requested data
         /// </returns>
         ICodelistObject GetCodelist(IDataflowObject dataflow, IDataStructureObject dsd, IComponent component, List<IContentConstraintMutableObject> criterias, bool Constrained);
-        
+
         /// <summary>
         /// Get the maximum number of observations that can be retrieved given the specified criteria
         /// </summary>
@@ -92,6 +105,14 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
         /// </returns>
         int GetDataflowDataCount(IDataflowObject dataflow, IContentConstraintMutableObject criteria);
 
+        /// <summary>
+        /// Retrieves all available categorisations.
+        /// </summary>
+        /// <returns>
+        ///   ISdmxObjects&amp;lt;/c&amp;gt; instance; the result won&amp;apos;t be &amp;lt;c&amp;gt;null&amp;lt;/c&amp;gt; if there are
+        ///   no SdmxObject, instead an empty list will be returned
+        /// </returns>
+        ISdmxObjects RetrieveCategorisations();
 
         /// <summary>
         /// Gets a bean with data about the key family for specified dataflow.
@@ -115,5 +136,7 @@ namespace ISTAT.WebClient.WidgetComplements.Model.CallWS
 
 
         #endregion
+
+        
     }
 }
